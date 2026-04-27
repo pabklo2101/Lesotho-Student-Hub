@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesotho Student Hub | Study Resources, Planner & Quizzes</title>
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --text: #0f172a;
+            --text-muted: #475569;
+            --primary: #1e40af;
+            --primary-light: #3b82f6;
+            --accent: #0ea5e9;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            --radius: 12px;
+        }
+        body.dark {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --primary: #3b82f6;
+            --primary-light: #60a5fa;
+            --border: #334155;
+            --shadow: 0 4px 10px rgba(0,0,0,0.4);
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            transition: background 0.3s, color 0.3s;
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+        .app-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+        /* sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            padding: 1.5rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            flex-shrink: 0;
+            transition: background 0.3s;
+            overflow-y: auto;
+        }
+        .sidebar .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        .nav-link {
+            padding: 0.7rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .nav-link:hover, .nav-link.active {
+            background: var(--primary);
+            color: white;
+        }
+        .theme-toggle, .logout-btn {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 2rem;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text);
+            transition: all 0.2s;
+        }
+        .theme-toggle:hover, .logout-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        .user-panel {
+            margin-top: auto;
+            border-top: 1px solid var(--border);
+            padding-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .user-info {
+            font-weight: 600;
+        }
+        /* main content */
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .search-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .search-bar input {
+            flex: 2;
+            padding: 0.75rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            font-size: 1rem;
+        }
+        .filter-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+            color: var(--text);
+        }
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1.5rem;
+        }
+        .resource-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            position: relative;
+        }
+        .resource-card:hover {
+            transform: translateY(-4px);
+        }
+        .resource-card .subject-badge {
+            background: var(--accent);
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            width: fit-content;
+        }
+        .resource-card h3 {
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+        .resource-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .resource-card .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+        .rating {
+            display: flex;
+            gap: 0.2rem;
+            font-size: 1.2rem;
+            color: gold;
+            cursor: pointer;
+            user-select: none;
+        }
+        .bookmark-star {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+        .bookmark-star.active {
+            color: gold;
+        }
+        .comment-section {
+            margin-top: 0.5rem;
+            border-top: 1px solid var(--border);
+            padding-top: 0.5rem;
+        }
+        .comment-section input {
+            width: 100%;
+            padding: 0.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: var(--text);
+        }
+        .comments-list {
+            max-height: 100px;
+            overflow-y: auto;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .planner, .quiz-container {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+        }
+        .task-item, .quiz-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .btn:hover {
+            background: var(--primary-dark);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: var(--radius);
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        @media (max-width: 768px) {
+            .app-layout {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                flex-direction: row;
+                flex-wrap: wrap;
+                padding: 1rem;
+            }
+            .main-content {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="app-layout">
+    <aside class="sidebar">
+        <div class="logo">📚 Lesotho Hub</div>
+        <nav class="nav-links">
+            <div class="nav-link active" data-page="resources">🔗 Resources</div>
+            <div class="nav-link" data-page="planner">📅 Study Planner</div>
+            <div class="nav-link" data-page="quizzes">❓ Quizzes</div>
+            <div class="nav-link" data-page="about">ℹ️ About</div>
+        </nav>
+        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+            <button class="theme-toggle" id="themeToggle">🌙 Dark</button>
+        </div>
+        <div class="user-panel" id="userPanel">
+            <!-- dynamic -->
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <!-- Resources Page -->
+        <div class="page active" id="page-resources">
+            <h2>📖 Study Resources</h2>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search by title, subject, or description...">
+                <div class="filter-group" id="filterGroup"></div>
+            </div>
+            <div class="resources-grid" id="resourcesContainer"></div>
+        </div>
+
+        <!-- Planner Page -->
+        <div class="page" id="page-planner">
+            <h2>📅 My Study Planner</h2>
+            <div class="planner">
+                <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                    <input type="text" id="taskInput" placeholder="New task..." style="flex:1; padding:0.5rem; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:var(--text);">
+                    <input type="date" id="taskDate" style="background:var(--bg); color:var(--text); border:1px solid var(--border); border-radius:8px; padding:0.5rem;">
+                    <button class="btn" onclick="addTask()">Add</button>
+                </div>
+                <div id="taskList"></div>
+            </div>
+        </div>
+
+        <!-- Quizzes Page -->
+        <div class="page" id="page-quizzes">
+            <h2>❓ Interactive Quizzes</h2>
+            <div id="quizContainer" class="quiz-container">
+                <select id="quizSubject" style="margin-bottom:1rem; padding:0.5rem; border-radius:8px; background:var(--bg); color:var(--text); border:1px solid var(--border);">
+                    <option value="math">Math</option>
+                    <option value="english">English</option>
+                    <option value="science">Science</option>
+                    <option value="history">History</option>
+                </select>
+                <button class="btn" onclick="startQuiz()">Start Quiz</button>
+                <div id="quizArea" style="margin-top:1rem;"></div>
+            </div>
+        </div>
+
+        <!-- About Page -->
+        <div class="page" id="page-about">
+            <h2>ℹ️ About Lesotho Student Hub</h2>
+            <p>This is a free, community‑driven platform for students in Lesotho. All resources are external links to high‑quality free materials. No ads, no costs.</p>
+            <p>🇱🇸 Made with love for Basotho learners.</p>
+        </div>
+    </main>
+</div>
+
+<!-- Login/Register Modal -->
+<div class="modal" id="authModal">
+    <div class="modal-content">
+        <h3 id="authTitle">Login</h3>
+        <input type="text" id="authUsername" placeholder="Username" style="width:100%; margin:0.5rem 0; padding:0.5rem; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:var(--text);">
+        <input type="password" id="authPassword" placeholder="Password" style="width:100%; margin:0.5rem 0; padding:0.5rem; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:var(--text);">
+        <div style="display:flex; gap:1rem; margin-top:1rem;">
+            <button class="btn" id="authActionBtn">Login</button>
+            <button class="btn" style="background:transparent; border:1px solid var(--border); color:var(--text);" onclick="toggleAuthMode()">Switch to Register</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ------------------- DATA -------------------
+    const curated = [
+        { title: "Khan Academy - Mathematics", subject: "Math", description: "Video lessons and practice from arithmetic to calculus.", url: "https://www.khanacademy.org/math", external: true },
+        { title: "Lesotho Past Examination Papers (LEC)", subject: "Math", description: "Official past papers for COSC and Cambridge exams.", url: "https://www.leclesco.com/past-papers/", external: true },
+        { title: "Brilliant.org - Math & Logic", subject: "Math", description: "Interactive problem solving.", url: "https://brilliant.org/", external: true },
+        { title: "Wolfram Alpha", subject: "Math", description: "Computational engine for step‑by‑step solutions.", url: "https://www.wolframalpha.com/", external: true },
+        { title: "Siyavula – Open Textbooks", subject: "Math", description: "Free South African curriculum textbooks.", url: "https://www.siyavula.com/", external: true },
+        { title: "BBC Bitesize - English", subject: "English", description: "Grammar, literature, writing tips.", url: "https://www.bbc.co.uk/bitesize/subjects/z3kw2hv", external: true },
+        { title: "Project Gutenberg", subject: "English", description: "Thousands of free classic books.", url: "https://www.gutenberg.org/", external: true },
+        { title: "Grammarly Handbook", subject: "English", description: "Free writing and grammar guide.", url: "https://www.grammarly.com/handbook", external: true },
+        { title: "Coursera – English Composition", subject: "English", description: "Free university-level writing course.", url: "https://www.coursera.org/courses?query=english%20composition", external: true },
+        { title: "PhET Simulations", subject: "Science", description: "Interactive physics, chemistry, biology simulations.", url: "https://phet.colorado.edu/", external: true },
+        { title: "National Geographic Education", subject: "Science", description: "Articles and videos on biology, geography.", url: "https://education.nationalgeographic.org/", external: true },
+        { title: "NASA STEM Resources", subject: "Science", description: "Space, astronomy and engineering activities.", url: "https://www.nasa.gov/stem", external: true },
+        { title: "CK-12 Foundation", subject: "Science", description: "Free science textbooks and adaptive practice.", url: "https://www.ck12.org/", external: true },
+        { title: "Sesotho Online Dictionary", subject: "Sesotho", description: "English-Sesotho translation and definitions.", url: "https://www.sesotho.org/", external: true },
+        { title: "Wikipedia – History of Lesotho", subject: "History", description: "From Basotho kingdom to modern day.", url: "https://en.wikipedia.org/wiki/History_of_Lesotho", external: true },
+        { title: "African Studies Centre – Lesotho", subject: "History", description: "Research papers and archives.", url: "https://www.ascleiden.nl/content/webdossiers/lesotho", external: true },
+        { title: "Mindset Learn (SA) – Physical Sciences", subject: "Science", description: "Video lessons and exam prep.", url: "https://mindset.learn.co.za/", external: true },
+        { title: "LEC Exam Guidelines", subject: "General", description: "Official rules and syllabi for COSC.", url: "https://www.examinations.co.ls/", external: true },
+        { title: "Google Scholar", subject: "General", description: "Academic articles for advanced projects.", url: "https://scholar.google.com/", external: true },
+        { title: "Quizlet", subject: "General", description: "Flashcards for many subjects.", url: "https://quizlet.com/", external: true },
+        { title: "Duolingo – English for Sesotho Speakers", subject: "English", description: "Learn English with fun exercises.", url: "https://www.duolingo.com/", external: true },
+        { title: "FreeCodeCamp", subject: "Tech", description: "Learn to code for free.", url: "https://www.freecodecamp.org/", external: true },
+        { title: "Code.org", subject: "Tech", description: "Beginner coding courses.", url: "https://code.org/", external: true },
+        { title: "Mozilla Developer Network (MDN)", subject: "Tech", description: "Web development tutorials.", url: "https://developer.mozilla.org/", external: true },
+        { title: "Lesotho Times – Education News", subject: "General", description: "Stay updated on local education policies.", url: "https://lestimes.com/category/education/", external: true }
+    ];
+
+    const subjects = ["all","Math","English","Science","Sesotho","History","Tech","General"];
+
+    // ------------------- APP STATE -------------------
+    let currentUser = localStorage.getItem('hub_user') || null;
+    let allUsers = JSON.parse(localStorage.getItem('hub_users') || '{}');
+    let resources = [...curated];
+    let bookmarks = currentUser ? (allUsers[currentUser]?.bookmarks || []) : [];
+    let ratings = currentUser ? (allUsers[currentUser]?.ratings || {}) : {};
+    let comments = JSON.parse(localStorage.getItem('hub_comments') || '{}');
+    let allRatings = JSON.parse(localStorage.getItem('hub_ratings') || '{}'); // per resource average
+    let plannerTasks = currentUser ? (allUsers[currentUser]?.tasks || []) : [];
+
+    // ------------------- UI HELPERS -------------------
+    function $(sel) { return document.querySelector(sel); }
+    function $$(sel) { return document.querySelectorAll(sel); }
+
+    // Save current user
+    function saveUserData() {
+        if (!currentUser) return;
+        if (!allUsers[currentUser]) allUsers[currentUser] = {};
+        allUsers[currentUser].bookmarks = bookmarks;
+        allUsers[currentUser].ratings = ratings;
+        allUsers[currentUser].tasks = plannerTasks;
+        localStorage.setItem('hub_users', JSON.stringify(allUsers));
+    }
+
+    // Rating average helper
+    function getAverageRating(title) {
+        const r = allRatings[title];
+        if (!r || r.count === 0) return 0;
+        return (r.sum / r.count).toFixed(1);
+    }
+
+    // ------------------- RESOURCES PAGE -------------------
+    function renderResources(filter='all', search='') {
+        let filtered = resources.filter(r => {
+            const matchSubj = filter==='all' || r.subject===filter;
+            const s = search.toLowerCase();
+            const matchSearch = !s || r.title.toLowerCase().includes(s) || r.subject.toLowerCase().includes(s) || r.description.toLowerCase().includes(s);
+            return matchSubj && matchSearch;
+        });
+        const container = $('#resourcesContainer');
+        if (filtered.length===0) {
+            container.innerHTML = '<p>📭 No resources found.</p>';
+            return;
+        }
+        container.innerHTML = filtered.map(r => {
+            const avgRating = getAverageRating(r.title);
+            const isBookmarked = bookmarks.includes(r.title);
+            return `
+            <div class="resource-card">
+                <span class="subject-badge">${r.subject}</span>
+                <h3>${r.title} ${avgRating>0 ? `⭐${avgRating}` : ''}</h3>
+                <p>${r.description}</p>
+                <div class="actions">
+                    <a href="${r.url}" target="_blank" rel="noopener" style="color:var(--primary); text-decoration:none; font-weight:600;">🔗 Open</a>
+                    <div style="display:flex; gap:0.5rem;">
+                        <span class="bookmark-star ${isBookmarked?'active':''}" onclick="toggleBookmark('${r.title.replace(/'/g, "\\'")}')">⭐</span>
+                        <div class="rating" data-title="${r.title.replace(/'/g, "\\'")}">
+                            ${[1,2,3,4,5].map(n => `<span onclick="rate('${r.title.replace(/'/g, "\\'")}', ${n})">${n <= (ratings[r.title]||0) ? '★' : '☆'}</span>`).join('')}
+                        </div>
+                    </div>
+                </div>
+                <div class="comment-section">
+                    <input type="text" placeholder="Add a comment..." onkeypress="if(event.key==='Enter') addComment('${r.title.replace(/'/g, "\\'")}', this.value); this.value='';">
+                    <div class="comments-list">${(comments[r.title]||[]).map(c => `<div>${c}</div>`).join('')}</div>
+                </div>
+            </div>`;
+        }).join('');
+    }
+
+    function toggleBookmark(title) {
+        if (!currentUser) { alert('Please login to bookmark.'); return; }
+        if (bookmarks.includes(title)) {
+            bookmarks = bookmarks.filter(t => t!==title);
+        } else {
+            bookmarks.push(title);
+        }
+        saveUserData();
+        renderResources(currentFilter, currentSearch);
+    }
+
+    function rate(title, value) {
+        if (!currentUser) { alert('Please login to rate.'); return; }
+        ratings[title] = value;
+        // update global average
+        if (!allRatings[title]) allRatings[title] = { sum: 0, count: 0, voters: {} };
+        const prev = allRatings[title].voters[currentUser] || 0;
+        allRatings[title].sum = allRatings[title].sum - prev + value;
+        if (!allRatings[title].voters[currentUser]) allRatings[title].count++;
+        allRatings[title].voters[currentUser] = value;
+        localStorage.setItem('hub_ratings', JSON.stringify(allRatings));
+        saveUserData();
+        renderResources(currentFilter, currentSearch);
+    }
+
+    function addComment(title, text) {
+        if (!text.trim()) return;
+        if (!comments[title]) comments[title] = [];
+        comments[title].push((currentUser || 'Anonymous') + ': ' + text);
+        localStorage.setItem('hub_comments', JSON.stringify(comments));
+        renderResources(currentFilter, currentSearch);
+    }
+
+    let currentFilter = 'all', currentSearch = '';
+    $('#searchInput').addEventListener('input', e => {
+        currentSearch = e.target.value;
+        renderResources(currentFilter, currentSearch);
+    });
+
+    // filter buttons
+    const filterGroup = $('#filterGroup');
+    filterGroup.innerHTML = subjects.map(s => `<button class="filter-btn ${s==='all'?'active':''}" data-subj="${s}">${s==='all'?'All':s}</button>`).join('');
+    filterGroup.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterGroup.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentFilter = btn.dataset.subj;
+            renderResources(currentFilter, currentSearch);
+        });
+    });
+
+    // ------------------- PLANNER -------------------
+    function renderTasks() {
+        const list = $('#taskList');
+        if (!plannerTasks.length) { list.innerHTML = '<p>No tasks yet.</p>'; return; }
+        list.innerHTML = plannerTasks.map((t,i) => `
+            <div class="task-item">
+                <input type="checkbox" ${t.done?'checked':''} onchange="toggleTask(${i})">
+                <span style="flex:1; text-decoration:${t.done?'line-through':'none'}">${t.text} ${t.date ? '📅 '+t.date : ''}</span>
+                <button onclick="deleteTask(${i})" style="background:none; border:none; color:red; cursor:pointer;">❌</button>
+            </div>`).join('');
+    }
+
+    function addTask() {
+        const text = $('#taskInput').value.trim();
+        const date = $('#taskDate').value;
+        if (!text) return;
+        plannerTasks.push({ text, date, done: false });
+        saveUserData();
+        renderTasks();
+        $('#taskInput').value = '';
+        $('#taskDate').value = '';
+    }
+    function toggleTask(i) {
+        plannerTasks[i].done = !plannerTasks[i].done;
+        saveUserData();
+        renderTasks();
+    }
+    function deleteTask(i) {
+        plannerTasks.splice(i,1);
+        saveUserData();
+        renderTasks();
+    }
+    if (currentUser) renderTasks();
+
+    // ------------------- QUIZZES -------------------
+    const quizData = {
+        math: [
+            { q: "What is 15 × 4?", options: ["60","45","65","55"], correct: 0 },
+            { q: "Solve for x: 2x + 6 = 14", options: ["x=4","x=5","x=8","x=10"], correct: 0 },
+            { q: "Area of a circle with radius 7? (π≈3.14)", options: ["153.86","150","140","160"], correct: 0 },
+        ],
+        english: [
+            { q: "Which is a synonym of 'happy'?", options: ["Sad","Joyful","Angry","Tired"], correct: 1 },
+            { q: "Identify the verb: 'She runs quickly.'", options: ["She","runs","quickly","."], correct: 1 },
+            { q: "Past tense of 'go'?", options: ["goed","went","gone","going"], correct: 1 },
+        ],
+        science: [
+            { q: "What planet is known as the Red Planet?", options: ["Venus","Mars","Jupiter","Saturn"], correct: 1 },
+            { q: "H2O is the chemical formula for?", options: ["Oxygen","Hydrogen","Water","Salt"], correct: 2 },
+            { q: "What gas do plants absorb?", options: ["Oxygen","Nitrogen","Carbon Dioxide","Helium"], correct: 2 },
+        ],
+        history: [
+            { q: "Who was the founder of the Basotho nation?", options: ["Moshoeshoe I","Letsie I","Lerotholi","Seeiso"], correct: 0 },
+            { q: "In which year did Lesotho gain independence?", options: ["1966","1960","1970","1980"], correct: 0 },
+            { q: "What is the capital of Lesotho?", options: ["Maseru","Mafeteng","Leribe","Qacha's Nek"], correct: 0 },
+        ]
+    };
+    let currentQuiz = [];
+    let quizScore = 0;
+    let quizIndex = 0;
+    function startQuiz() {
+        const subj = $('#quizSubject').value;
+        currentQuiz = [...quizData[subj]].sort(()=>Math.random()-0.5);
+        quizScore = 0;
+        quizIndex = 0;
+        showQuestion();
+    }
+    function showQuestion() {
+        const area = $('#quizArea');
+        if (quizIndex >= currentQuiz.length) {
+            area.innerHTML = `<h3>Quiz finished! Your score: ${quizScore}/${currentQuiz.length}</h3><button class="btn" onclick="startQuiz()">Retry</button>`;
+            return;
+        }
+        const q = currentQuiz[quizIndex];
+        area.innerHTML = `
+            <h4>${q.q}</h4>
+            ${q.options.map((opt,i) => `<div class="quiz-option"><input type="radio" name="quizOpt" value="${i}" id="opt${i}"><label for="opt${i}">${opt}</label></div>`).join('')}
+            <button class="btn" onclick="checkAnswer()">Submit</button>
+            <p id="quizFeedback" style="margin-top:0.5rem;"></p>
+        `;
+    }
+    function checkAnswer() {
+        const selected = document.querySelector('input[name="quizOpt"]:checked');
+        const feedback = $('#quizFeedback');
+        if (!selected) { feedback.innerText = 'Please select an answer.'; return; }
+        const answer = parseInt(selected.value);
+        if (answer === currentQuiz[quizIndex].correct) {
+            quizScore++;
+            feedback.innerText = '✅ Correct!';
+        } else {
+            feedback.innerText = '❌ Wrong! The correct answer was: ' + currentQuiz[quizIndex].options[currentQuiz[quizIndex].correct];
+        }
+        quizIndex++;
+        setTimeout(showQuestion, 1500);
+    }
+
+    // ------------------- AUTH -------------------
+    function renderAuthUI() {
+        const panel = $('#userPanel');
+        if (currentUser) {
+            panel.innerHTML = `
+                <div class="user-info">👤 ${currentUser}</div>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            `;
+        } else {
+            panel.innerHTML = `<button class="btn" onclick="showAuthModal()">Login / Register</button>`;
+        }
+        // reload user-specific data
+        if (currentUser && allUsers[currentUser]) {
+            bookmarks = allUsers[currentUser].bookmarks || [];
+            ratings = allUsers[currentUser].ratings || {};
+            plannerTasks = allUsers[currentUser].tasks || [];
+        } else {
+            bookmarks = [];
+            ratings = {};
+            plannerTasks = [];
+        }
+        renderResources(currentFilter, currentSearch);
+        if (currentUser) renderTasks();
+        else $('#taskList').innerHTML = '<p>Please login to use planner.</p>';
+    }
+
+    let authMode = 'login'; // or 'register'
+    function showAuthModal() {
+        $('#authModal').classList.add('active');
+        updateAuthModal();
+    }
+    function hideAuthModal() {
+        $('#authModal').classList.remove('active');
+    }
+    function toggleAuthMode() {
+        authMode = authMode==='login'?'register':'login';
+        updateAuthModal();
+    }
+    function updateAuthModal() {
+        $('#authTitle').innerText = authMode==='login'?'Login':'Register';
+        $('#authActionBtn').innerText = authMode==='login'?'Login':'Register';
+    }
+    $('#authActionBtn').addEventListener('click', () => {
+        const username = $('#authUsername').value.trim();
+        const password = $('#authPassword').value.trim();
+        if (!username || !password) { alert('Fill all fields'); return; }
+        if (authMode === 'register') {
+            if (allUsers[username]) { alert('User exists'); return; }
+            allUsers[username] = { password, bookmarks:[], ratings:{}, tasks:[] };
+            localStorage.setItem('hub_users', JSON.stringify(allUsers));
+            alert('Registered! Please login.');
+            authMode = 'login';
+            updateAuthModal();
+        } else {
+            const user = allUsers[username];
+            if (!user || user.password !== password) { alert('Invalid credentials'); return; }
+            currentUser = username;
+            localStorage.setItem('hub_user', currentUser);
+            hideAuthModal();
+            renderAuthUI();
+        }
+    });
+    function logout() {
+        currentUser = null;
+        localStorage.removeItem('hub_user');
+        renderAuthUI();
+    }
+    window.onclick = e => { if (e.target === $('#authModal')) hideAuthModal(); };
+
+    // ------------------- NAVIGATION -------------------
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+            const page = link.dataset.page;
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            $('#page-'+page).classList.add('active');
+        });
+    });
+
+    // ------------------- DARK MODE -------------------
+    const themeToggle = $('#themeToggle');
+    function updateThemeUI() {
+        if (document.body.classList.contains('dark')) {
+            themeToggle.innerText = '☀️ Light';
+        } else {
+            themeToggle.innerText = '🌙 Dark';
+        }
+    }
+    if (localStorage.getItem('hub_theme')==='dark') {
+        document.body.classList.add('dark');
+    }
+    updateThemeUI();
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark');
+        localStorage.setItem('hub_theme', document.body.classList.contains('dark')?'dark':'light');
+        updateThemeUI();
+    });
+
+    // ------------------- LOAD LOCAL FILES (optional) -------------------
+    fetch('file_list.json')
+        .then(res => res.json())
+        .then(files => {
+            files.forEach(f => {
+                resources.push({
+                    title: f.title,
+                    subject: f.subject,
+                    description: f.description || 'Uploaded file',
+                    url: f.url,
+                    external: false
+                });
+            });
+            renderResources();
+        })
+        .catch(() => {/* no local files */});
+
+    // ------------------- INIT -------------------
+    renderAuthUI();
+    renderResources();
+</script>
+</body>
+</html>
