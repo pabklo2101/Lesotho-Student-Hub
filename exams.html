@@ -3,153 +3,522 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LGCSE/COSC Exam Simulator | Lesotho Student Hub</title>
+    <title>LGCSE / COSC Tough Exam | Lesotho Student Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: system-ui, sans-serif; background: #f8fafc; color: #0f172a; margin: 0; padding: 1rem; display: flex; justify-content: center; }
-        .container { max-width: 700px; width: 100%; background: white; border-radius: 18px; padding: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.07); }
-        h2, h3 { color: #1e40af; }
-        .btn { background: #1e40af; color: white; border: none; padding: 0.8rem 1.6rem; border-radius: 50px; font-weight: 600; cursor: pointer; }
-        .option-btn { display: block; width: 100%; text-align: left; padding: 0.9rem; margin: 0.5rem 0; border-radius: 12px; border: 1px solid #e2e8f0; background: #f1f5f9; cursor: pointer; }
-        .option-btn:hover { background: #1e40af; color: white; }
-        .correct { background: #10b981!important; color: white; }
-        .wrong { background: #ef4444!important; color: white; }
-        .progress { height: 8px; background: #e2e8f0; border-radius: 10px; margin: 1rem 0; }
-        .progress-fill { height: 100%; border-radius: 10px; background: linear-gradient(90deg, #1e40af, #0ea5e9); }
-        .timer { font-size: 1.2rem; font-weight: 700; }
+        :root {
+            --bg: #0a0c14;
+            --surface: rgba(22,26,40,0.85);
+            --border: rgba(255,255,255,0.08);
+            --text: #e8edf5;
+            --text-secondary: #8892b0;
+            --primary: #7c3aed;
+            --accent: #06b6d4;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --radius: 18px;
+            --radius-sm: 12px;
+            --shadow: 0 15px 35px rgba(0,0,0,0.5);
+            --transition: 0.2s ease;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 1rem;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+            margin: 1rem auto;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .timer-box {
+            background: var(--surface);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            padding: 0.7rem 1.8rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            box-shadow: var(--shadow);
+        }
+        .exam-panel {
+            background: var(--surface);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--border);
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+        }
+        .progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: width 0.3s;
+        }
+        .question-text {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        .option-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 1rem 1.4rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.03);
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text);
+            transition: all var(--transition);
+        }
+        .option-btn:hover:not(:disabled) {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        .option-btn.correct {
+            background: var(--success);
+            color: white;
+            border-color: var(--success);
+        }
+        .option-btn.wrong {
+            background: var(--danger);
+            color: white;
+            border-color: var(--danger);
+        }
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        .feedback {
+            margin-top: 1rem;
+            font-weight: 600;
+            min-height: 1.5rem;
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+        }
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.6rem;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(124,58,237,0.3);
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(124,58,237,0.5); }
+        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); box-shadow: none; }
+        .question-palette {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 1rem;
+        }
+        .palette-dot {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: transparent;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        .palette-dot.answered { background: var(--primary); color: white; border-color: var(--primary); }
+        .palette-dot.current { border-color: var(--accent); box-shadow: 0 0 10px var(--accent); }
+        .setup-card {
+            background: var(--surface);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            max-width: 500px;
+            margin: 2rem auto;
+        }
+        select, input {
+            padding: 0.7rem 1rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.05);
+            color: var(--text);
+            font-weight: 500;
+            width: 100%;
+            margin: 0.5rem 0;
+        }
+        .result {
+            text-align: center;
+        }
+        .result h2 { color: var(--primary); }
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 8px solid var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 1rem auto;
+            color: var(--text);
+        }
+        @media (max-width: 600px) {
+            .header { flex-direction: column; align-items: flex-start; }
+        }
     </style>
 </head>
 <body>
-<div class="container">
-    <h2>📝 LGCSE / COSC Exam Practice</h2>
-    <div style="background:#eef2ff; padding:1rem; border-radius:12px; margin-bottom:1.5rem;">
-        <h3>🌟 Daily Challenge</h3>
-        <p id="dailyQ"></p>
-        <div id="dailyOpts"></div>
-        <p id="dailyFeedback" style="font-weight:600;"></p>
-    </div>
-    <div id="setup">
-        <label>Subject:</label>
-        <select id="subjectSelect"></select>
-        <label style="margin-left:1rem;">Duration (min):</label>
-        <input type="number" id="timeInput" value="10" min="1" max="60" style="width:80px;">
-        <button class="btn" id="startExamBtn" style="margin-left:1rem;">Start Exam</button>
-    </div>
-    <div id="examArea" style="display:none;">
-        <div style="display:flex; justify-content:space-between;">
-            <span id="qCounter"></span>
-            <span class="timer" id="timerDisplay">⏱ 10:00</span>
+    <div class="container">
+        <!-- SETUP PHASE -->
+        <div id="setupScreen">
+            <div class="setup-card">
+                <h2>📝 Tough LGCSE / COSC Exam</h2>
+                <p>Challenge yourself with hard questions under time pressure.</p>
+                <label>Subject:</label>
+                <select id="examSubject">
+                    <option value="math">Mathematics</option>
+                    <option value="english">English</option>
+                    <option value="science">Science</option>
+                    <option value="history">History</option>
+                    <option value="geography">Geography</option>
+                    <option value="sesotho">Sesotho</option>
+                    <option value="business">Business</option>
+                    <option value="tech">Tech/ICT</option>
+                </select>
+                <label>Duration (minutes):</label>
+                <input type="number" id="examDuration" value="30" min="10" max="120" step="5">
+                <label>Questions:</label>
+                <input type="number" id="questionCount" value="20" min="10" max="50">
+                <button class="btn" onclick="startExam()" style="margin-top:1rem; width:100%; justify-content:center;">
+                    <i class="fas fa-play"></i> Begin Exam
+                </button>
+            </div>
         </div>
-        <div class="progress"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
-        <h3 id="questionText"></h3>
-        <div id="optionsContainer"></div>
-        <p id="examFeedback" style="font-weight:600;"></p>
-        <button class="btn" id="nextBtn" style="display:none;" onclick="nextQuestion()">Next →</button>
-    </div>
-    <div id="resultArea" style="display:none;">
-        <h2>🏁 Exam Finished!</h2>
-        <p id="scoreText"></p>
-        <button class="btn" onclick="location.reload()">Try Again</button>
-    </div>
-</div>
-<script src="lgcse_questions.js"></script>
-<script>
-    const subjectSelect = document.getElementById('subjectSelect');
-    for (const subj in LGCSE_BANK) {
-        const opt = document.createElement('option');
-        opt.value = subj;
-        opt.textContent = subj.charAt(0).toUpperCase() + subj.slice(1);
-        subjectSelect.appendChild(opt);
-    }
 
-    // daily challenge
-    const subjects = Object.keys(LGCSE_BANK);
-    const todayStr = new Date().toISOString().slice(0,10);
-    let hash = 0;
-    for (let i=0; i<todayStr.length; i++) hash = ((hash<<5)-hash) + todayStr.charCodeAt(i);
-    hash = Math.abs(hash);
-    const dailySubj = subjects[hash % subjects.length];
-    const dailyQArr = LGCSE_BANK[dailySubj];
-    const dailyQ = dailyQArr[hash % dailyQArr.length];
-    document.getElementById('dailyQ').innerHTML = `<strong>${dailySubj.toUpperCase()}:</strong> ${dailyQ.q}`;
-    const dailyOptsDiv = document.getElementById('dailyOpts');
-    dailyOptsDiv.innerHTML = dailyQ.opts.map((opt, i) => `<button class="option-btn" onclick="submitDaily(${i}, this)">${opt}</button>`).join('');
-    let dailyDone = false;
-    function submitDaily(chosen, btn) {
-        if (dailyDone) return;
-        dailyDone = true;
-        const correct = dailyQ.ans;
-        document.querySelectorAll('#dailyOpts .option-btn').forEach((b, i) => {
-            b.disabled = true;
-            if (i === correct) b.classList.add('correct');
-            else if (i === chosen) b.classList.add('wrong');
-        });
-        document.getElementById('dailyFeedback').innerText = chosen === correct ? '✅ Correct!' : `❌ Correct answer: ${dailyQ.opts[correct]}`;
-    }
+        <!-- EXAM SCREEN (hidden initially) -->
+        <div id="examScreen" style="display:none;">
+            <div class="header">
+                <h1 id="examSubjectTitle">Mathematics</h1>
+                <div class="timer-box" id="timerDisplay">30:00</div>
+            </div>
+            <div class="exam-panel">
+                <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                <div class="question-text" id="questionText"></div>
+                <div class="options" id="optionsContainer"></div>
+                <div class="feedback" id="feedback"></div>
+                <div class="nav-buttons">
+                    <button class="btn btn-outline" id="prevBtn" onclick="prevQuestion()"><i class="fas fa-arrow-left"></i> Previous</button>
+                    <span id="questionCounter"></span>
+                    <button class="btn" id="nextBtn" onclick="nextQuestion()">Next <i class="fas fa-arrow-right"></i></button>
+                </div>
+                <button class="btn" id="submitExamBtn" style="display:none; margin-top:1rem; width:100%; justify-content:center;" onclick="submitExam()">
+                    <i class="fas fa-check-circle"></i> Submit Exam
+                </button>
+            </div>
+            <div class="question-palette" id="palette"></div>
+        </div>
 
-    // full exam
-    let questions, index, score, timerId, timeLeft, answered;
-    document.getElementById('startExamBtn').onclick = () => {
-        const subj = subjectSelect.value;
-        const mins = parseInt(document.getElementById('timeInput').value) || 10;
-        if (!LGCSE_BANK[subj]) return;
-        questions = [...LGCSE_BANK[subj]].sort(() => Math.random() - 0.5);
-        index = 0;
-        score = 0;
-        timeLeft = mins * 60;
-        answered = false;
-        document.getElementById('setup').style.display = 'none';
-        document.getElementById('examArea').style.display = 'block';
-        document.getElementById('resultArea').style.display = 'none';
-        document.querySelector('[style*="background:#eef2ff"]').style.display = 'none';
-        document.getElementById('timerDisplay').innerText = `⏱ ${mins}:00`;
-        timerId = setInterval(() => {
-            timeLeft--;
-            const m = Math.floor(timeLeft/60), s = timeLeft%60;
-            document.getElementById('timerDisplay').innerText = `⏱ ${m}:${s.toString().padStart(2,'0')}`;
-            if (timeLeft <= 0) { clearInterval(timerId); finishExam(); }
-        }, 1000);
-        showQuestion();
-    };
-    function showQuestion() {
-        if (index >= questions.length) { clearInterval(timerId); finishExam(); return; }
-        answered = false;
-        const q = questions[index];
-        document.getElementById('qCounter').innerText = `Question ${index+1} of ${questions.length}`;
-        document.getElementById('questionText').innerText = q.q;
-        document.getElementById('progressFill').style.width = (index/questions.length*100)+'%';
-        document.getElementById('examFeedback').innerText = '';
-        document.getElementById('nextBtn').style.display = 'none';
-        const optsDiv = document.getElementById('optionsContainer');
-        optsDiv.innerHTML = '';
-        q.opts.forEach((opt, i) => {
-            const btn = document.createElement('button');
-            btn.className = 'option-btn';
-            btn.innerText = opt;
-            btn.onclick = () => selectAnswer(i);
-            optsDiv.appendChild(btn);
-        });
-    }
-    function selectAnswer(chosen) {
-        if (answered) return;
-        answered = true;
-        const correct = questions[index].ans;
-        document.querySelectorAll('#optionsContainer .option-btn').forEach((b, i) => {
-            b.disabled = true;
-            if (i === correct) b.classList.add('correct');
-            else if (i === chosen) b.classList.add('wrong');
-        });
-        if (chosen === correct) { score++; document.getElementById('examFeedback').innerText = '✅ Correct!'; }
-        else { document.getElementById('examFeedback').innerText = `❌ Correct answer: ${questions[index].opts[correct]}`; }
-        document.getElementById('nextBtn').style.display = 'inline-block';
-    }
-    function nextQuestion() { index++; showQuestion(); }
-    function finishExam() {
-        clearInterval(timerId);
-        document.getElementById('examArea').style.display = 'none';
-        document.getElementById('resultArea').style.display = 'block';
-        const pct = Math.round((score/questions.length)*100);
-        document.getElementById('scoreText').innerHTML = `You scored <strong>${score}/${questions.length}</strong> (${pct}%).`;
-    }
-</script>
+        <!-- RESULT SCREEN -->
+        <div id="resultScreen" style="display:none;">
+            <div class="result">
+                <h2>🏁 Exam Finished!</h2>
+                <div class="score-circle" id="scorePercent">0%</div>
+                <p id="scoreText"></p>
+                <button class="btn" onclick="location.reload()"><i class="fas fa-redo"></i> Try Again</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load the question bank -->
+    <script src="lgcse_questions.js"></script>
+    <script>
+        // ==================== GLOBALS ====================
+        let examQuestions = [];
+        let currentIndex = 0;
+        let userAnswers = [];          // stores chosen option index for each question (-1 if unanswered)
+        let timerInterval = null;
+        let timeLeft = 0;
+        let examSubmitted = false;
+
+        // Strict mode: no going back after answering? We'll allow going back but penalty for changing? Harder: cannot go back to previous questions once answered. We'll implement that.
+        const strictMode = true;       // true = cannot go back
+
+        // ==================== START EXAM ====================
+        window.startExam = () => {
+            const subj = document.getElementById('examSubject').value;
+            const duration = parseInt(document.getElementById('examDuration').value) || 30;
+            const count = parseInt(document.getElementById('questionCount').value) || 20;
+
+            // Build question pool – PREFER HARD, then medium, then easy
+            let pool = [];
+            ['hard','medium','easy'].forEach(diff => {
+                if (QUESTION_BANK[subj] && QUESTION_BANK[subj][diff]) {
+                    pool = pool.concat(QUESTION_BANK[subj][diff]);
+                }
+            });
+            if (pool.length === 0) {
+                alert('No questions for this subject. Choose another.');
+                return;
+            }
+            // Shuffle and take the requested count
+            pool = shuffleArray(pool).slice(0, count);
+            examQuestions = pool;
+            userAnswers = new Array(examQuestions.length).fill(-1);
+            currentIndex = 0;
+            timeLeft = duration * 60;
+            examSubmitted = false;
+
+            document.getElementById('setupScreen').style.display = 'none';
+            document.getElementById('examScreen').style.display = 'block';
+            document.getElementById('resultScreen').style.display = 'none';
+            document.getElementById('examSubjectTitle').textContent = 
+                document.getElementById('examSubject').options[document.getElementById('examSubject').selectedIndex].text;
+
+            renderQuestion();
+            startTimer();
+            renderPalette();
+        };
+
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        // ==================== TIMER ====================
+        function startTimer() {
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    submitExam();
+                }
+            }, 1000);
+        }
+        function updateTimerDisplay() {
+            const m = Math.floor(timeLeft / 60);
+            const s = timeLeft % 60;
+            document.getElementById('timerDisplay').textContent = 
+                `${m}:${s.toString().padStart(2, '0')}`;
+        }
+
+        // ==================== QUESTION RENDERING ====================
+        function renderQuestion() {
+            if (examQuestions.length === 0) return;
+            const q = examQuestions[currentIndex];
+            document.getElementById('questionText').textContent = q.q;
+            
+            // Shuffle options for this question (keep consistent for the session)
+            const shuffled = shuffleArray(q.opts.map((text, idx) => ({ text, originalIndex: idx })));
+            // Store shuffled order in question object for this session
+            q.shuffledOptions = shuffled;
+            q.correctShuffledIndex = shuffled.findIndex(opt => opt.originalIndex === q.ans);
+
+            const optsDiv = document.getElementById('optionsContainer');
+            optsDiv.innerHTML = '';
+            shuffled.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = opt.text;
+                btn.onclick = () => selectOption(i);
+                // If already answered, show selection
+                if (userAnswers[currentIndex] === i) {
+                    btn.classList.add(userAnswers[currentIndex] === q.correctShuffledIndex ? 'correct' : 'wrong');
+                    btn.disabled = true;
+                }
+                // If strict mode and current question is answered, disable all
+                if (strictMode && userAnswers[currentIndex] !== -1) {
+                    btn.disabled = true;
+                }
+                optsDiv.appendChild(btn);
+            });
+
+            // Update progress bar
+            const progress = ((currentIndex) / examQuestions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('questionCounter').textContent = 
+                `${currentIndex + 1} of ${examQuestions.length}`;
+
+            // Show/Hide navigation buttons
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitExamBtn');
+            
+            if (strictMode) {
+                prevBtn.style.display = 'none';   // No going back
+            } else {
+                prevBtn.style.display = (currentIndex === 0) ? 'none' : 'inline-flex';
+            }
+            
+            if (currentIndex === examQuestions.length - 1) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'flex';
+            } else {
+                nextBtn.style.display = 'inline-flex';
+                submitBtn.style.display = 'none';
+            }
+
+            // Clear feedback if unanswered
+            if (userAnswers[currentIndex] === -1) {
+                document.getElementById('feedback').textContent = '';
+            }
+
+            renderPalette();
+        }
+
+        // ==================== ANSWER HANDLING ====================
+        function selectOption(chosenIdx) {
+            if (examSubmitted) return;
+            if (userAnswers[currentIndex] !== -1 && strictMode) return; // already answered in strict mode
+            
+            const q = examQuestions[currentIndex];
+            const correctIdx = q.correctShuffledIndex;
+            userAnswers[currentIndex] = chosenIdx;
+
+            // Update UI
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach((btn, i) => {
+                btn.disabled = true;
+                if (i === correctIdx) btn.classList.add('correct');
+                else if (i === chosenIdx) btn.classList.add('wrong');
+            });
+
+            const explanation = q.exp || '';
+            if (chosenIdx === correctIdx) {
+                document.getElementById('feedback').innerHTML = 
+                    `<span style="color:#10b981;">✅ Correct! ${explanation}</span>`;
+            } else {
+                document.getElementById('feedback').innerHTML = 
+                    `<span style="color:#ef4444;">❌ Wrong. ${explanation}</span>`;
+            }
+
+            // In strict mode, auto-advance after 1.5 seconds
+            if (strictMode && currentIndex < examQuestions.length - 1) {
+                setTimeout(() => {
+                    currentIndex++;
+                    renderQuestion();
+                }, 1500);
+            } else if (!strictMode) {
+                // Enable next/prev after answering
+                renderQuestion();
+            }
+        }
+
+        // ==================== NAVIGATION ====================
+        window.prevQuestion = () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                renderQuestion();
+            }
+        };
+
+        window.nextQuestion = () => {
+            if (currentIndex < examQuestions.length - 1) {
+                currentIndex++;
+                renderQuestion();
+            }
+        };
+
+        // ==================== PALETTE ====================
+        function renderPalette() {
+            const palette = document.getElementById('palette');
+            palette.innerHTML = '';
+            examQuestions.forEach((_, i) => {
+                const dot = document.createElement('span');
+                dot.className = 'palette-dot';
+                if (userAnswers[i] !== -1) dot.classList.add('answered');
+                if (i === currentIndex) dot.classList.add('current');
+                dot.textContent = i + 1;
+                dot.onclick = () => {
+                    if (strictMode && userAnswers[i] !== -1) {
+                        alert('You cannot go back to a answered question in strict mode.');
+                        return;
+                    }
+                    currentIndex = i;
+                    renderQuestion();
+                };
+                palette.appendChild(dot);
+            });
+        }
+
+        // ==================== SUBMIT EXAM ====================
+        window.submitExam = () => {
+            if (examSubmitted) return;
+            examSubmitted = true;
+            clearInterval(timerInterval);
+
+            let correct = 0;
+            examQuestions.forEach((q, i) => {
+                if (userAnswers[i] === q.correctShuffledIndex) correct++;
+            });
+            const total = examQuestions.length;
+            const percent = Math.round((correct / total) * 100);
+
+            document.getElementById('examScreen').style.display = 'none';
+            document.getElementById('resultScreen').style.display = 'block';
+            document.getElementById('scorePercent').textContent = percent + '%';
+            document.getElementById('scoreText').innerHTML = 
+                `You scored <strong>${correct}</strong> out of <strong>${total}</strong> (${percent}%).<br>
+                ${percent >= 70 ? '🎉 Great job!' : percent >= 50 ? '👍 Keep practicing!' : '📚 Study more and try again.'}`;
+        };
+    </script>
 </body>
-          </html>
+    </html> 
