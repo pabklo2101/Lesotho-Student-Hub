@@ -3,118 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Lesotho Student Hub | The Ultimate All‑in‑One Study Platform</title>
+    <title>Lesotho Student Hub | Beautiful All‑in‑One Study Platform</title>
     <meta name="description" content="Free study resources, LGCSE exam simulator, quizzes, planner, tools, and community for Basotho students.">
-    <meta name="theme-color" content="#7c3aed">
+    <meta name="theme-color" content="#4F46E5">
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script type="importmap">
         { "imports": { "three": "https://unpkg.com/three@0.126.0/build/three.module.js" } }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- External question bank -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- External question bank and service worker -->
     <script src="lgcse_questions.js"></script>
     <style>
         /* ============================================================
-           MASSIVE GLOBAL STYLES – MODERN, ANIMATED, RESPONSIVE
+           VIBRANT, RESPONSIVE, MODERN DESIGN – NO COMPROMISES
            ============================================================ */
         :root {
-            --bg: #0a0c14; --surface: rgba(22,26,40,0.8); --surface-solid: #131824;
-            --border: rgba(255,255,255,0.08); --text: #e8edf5; --text-secondary: #8892b0;
-            --primary: #7c3aed; --accent: #06b6d4; --success: #10b981; --warning: #f59e0b; --danger: #ef4444;
-            --radius: 18px; --radius-sm: 12px; --shadow-card: 0 15px 35px rgba(0,0,0,0.5);
-            --transition: 0.25s ease; --font: 'Plus Jakarta Sans', sans-serif;
-            --glass-bg: rgba(22,26,40,0.8); --glass-border: rgba(255,255,255,0.08);
-            --glass-shadow: 0 15px 35px rgba(0,0,0,0.5);
-            --orb-color1: var(--primary); --orb-color2: var(--accent); --orb-color3: #d946ef;
-            --toast-bg: #1e293b; --chart-grid: rgba(255,255,255,0.1);
+            --bg: #F8FAFC;
+            --surface: #FFFFFF;
+            --text: #1E293B;
+            --text-secondary: #64748B;
+            --primary: #4F46E5;
+            --accent: #06B6D4;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --border: #E2E8F0;
+            --radius: 20px;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+            --shadow: 0 8px 30px rgba(0,0,0,0.06);
+            --transition: 0.2s ease;
+            --font: 'Inter', sans-serif;
         }
-        body.light {
-            --bg: #f1f5f9; --surface: rgba(255,255,255,0.85); --surface-solid: #ffffff;
-            --border: rgba(0,0,0,0.1); --text: #1e293b; --text-secondary: #475569;
-            --primary: #6d28d9; --accent: #0891b2; --orb-color1: #6d28d9; --orb-color2: #0891b2; --orb-color3: #d946ef;
-            --toast-bg: #ffffff; --chart-grid: rgba(0,0,0,0.1);
+        body.dark {
+            --bg: #0F172A;
+            --surface: #1E293B;
+            --text: #F1F5F9;
+            --text-secondary: #94A3B8;
+            --border: #334155;
         }
-        /* 18 vibrant themes */
-        body.theme-nature { --primary: #10b981; --accent: #34d399; --orb-color1: #10b981; --orb-color2: #34d399; --orb-color3: #6ee7b7; }
-        body.theme-ocean { --primary: #0ea5e9; --accent: #38bdf8; --orb-color1: #0ea5e9; --orb-color2: #38bdf8; --orb-color3: #7dd3fc; }
-        body.theme-space { --primary: #a78bfa; --accent: #c4b5fd; --orb-color1: #a78bfa; --orb-color2: #c4b5fd; --orb-color3: #e9d5ff; }
-        body.theme-sunset { --primary: #f97316; --accent: #fb923c; --orb-color1: #f97316; --orb-color2: #fb923c; --orb-color3: #fdba74; }
-        body.theme-berry { --primary: #ec4899; --accent: #f472b6; --orb-color1: #ec4899; --orb-color2: #f472b6; --orb-color3: #f9a8d4; }
-        body.theme-mono { --primary: #6b7280; --accent: #9ca3af; --orb-color1: #6b7280; --orb-color2: #9ca3af; --orb-color3: #d1d5db; }
-        body.theme-gold { --primary: #d97706; --accent: #f59e0b; --orb-color1: #d97706; --orb-color2: #f59e0b; --orb-color3: #fbbf24; }
-        body.theme-forest { --primary: #059669; --accent: #10b981; --orb-color1: #059669; --orb-color2: #10b981; --orb-color3: #34d399; }
-        body.theme-lavender { --primary: #8b5cf6; --accent: #a78bfa; --orb-color1: #8b5cf6; --orb-color2: #a78bfa; --orb-color3: #c4b5fd; }
-        body.theme-cherry { --primary: #dc2626; --accent: #ef4444; --orb-color1: #dc2626; --orb-color2: #ef4444; --orb-color3: #f87171; }
-        body.theme-teal { --primary: #0d9488; --accent: #14b8a6; --orb-color1: #0d9488; --orb-color2: #14b8a6; --orb-color3: #5eead4; }
-        body.theme-retro { --primary: #e07c24; --accent: #f5a623; --orb-color1: #e07c24; --orb-color2: #f5a623; --orb-color3: #f7d794; }
-        body.theme-cyberpunk { --primary: #f72585; --accent: #7209b7; --orb-color1: #f72585; --orb-color2: #7209b7; --orb-color3: #4361ee; }
-        body.theme-pastel { --primary: #b565a7; --accent: #d19bcd; --orb-color1: #b565a7; --orb-color2: #d19bcd; --orb-color3: #e6c9e3; }
-        body.theme-neon { --primary: #00ff00; --accent: #00ffff; --orb-color1: #00ff00; --orb-color2: #00ffff; --orb-color3: #ff00ff; }
-
         * { margin:0; padding:0; box-sizing:border-box; }
         body {
             font-family: var(--font);
             background: var(--bg);
             color: var(--text);
             min-height: 100vh;
-            transition: background 0.4s, color 0.4s;
-            overflow-x: hidden;
+            line-height: 1.5;
             display: flex;
+            transition: background 0.3s;
         }
-        ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb, #4b5563); border-radius: 4px; }
+        ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
 
-        /* Animated orbs */
-        .bg-orbs {
-            position: fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; overflow:hidden;
-        }
-        .orb {
-            position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.15;
-            animation: orbFloat 20s infinite alternate ease-in-out;
-        }
-        .orb:nth-child(1) { background: var(--orb-color1); width: 40vw; height: 40vw; top: -10vw; left: -10vw; }
-        .orb:nth-child(2) { background: var(--orb-color2); width: 35vw; height: 35vw; bottom: -10vw; right: -10vw; animation-delay: -7s; }
-        .orb:nth-child(3) { background: var(--orb-color3); width: 30vw; height: 30vw; top: 50%; left: 50%; animation-delay: -15s; }
-        @keyframes orbFloat {
-            0% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(5vw, -5vw) scale(1.15); }
-            66% { transform: translate(-3vw, 3vw) scale(0.9); }
-            100% { transform: translate(2vw, 2vw) scale(1.05); }
-        }
-
-        /* Particle canvas */
-        #particleCanvas {
-            position: fixed; top:0; left:0; width:100%; height:100%; z-index:1; pointer-events:none;
-        }
-
-        /* Main layout */
-        .app-container {
-            position: relative; z-index:2; display: flex; min-height: 100vh; width: 100%;
-        }
         .sidebar {
-            width: 320px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(35px);
-            -webkit-backdrop-filter: blur(35px);
-            border-right: 1px solid var(--glass-border);
-            padding: 2rem 1.5rem;
+            width: 280px;
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            padding: 1.5rem 1rem;
             display: flex;
             flex-direction: column;
-            gap: 1.6rem;
+            gap: 1.2rem;
             position: sticky;
             top: 0;
             height: 100vh;
             overflow-y: auto;
             z-index: 10;
-            transition: background 0.3s;
+            box-shadow: var(--shadow-sm);
         }
         .logo {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: 800;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--primary);
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -123,10 +82,10 @@
             display: flex;
             align-items: center;
             gap: 0.8rem;
-            padding: 0.9rem 1.2rem;
-            border-radius: 14px;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
             font-weight: 600;
-            color: var(--text);
+            color: var(--text-secondary);
             text-decoration: none;
             border: none;
             background: transparent;
@@ -135,671 +94,504 @@
             text-align: left;
             transition: all var(--transition);
         }
-        .nav-item i { font-size: 1.2rem; width: 24px; text-align: center; }
+        .nav-item i { font-size: 1.1rem; width: 22px; text-align: center; }
         .nav-item:hover, .nav-item.active {
             background: var(--primary);
             color: white;
-            box-shadow: 0 8px 25px rgba(124,58,237,0.4);
         }
-        .nav-item.active::after {
-            content: '';
-            position: absolute;
-            right: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 6px;
-            height: 6px;
-            background: white;
-            border-radius: 50%;
-            box-shadow: 0 0 12px white;
-        }
+        .nav-item.active { box-shadow: 0 4px 12px rgba(79,70,229,0.3); }
         .sidebar-btn {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 50px;
-            padding: 0.8rem 1.2rem;
-            color: var(--text);
-            cursor: pointer;
-            font-weight: 600;
-            transition: var(--transition);
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
         }
         .sidebar-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
-        .user-panel { border-top: 1px solid var(--glass-border); padding-top: 1rem; }
+        .user-panel { margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border); }
 
+        .main-content { flex: 1; padding: 2rem; overflow-y: auto; background: var(--bg); }
+        .page { display: none; animation: fadeIn 0.25s; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform: translateY(0); } }
+
+        .card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            margin-bottom: 1.2rem;
+            box-shadow: var(--shadow-sm);
+            transition: box-shadow 0.2s;
+        }
+        .card:hover { box-shadow: var(--shadow); }
+        .badge {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
         .btn {
             background: var(--primary);
             color: white;
             border: none;
-            padding: 0.7rem 1.6rem;
-            border-radius: 50px;
-            font-weight: 700;
+            padding: 0.65rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
             transition: var(--transition);
-            box-shadow: 0 4px 15px rgba(124,58,237,0.3);
-            text-decoration: none;
+            font-size: 0.95rem;
         }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(124,58,237,0.5); }
-        .btn-outline { background: transparent; border: 1px solid var(--glass-border); color: var(--text); box-shadow: none; }
-        .main-content { flex: 1; padding: 2rem; overflow-y: auto; }
-        .page { display: none; animation: fadeSlide 0.3s; }
-        .page.active { display: block; }
-        @keyframes fadeSlide { from { opacity:0; transform: translateY(10px); } to { opacity:1; transform: translateY(0); } }
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(25px);
-            border-radius: var(--radius);
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--glass-shadow);
-            padding: 1.8rem;
-            margin-bottom: 1.5rem;
+        .btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
         }
-        .resource-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
-        .card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(25px);
-            border-radius: var(--radius);
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--glass-shadow);
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-        .badge {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: white;
-            padding: 0.2rem 1rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            width: fit-content;
-        }
+        .resource-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 1.2rem; }
         .filter-pills { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
         .pill {
-            padding: 0.5rem 1.3rem;
-            border-radius: 50px;
-            border: 1px solid var(--glass-border);
-            background: var(--glass-bg);
+            padding: 0.4rem 1.2rem;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            background: var(--surface);
             cursor: pointer;
-            font-weight: 600;
-            transition: var(--transition);
+            font-weight: 500;
             color: var(--text);
+            transition: var(--transition);
         }
         .pill.active { background: var(--primary); color: white; border-color: var(--primary); }
         .quiz-option {
-            display: block; width: 100%; text-align: left; padding: 0.9rem 1.2rem; margin: 0.4rem 0;
-            border-radius: var(--radius-sm); border: 1px solid var(--glass-border);
-            background: var(--glass-bg); cursor: pointer; transition: var(--transition); color: var(--text);
+            display: block; width: 100%; text-align: left; padding: 0.8rem 1rem; margin: 0.3rem 0;
+            border-radius: 12px; border: 1px solid var(--border); background: var(--surface);
+            cursor: pointer; transition: 0.15s; color: var(--text);
         }
         .quiz-option:hover { background: var(--primary); color: white; }
         .quiz-option.correct { background: var(--success); color: white; }
         .quiz-option.wrong { background: var(--danger); color: white; }
-        .timer-display { font-size: 2.2rem; font-weight: 800; color: var(--primary); }
-        .achievement-badge {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: white; padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.75rem; margin: 0.2rem; display: inline-block;
-        }
-        .toast {
-            position: fixed; bottom: 20px; right: 20px; background: var(--toast-bg); color: var(--text);
-            padding: 1rem 1.5rem; border-radius: var(--radius-sm); box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-            z-index: 1001; animation: slideIn 0.3s, fadeOut 0.3s 2.7s forwards; max-width: 300px;
-        }
-        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        @keyframes fadeOut { to { opacity: 0; } }
-        .xp-bar { width: 100%; height: 10px; background: var(--glass-border); border-radius: 10px; overflow: hidden; }
-        .xp-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); transition: width 0.5s; }
-        .leaderboard-table { width: 100%; border-collapse: collapse; }
-        .leaderboard-table th, .leaderboard-table td { padding: 0.5rem; border-bottom: 1px solid var(--glass-border); text-align: left; }
-        .virtual-pet { text-align: center; font-size: 3rem; transition: transform 0.3s; cursor: pointer; }
-        .virtual-pet:hover { transform: scale(1.15); }
-        .countdown-number { font-size: 2rem; font-weight: 800; color: var(--primary); }
-        .chart-container { width: 100%; max-width: 600px; margin: 1rem auto; }
-        .overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7); z-index: 1000; display: flex; justify-content: center; align-items: center;
-        }
-        .overlay-content {
-            background: var(--surface-solid); padding: 2rem; border-radius: var(--radius);
-            max-width: 500px; width: 90%; box-shadow: 0 25px 40px rgba(0,0,0,0.5); text-align: center;
-        }
-        .focus-mode .sidebar, .focus-mode .main-content > .page > *:not(.focus-container) { display: none!important; }
-        .focus-container { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
-        .focus-container .timer-display { font-size: 5rem; }
 
-        /* Responsive */
+        .xp-bar { width:100%; height:10px; background:var(--border); border-radius:10px; overflow:hidden; margin:0.5rem 0; }
+        .xp-fill { height:100%; background:linear-gradient(90deg, var(--primary), var(--accent)); transition: width 0.5s; }
+        .leaderboard-table { width:100%; border-collapse:collapse; }
+        .leaderboard-table th, .leaderboard-table td { padding:0.5rem; border-bottom:1px solid var(--border); text-align:left; }
+        .virtual-pet { text-align:center; font-size:3rem; transition:transform 0.3s; cursor:pointer; }
+        .virtual-pet:hover { transform:scale(1.15); }
+        .countdown-number { font-size:2rem; font-weight:800; color:var(--primary); }
+        .timer-display { font-size:2.2rem; font-weight:800; color:var(--primary); }
+
         @media (max-width: 768px) {
-            .app-container { flex-direction: column; }
+            body { flex-direction: column; }
             .sidebar {
                 width: 100%; height: auto; position: relative; flex-direction: row; flex-wrap: wrap;
-                padding: 1rem; gap: 0.8rem; overflow-y: visible;
+                padding: 1rem; gap: 0.6rem; overflow-y: visible; box-shadow: none;
             }
             .sidebar .logo { width: 100%; }
-            .nav-item { width: auto; padding: 0.6rem 1rem; font-size: 0.9rem; }
+            .nav-item { width: auto; padding: 0.5rem 0.8rem; font-size: 0.85rem; }
             .main-content { padding: 1rem; }
             .resource-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <!-- Animated Background -->
-    <div class="bg-orbs"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
-    <canvas id="particleCanvas"></canvas>
+<aside class="sidebar">
+    <div class="logo">📚 Lesotho Hub</div>
+    <nav>
+        <button class="nav-item active" data-page="dashboard">🏠 Dashboard</button>
+        <button class="nav-item" data-page="resources">🔗 Resources</button>
+        <button class="nav-item" data-page="planner">📅 Planner</button>
+        <button class="nav-item" data-page="learn">📘 Study Guides</button>
+        <button class="nav-item" data-page="tools">🧰 Tools</button>
+        <button class="nav-item" data-page="quizzes">🧠 Quizzes</button>
+        <a href="exams.html" class="nav-item">📝 LGCSE Exams</a>
+        <button class="nav-item" data-page="achievements">🏆 Achievements</button>
+        <button class="nav-item" data-page="community">💬 Community</button>
+        <button class="nav-item" data-page="world">🌍 World</button>
+        <button class="nav-item" data-page="focus">🧘 Focus Mode</button>
+        <button class="nav-item" data-page="about">ℹ️ About</button>
+    </nav>
+    <button id="themeToggle" class="sidebar-btn">🌓 Toggle Dark/Light</button>
+    <div class="user-panel" id="userPanel">
+        <button class="btn" onclick="showAuthModal()">🔐 Login / Register</button>
+    </div>
+</aside>
 
-    <div class="app-container">
-        <!-- SIDEBAR -->
-        <aside class="sidebar">
-            <div class="logo"><i class="fas fa-graduation-cap"></i> Lesotho Hub</div>
-            <nav>
-                <button class="nav-item active" data-page="dashboard"><i class="fas fa-th-large"></i> Dashboard</button>
-                <button class="nav-item" data-page="resources"><i class="fas fa-link"></i> Resources</button>
-                <button class="nav-item" data-page="planner"><i class="fas fa-calendar-alt"></i> Planner</button>
-                <button class="nav-item" data-page="learn"><i class="fas fa-book-open"></i> Learn</button>
-                <button class="nav-item" data-page="tools"><i class="fas fa-toolbox"></i> Tools</button>
-                <button class="nav-item" data-page="quizzes"><i class="fas fa-brain"></i> Quizzes</button>
-                <a href="exams.html" class="nav-item"><i class="fas fa-file-alt"></i> LGCSE Exams</a>
-                <button class="nav-item" data-page="achievements"><i class="fas fa-trophy"></i> Achievements</button>
-                <button class="nav-item" data-page="community"><i class="fas fa-users"></i> Community</button>
-                <button class="nav-item" data-page="world"><i class="fas fa-globe-africa"></i> World</button>
-                <button class="nav-item" data-page="focus"><i class="fas fa-eye"></i> Focus Mode</button>
-                <button class="nav-item" data-page="about"><i class="fas fa-info-circle"></i> About</button>
-            </nav>
-            <button id="themeSelector" class="sidebar-btn"><i class="fas fa-palette"></i> Theme: Default</button>
-            <button id="notifToggle" class="sidebar-btn"><i class="fas fa-bell"></i> Enable Notifications</button>
-            <button id="exportBtn" class="sidebar-btn"><i class="fas fa-download"></i> Export Profile</button>
-            <button id="importBtn" class="sidebar-btn"><i class="fas fa-upload"></i> Import Profile</button>
-            <div class="user-panel" id="userPanel"></div>
-        </aside>
-
-        <!-- MAIN CONTENT -->
-        <main class="main-content" id="mainContent">
-            <!-- DASHBOARD -->
-            <div class="page active" id="page-dashboard">
-                <h2>👋 Welcome, <span id="userGreeting">Student</span></h2>
-                <div class="glass-card">
-                    <div class="virtual-pet" id="petDisplay">🐣</div>
-                    <p id="petSpeech" style="text-align:center;"></p>
-                    <p>Level <span id="userLevel">1</span> · <span id="userXP">0</span> XP</p>
-                    <div class="xp-bar"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
-                    <p>Streak: <span id="streakCount">0</span> days</p>
-                </div>
-                <div class="glass-card">
-                    <h3><i class="fas fa-clock"></i> LGCSE Exam Countdown</h3>
-                    <div style="display:flex;gap:1rem;justify-content:center;">
-                        <div><span class="countdown-number" id="countdownDays">--</span><br>Days</div>
-                        <div><span class="countdown-number" id="countdownHours">--</span><br>Hours</div>
-                        <div><span class="countdown-number" id="countdownMins">--</span><br>Minutes</div>
-                    </div>
-                    <p style="text-align:center;">Next COSC/LGCSE exams: October 2026</p>
-                </div>
-                <div class="glass-card"><h3>🏆 Leaderboard</h3><div id="leaderboardTable">No entries yet.</div></div>
-                <div class="glass-card"><h3>📊 Your Progress</h3><div class="chart-container"><canvas id="progressChart"></canvas></div></div>
-                <div class="glass-card"><h3>🌟 Daily Challenge</h3><div id="dailyChallengeContainer">Loading...</div></div>
-                <div class="glass-card"><h3>📌 Resource Spotlight</h3><div id="spotlightResource">Loading...</div></div>
-                <div class="glass-card"><h3>🌤 Maseru Weather</h3><div id="weatherInfo">Loading...</div></div>
-            </div>
-
-            <!-- RESOURCES PAGE (long list of curated links) -->
-            <div class="page" id="page-resources">
-                <h2><i class="fas fa-link"></i> Study Resources</h2>
-                <input type="text" id="searchInput" placeholder="Search..." style="width:100%;padding:0.9rem 1.5rem;border-radius:50px;border:1px solid var(--border);background:var(--surface);backdrop-filter:blur(20px);color:var(--text);margin-bottom:1rem;">
-                <div class="filter-pills" id="filterPills"></div>
-                <div class="resource-grid" id="resourcesContainer"></div>
-            </div>
-
-            <!-- PLANNER PAGE -->
-            <div class="page" id="page-planner">
-                <h2><i class="fas fa-calendar-alt"></i> Study Planner</h2>
-                <div class="glass-card">
-                    <h3>Tasks</h3>
-                    <div style="display:flex;gap:1rem;margin:1rem 0;flex-wrap:wrap;">
-                        <input type="text" id="taskInput" placeholder="What do you need to do?" style="flex:2;padding:0.7rem;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,0.05);color:var(--text);">
-                        <input type="date" id="taskDate" style="background:rgba(255,255,255,0.05);color:var(--text);border:1px solid var(--border);border-radius:12px;padding:0.7rem;">
-                        <select id="taskPriority" style="background:rgba(255,255,255,0.05);color:var(--text);border:1px solid var(--border);border-radius:12px;padding:0.7rem;"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">🔥 High</option></select>
-                        <button class="btn" onclick="addTask()"><i class="fas fa-plus"></i> Add</button>
-                    </div>
-                    <div id="taskList"></div>
-                </div>
-                <div class="glass-card">
-                    <h3>Pomodoro Timer</h3>
-                    <div style="text-align:center;"><div class="timer-display" id="pomodoroDisplay">25:00</div>
-                    <div style="display:flex;gap:0.5rem;justify-content:center;margin-top:1rem;"><button class="btn" onclick="startPomodoro(25)">25 min</button><button class="btn" onclick="startPomodoro(15)">15 min</button><button class="btn btn-outline" onclick="resetPomodoro()">Reset</button></div></div>
-                </div>
-            </div>
-
-            <!-- LEARN PAGE (detailed study guides) -->
-            <div class="page" id="page-learn">
-                <h2><i class="fas fa-book-open"></i> Study Hub</h2>
-                <div class="glass-card"><h3>📐 Mathematics Notes</h3><p>Key formulas: Quadratic formula, Pythagoras, area & volume. Detailed study guides coming soon.</p><button class="btn" onclick="showFormulaSheet('math')">View Formula Sheet</button></div>
-                <div class="glass-card"><h3>📚 English Grammar</h3><p>Tenses, parts of speech, common mistakes. Expand for full breakdown.</p><button class="btn" onclick="alert('Grammar guide: Nouns, Verbs, Adjectives...')">Expand</button></div>
-                <div class="glass-card"><h3>⚛️ Science Glossary</h3><p>Physics, Chemistry, Biology key terms.</p><button class="btn" onclick="alert('Photosynthesis: process...')">Expand</button></div>
-                <div class="glass-card"><h3>🧪 Interactive Periodic Table</h3><div id="periodicTableContainer"></div></div>
-                <div class="glass-card"><h3>🏛️ Basotho History Timeline</h3><div id="historyTimeline" style="margin-top:1rem;"></div></div>
-                <div class="glass-card"><h3>📅 Academic Calendar</h3><div id="academicCalendar"></div></div>
-            </div>
-
-            <!-- TOOLS PAGE -->
-            <div class="page" id="page-tools">
-                <h2><i class="fas fa-toolbox"></i> Study Tools</h2>
-                <div class="glass-card">
-                    <h3>🧮 Scientific Calculator</h3>
-                    <div style="display:grid;gap:0.3rem;grid-template-columns:repeat(4,1fr);">
-                        <input type="text" id="calcDisplay" style="grid-column:span 4;padding:0.7rem;border-radius:8px;background:rgba(255,255,255,0.05);color:var(--text);" placeholder="0">
-                        <button class="btn" onclick="calcInput('7')">7</button><button class="btn" onclick="calcInput('8')">8</button><button class="btn" onclick="calcInput('9')">9</button><button class="btn" onclick="calcInput('+')">+</button>
-                        <button class="btn" onclick="calcInput('4')">4</button><button class="btn" onclick="calcInput('5')">5</button><button class="btn" onclick="calcInput('6')">6</button><button class="btn" onclick="calcInput('-')">-</button>
-                        <button class="btn" onclick="calcInput('1')">1</button><button class="btn" onclick="calcInput('2')">2</button><button class="btn" onclick="calcInput('3')">3</button><button class="btn" onclick="calcInput('*')">×</button>
-                        <button class="btn" onclick="calcInput('0')">0</button><button class="btn" onclick="calcInput('.')">.</button><button class="btn" onclick="calcInput('/')">÷</button><button class="btn" onclick="calcEval()">=</button>
-                        <button class="btn" onclick="calcClear()" style="grid-column:span 4;">C</button>
-                    </div>
-                </div>
-                <div class="glass-card"><h3>📐 Unit Converter</h3><input type="number" id="convertInput" placeholder="Value" style="width:100%;padding:0.5rem;"><select id="convertType" style="width:100%;padding:0.5rem;"><option value="m_to_cm">Meters ➔ Centimeters</option><option value="km_to_miles">Kilometers ➔ Miles</option></select><button class="btn" onclick="convertUnit()">Convert</button><p id="convertResult"></p></div>
-                <div class="glass-card"><h3>🃏 Flashcards</h3><div id="flashcardContainer"><div id="flashcardQuestion">What is H2O?</div><button class="btn" onclick="flipFlashcard()">Show Answer</button></div></div>
-                <div class="glass-card"><h3>📤 PDF Viewer</h3><input type="file" id="pdfInput" accept=".pdf"><iframe id="pdfViewer" style="width:100%;height:400px;"></iframe></div>
-            </div>
-
-            <!-- QUIZZES PAGE -->
-            <div class="page" id="page-quizzes">
-                <h2><i class="fas fa-brain"></i> Quizzes</h2>
-                <div class="glass-card">
-                    <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;">
-                        <select id="quizSubjectSelect" style="padding:0.7rem;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,0.05);color:var(--text);">
-                            <option value="math">Mathematics</option><option value="english">English</option><option value="science">Science</option><option value="history">History</option><option value="geography">Geography</option><option value="sesotho">Sesotho</option>
-                        </select>
-                        <select id="quizDifficulty" style="padding:0.7rem;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,0.05);color:var(--text);"><option value="easy">Easy</option><option value="medium" selected>Medium</option><option value="hard">Hard</option></select>
-                        <button class="btn" onclick="startQuiz()">Start Quiz</button>
-                    </div>
-                    <div id="quizContainer"></div>
-                </div>
-            </div>
-
-            <!-- ACHIEVEMENTS PAGE -->
-            <div class="page" id="page-achievements">
-                <h2><i class="fas fa-trophy"></i> Your Achievements</h2>
-                <div class="glass-card" id="achievementsContainer">Complete quizzes and tasks to earn badges.</div>
-            </div>
-
-            <!-- COMMUNITY PAGE -->
-            <div class="page" id="page-community">
-                <h2><i class="fas fa-users"></i> Community</h2>
-                <div class="glass-card"><h3>💬 Study Group Chat</h3><div id="chatMessages" style="height:150px;overflow-y:auto;border:1px solid var(--border);padding:0.5rem;margin-bottom:0.5rem;border-radius:8px;"></div><input type="text" id="chatInput" placeholder="Message..." style="width:100%;padding:0.5rem;border-radius:8px;background:rgba(255,255,255,0.05);color:var(--text);"><button class="btn" onclick="sendChat()" style="margin-top:0.5rem;">Send</button></div>
-                <div class="glass-card"><h3>❓ Question Board</h3><input type="text" id="questionInput" placeholder="Ask anonymously..." style="width:100%;padding:0.5rem;background:rgba(255,255,255,0.05);color:var(--text);"><button class="btn" onclick="postQuestion()" style="margin-top:0.5rem;">Post</button><div id="questionList"></div></div>
-                <div class="glass-card"><h3>🔗 Report Broken Link</h3><input type="text" id="brokenLinkInput" placeholder="Resource title or URL" style="width:100%;padding:0.5rem;background:rgba(255,255,255,0.05);color:var(--text);"><button class="btn" onclick="reportBrokenLink()">Report</button></div>
-            </div>
-
-            <!-- WORLD PAGE -->
-            <div class="page" id="page-world">
-                <h2><i class="fas fa-globe-africa"></i> Our World</h2>
-                <div id="globeContainer" style="width:100%;height:400px;"></div>
-            </div>
-
-            <!-- FOCUS MODE -->
-            <div class="page" id="page-focus">
-                <div class="focus-container glass-card">
-                    <h2>🧘 Focus Mode</h2>
-                    <div class="timer-display" id="focusTimer">00:00</div>
-                    <div style="margin:1rem;"><button class="btn" onclick="startFocusTimer(25)">25 min</button><button class="btn" onclick="startFocusTimer(15)">15 min</button><button class="btn btn-outline" onclick="resetFocusTimer()">Reset</button></div>
-                    <button class="btn" onclick="toggleAmbientSound()" id="ambientBtn"><i class="fas fa-music"></i> Play Ambient</button>
-                    <audio id="ambientAudio" loop src="https://cdn.pixabay.com/audio/2022/03/10/audio_c8ab69fba6.mp3"></audio>
-                    <button class="btn btn-outline" onclick="exitFocusMode()">Exit</button>
-                </div>
-            </div>
-
-            <!-- ABOUT PAGE (with expansion suggestions) -->
-            <div class="page" id="page-about">
-                <h2>ℹ️ About Lesotho Student Hub</h2>
-                <p>🇱🇸 A free, open‑source platform built for Basotho students.</p>
-                <p>To further improve this hub, consider adding these files to your repository:</p>
-                <ul>
-                    <li><strong>sw.js</strong> – Service worker for offline PWA support.</li>
-                    <li><strong>manifest.json</strong> – PWA manifest for installability.</li>
-                    <li><strong>server.py</strong> / <strong>server.js</strong> – A tiny backend to serve files with dynamic features (e.g., using Flask or Express).</li>
-                    <li><strong>file_list.json</strong> – List of your own local study files (PDFs, notes) to appear as downloadable cards.</li>
-                    <li>Free backend hosting: <strong>Vercel</strong>, <strong>Netlify</strong>, <strong>Render</strong>, or <strong>PythonAnywhere</strong> – all offer free tiers.</li>
-                </ul>
-            </div>
-        </main>
+<main class="main-content" id="mainContent">
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dashboard">
+        <h1 style="margin-bottom:1rem;">👋 Welcome, <span id="userGreeting">Student</span></h1>
+        <div class="card">
+            <div class="virtual-pet" id="petDisplay">🐣</div>
+            <p id="petSpeech" style="text-align:center;font-style:italic;"></p>
+            <p>Level <span id="userLevel">1</span> · <span id="userXP">0</span> XP</p>
+            <div class="xp-bar"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
+            <p>Streak: <span id="streakCount">0</span> days</p>
+        </div>
+        <div class="card"><h3>🏆 Leaderboard</h3><div id="leaderboardTable">No entries yet.</div></div>
+        <div class="card"><h3>📊 Your Progress</h3><div class="chart-container"><canvas id="progressChart"></canvas></div></div>
+        <div class="card"><h3>🌟 Daily Challenge</h3><div id="dailyChallengeContainer">Loading...</div></div>
+        <div class="card"><h3>📌 Resource Spotlight</h3><div id="spotlightResource">Loading...</div></div>
+        <div class="card"><h3>🌤 Maseru Weather</h3><div id="weatherInfo">Loading...</div></div>
     </div>
 
-    <!-- Auth Modal -->
-    <div class="overlay" id="authModal" style="display:none;">
-        <div class="overlay-content">
-            <h3 id="authTitle">Login</h3>
-            <input type="text" id="authUsername" placeholder="Username" style="width:100%;padding:0.8rem;margin:0.5rem 0;border-radius:10px;background:rgba(255,255,255,0.05);color:var(--text);">
-            <input type="password" id="authPassword" placeholder="Password" style="width:100%;padding:0.8rem;margin:0.5rem 0;border-radius:10px;background:rgba(255,255,255,0.05);color:var(--text);">
-            <div style="display:flex;gap:1rem;margin-top:1.2rem;justify-content:center;"><button class="btn" id="authActionBtn">Login</button><button class="btn btn-outline" onclick="toggleAuthMode()">Register</button></div>
+    <!-- RESOURCES -->
+    <div class="page" id="page-resources">
+        <h2>🔗 Study Resources</h2>
+        <input type="text" id="searchInput" placeholder="Search resources..." style="width:100%;padding:0.7rem 1rem;border-radius:30px;border:1px solid var(--border);margin-bottom:1rem;">
+        <div class="filter-pills" id="filterPills"></div>
+        <div class="resource-grid" id="resourcesContainer"></div>
+    </div>
+
+    <!-- PLANNER -->
+    <div class="page" id="page-planner">
+        <h2>📅 Study Planner</h2>
+        <div class="card">
+            <input type="text" id="taskInput" placeholder="Add a task..." style="width:100%;padding:0.5rem;margin-bottom:0.5rem;">
+            <input type="date" id="taskDate" style="margin-bottom:0.5rem;">
+            <select id="taskPriority" style="margin-bottom:0.5rem;"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">🔥 High</option></select>
+            <button class="btn" onclick="addTask()">Add Task</button>
+            <ul id="taskList" style="margin-top:1rem;"></ul>
+        </div>
+        <div class="card">
+            <h3>Pomodoro Timer</h3>
+            <div style="text-align:center;"><div class="timer-display" id="pomodoroDisplay">25:00</div>
+            <div style="display:flex;gap:0.5rem;justify-content:center;margin-top:1rem;">
+                <button class="btn" onclick="startPomodoro(25)">25 min</button>
+                <button class="btn" onclick="startPomodoro(15)">15 min</button>
+                <button class="btn btn-outline" onclick="resetPomodoro()">Reset</button>
+            </div></div>
         </div>
     </div>
 
-    <!-- Onboarding -->
-    <div class="overlay" id="onboardingOverlay" style="display:none;"><div class="overlay-content"><h2>Welcome! 🎉</h2><p>Explore the sidebar to get started.</p><button class="btn" onclick="closeOnboarding()">Got it!</button></div></div>
-    <div id="toast"></div>
+    <!-- LEARN -->
+    <div class="page" id="page-learn">
+        <h2>📘 Study Guides</h2>
+        <div class="card"><h3>📐 Mathematics</h3><p>Quadratic formula, Pythagoras, statistics. <button class="btn" onclick="showFormulaSheet('math')">View Sheet</button></p></div>
+        <div class="card"><h3>📚 English</h3><p>Essay writing, grammar, comprehension.</p></div>
+        <div class="card"><h3>⚛️ Science</h3><p>Physics, Chemistry, Biology summaries.</p></div>
+        <div class="card"><h3>🏛 History of Lesotho</h3><div id="historyTimeline"></div></div>
+        <div class="card"><h3>📅 Academic Calendar</h3><div id="academicCalendar"></div></div>
+    </div>
 
-    <script>
-        // ============================================================
-        // ENTIRE APPLICATION LOGIC (fully interactive)
-        // ============================================================
-        document.addEventListener('DOMContentLoaded', () => {
-            // Navigation
-            const navItems = document.querySelectorAll('.nav-item:not([href])');
-            const pages = document.querySelectorAll('.page');
-            function showPage(id) {
-                pages.forEach(p => p.classList.remove('active'));
-                document.getElementById('page-' + id).classList.add('active');
-                navItems.forEach(i => i.classList.remove('active'));
-                document.querySelector(`[data-page="${id}"]`).classList.add('active');
+    <!-- TOOLS -->
+    <div class="page" id="page-tools">
+        <h2>🧰 Tools</h2>
+        <div class="card"><h4>Calculator</h4>
+            <input type="text" id="calcDisplay" readonly style="width:100%;padding:0.5rem;text-align:right;margin-bottom:0.5rem;">
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.3rem;">
+                <button onclick="calcInput('7')">7</button><button onclick="calcInput('8')">8</button><button onclick="calcInput('9')">9</button><button onclick="calcInput('/')">/</button>
+                <button onclick="calcInput('4')">4</button><button onclick="calcInput('5')">5</button><button onclick="calcInput('6')">6</button><button onclick="calcInput('*')">*</button>
+                <button onclick="calcInput('1')">1</button><button onclick="calcInput('2')">2</button><button onclick="calcInput('3')">3</button><button onclick="calcInput('-')">-</button>
+                <button onclick="calcInput('0')">0</button><button onclick="calcInput('.')">.</button><button onclick="calcEval()">=</button><button onclick="calcInput('+')">+</button>
+                <button onclick="calcClear()" style="grid-column:span 4;">C</button>
+            </div>
+        </div>
+        <div class="card"><h4>Unit Converter</h4><input type="number" id="convertInput" placeholder="Value"><select id="convertType"><option value="m_to_cm">Meters → Centimeters</option><option value="km_to_miles">Kilometers → Miles</option></select><button class="btn" onclick="convertUnit()">Convert</button><p id="convertResult"></p></div>
+        <div class="card"><h4>Flashcards</h4><div id="flashcardContainer"><div id="flashcardQuestion">What is H2O?</div><button class="btn" onclick="flipFlashcard()">Show Answer</button></div></div>
+        <div class="card"><h4>PDF Viewer</h4><input type="file" id="pdfInput" accept=".pdf"><iframe id="pdfViewer" style="width:100%;height:400px;"></iframe></div>
+    </div>
+
+    <!-- QUIZZES -->
+    <div class="page" id="page-quizzes">
+        <h2>🧠 Quizzes</h2>
+        <select id="quizSubject"><option value="math">Math</option><option value="english">English</option><option value="science">Science</option><option value="history">History</option></select>
+        <select id="quizDifficulty"><option value="easy">Easy</option><option value="medium" selected>Medium</option><option value="hard">Hard</option></select>
+        <input type="number" id="quizTimePerQ" placeholder="Sec per question" value="0" min="0" style="width:80px;">
+        <button class="btn" onclick="startQuiz()">Start Quiz</button>
+        <div id="quizContainer" style="margin-top:1rem;"></div>
+    </div>
+
+    <!-- ACHIEVEMENTS -->
+    <div class="page" id="page-achievements">
+        <h2>🏆 Your Achievements</h2>
+        <div class="card" id="achievementsContainer">Complete quizzes and tasks to earn badges.</div>
+    </div>
+
+    <!-- COMMUNITY -->
+    <div class="page" id="page-community">
+        <h2>💬 Community</h2>
+        <div class="card"><div id="chatMessages" style="height:150px;overflow-y:auto;border:1px solid var(--border);padding:0.5rem;margin-bottom:0.5rem;"></div>
+        <input type="text" id="chatInput" placeholder="Message..." style="width:100%;padding:0.5rem;">
+        <button class="btn" onclick="sendChat()">Send</button></div>
+        <div class="card"><h3>❓ Q&A Board</h3><input type="text" id="questionInput" placeholder="Ask anonymously..."><button class="btn" onclick="postQuestion()">Post</button><div id="questionList"></div></div>
+        <div class="card"><h3>🔗 Report Broken Link</h3><input type="text" id="brokenLinkInput" placeholder="Resource title or URL"><button class="btn" onclick="reportBrokenLink()">Report</button></div>
+    </div>
+
+    <!-- WORLD -->
+    <div class="page" id="page-world">
+        <h2>🌍 Our World</h2>
+        <div id="globeContainer" style="width:100%;height:400px;"></div>
+    </div>
+
+    <!-- FOCUS MODE -->
+    <div class="page" id="page-focus">
+        <div class="focus-container card" style="text-align:center;">
+            <h2>🧘 Focus Mode</h2>
+            <div class="timer-display" id="focusTimer">00:00</div>
+            <div style="margin:1rem;"><button class="btn" onclick="startFocusTimer(25)">25 min</button><button class="btn" onclick="startFocusTimer(15)">15 min</button><button class="btn btn-outline" onclick="resetFocusTimer()">Reset</button></div>
+            <button class="btn" onclick="toggleAmbientSound()" id="ambientBtn"><i class="fas fa-music"></i> Play Ambient</button>
+            <audio id="ambientAudio" loop src="https://cdn.pixabay.com/audio/2022/03/10/audio_c8ab69fba6.mp3"></audio>
+            <button class="btn btn-outline" onclick="exitFocusMode()">Exit</button>
+        </div>
+    </div>
+
+    <!-- ABOUT -->
+    <div class="page" id="page-about">
+        <h2>ℹ️ About</h2>
+        <p>🇱🇸 Free platform for Basotho students. Add your own files and expand it!</p>
+    </div>
+</main>
+
+<!-- Auth Modal -->
+<div class="overlay" id="authModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:1000;">
+    <div class="card" style="max-width:400px; width:90%;">
+        <h3 id="authTitle">Login</h3>
+        <input type="text" id="authUsername" placeholder="Username" style="width:100%;padding:0.5rem;margin:0.5rem 0;">
+        <input type="password" id="authPassword" placeholder="Password" style="width:100%;padding:0.5rem;margin:0.5rem 0;">
+        <div style="display:flex;gap:1rem;margin-top:1rem;justify-content:center;">
+            <button class="btn" id="authActionBtn">Login</button>
+            <button class="btn btn-outline" onclick="toggleAuthMode()">Register</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ============================================================
+// COMPLETE APPLICATION SCRIPT
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+    // ---- NAVIGATION ----
+    const navItems = document.querySelectorAll('.nav-item:not([href])');
+    const pages = document.querySelectorAll('.page');
+    function showPage(id) {
+        pages.forEach(p => p.classList.remove('active'));
+        document.getElementById('page-'+id).classList.add('active');
+        navItems.forEach(i => i.classList.remove('active'));
+        document.querySelector(`[data-page="${id}"]`).classList.add('active');
+        // special triggers
+        if (id === 'world') setTimeout(initGlobe, 100);
+        if (id === 'learn') { renderTimeline(); renderAcademicCalendar(); }
+        if (id === 'tools') renderFlashcard();
+        if (id === 'community') { renderChat(); renderQuestions(); }
+    }
+    navItems.forEach(item => item.addEventListener('click', (e) => { e.preventDefault(); showPage(item.dataset.page); }));
+
+    // ---- RESOURCES ----
+    const resourcesBase = [
+        { title:"Khan Academy Math", subject:"Math", desc:"Video lessons & practice", url:"https://www.khanacademy.org/math" },
+        { title:"Lesotho Past Papers (LEC)", subject:"Math", desc:"COSC past exams", url:"https://www.leclesco.com/past-papers/" },
+        { title:"Siyavula Textbooks", subject:"Math", desc:"Free SA curriculum books", url:"https://www.siyavula.com/" },
+        { title:"BBC Bitesize English", subject:"English", desc:"Grammar & literature", url:"https://www.bbc.co.uk/bitesize/subjects/z3kw2hv" },
+        { title:"Project Gutenberg", subject:"English", desc:"Free classic books", url:"https://www.gutenberg.org/" },
+        { title:"PhET Science", subject:"Science", desc:"Interactive simulations", url:"https://phet.colorado.edu/" },
+        { title:"Sesotho Dictionary", subject:"Sesotho", desc:"Translations", url:"https://www.sesotho.org/" },
+        { title:"Wikipedia History of Lesotho", subject:"History", desc:"Basotho kingdom", url:"https://en.wikipedia.org/wiki/History_of_Lesotho" },
+        { title:"FreeCodeCamp", subject:"Tech", desc:"Learn coding", url:"https://www.freecodecamp.org/" },
+        { title:"Google Scholar", subject:"General", desc:"Academic papers", url:"https://scholar.google.com/" }
+    ];
+    let resources = [...resourcesBase];
+    const subjects = ["all","Math","English","Science","Sesotho","History","Tech","General"];
+    let currentFilter = 'all';
+    const searchInput = document.getElementById('searchInput');
+    const pills = document.getElementById('filterPills');
+    const resGrid = document.getElementById('resourcesContainer');
+    function renderResources() {
+        const term = searchInput.value.toLowerCase();
+        const filtered = resources.filter(r => (currentFilter==='all'||r.subject===currentFilter) && (!term || r.title.toLowerCase().includes(term)||r.subject.toLowerCase().includes(term)||r.desc.toLowerCase().includes(term)));
+        resGrid.innerHTML = filtered.map(r => `
+            <div class="card">
+                <span class="badge">${r.subject}</span>
+                <h4>${r.title}</h4>
+                <p>${r.desc}</p>
+                <a href="${r.url}" target="_blank" class="btn" style="padding:0.4rem 1rem;">Open</a>
+            </div>
+        `).join('') || '<p>No resources found.</p>';
+    }
+    pills.innerHTML = subjects.map(s => `<span class="pill ${s==='all'?'active':''}" data-subj="${s}">${s==='all'?'All':s}</span>`).join('');
+    pills.querySelectorAll('.pill').forEach(p => p.addEventListener('click', function(){
+        pills.querySelectorAll('.pill').forEach(pp => pp.classList.remove('active'));
+        this.classList.add('active');
+        currentFilter = this.dataset.subj;
+        renderResources();
+    }));
+    searchInput.addEventListener('input', renderResources);
+    renderResources();
+    // Load local files from file_list.json
+    fetch('file_list.json').then(r=>r.json()).then(files => {
+        files.forEach(f => resources.push({ title:f.title, subject:f.subject, desc:f.description, url:f.url }));
+        renderResources();
+    }).catch(() => {});
+
+    // ---- PLANNER ----
+    const taskInput = document.getElementById('taskInput');
+    const taskList = document.getElementById('taskList');
+    window.addTask = () => {
+        const text = taskInput.value.trim();
+        if(!text) return;
+        const li = document.createElement('li');
+        li.innerHTML = `<input type="checkbox" onchange="this.parentElement.style.textDecoration = this.checked ? 'line-through':'none'"> ${text} <small>${document.getElementById('taskDate').value} [${document.getElementById('taskPriority').value}]</small>`;
+        taskList.appendChild(li);
+        taskInput.value = '';
+    };
+    let pomodoroInterval, pomodoroRemaining = 1500;
+    function updatePomodoroDisplay() { const m=Math.floor(pomodoroRemaining/60), s=pomodoroRemaining%60; document.getElementById('pomodoroDisplay').textContent = `${m}:${s.toString().padStart(2,'0')}`; }
+    window.startPomodoro = (min) => { clearInterval(pomodoroInterval); pomodoroRemaining = min*60; updatePomodoroDisplay(); pomodoroInterval = setInterval(() => { pomodoroRemaining--; updatePomodoroDisplay(); if(pomodoroRemaining<=0) clearInterval(pomodoroInterval); }, 1000); };
+    window.resetPomodoro = () => { clearInterval(pomodoroInterval); pomodoroRemaining = 1500; updatePomodoroDisplay(); };
+
+    // ---- LEARN PAGE ----
+    window.showFormulaSheet = (subj) => alert({ math: 'Quadratic formula: x = [-b ± √(b²-4ac)]/2a' }[subj] || 'Sheet unavailable');
+    function renderTimeline() { document.getElementById('historyTimeline').innerHTML = '<p>1820s: Moshoeshoe I unites Basotho<br>1868: British protectorate<br>1966: Independence</p>'; }
+    function renderAcademicCalendar() { document.getElementById('academicCalendar').innerHTML = '<p>2026-10-20: COSC Exams Begin</p>'; }
+
+    // ---- TOOLS ----
+    let calcExpr = '';
+    window.calcInput = v => { calcExpr += v; document.getElementById('calcDisplay').value = calcExpr; };
+    window.calcEval = () => { try { calcExpr = eval(calcExpr).toString(); } catch { calcExpr = 'Error'; } document.getElementById('calcDisplay').value = calcExpr; };
+    window.calcClear = () => { calcExpr = ''; document.getElementById('calcDisplay').value = ''; };
+    window.convertUnit = () => { const val = parseFloat(document.getElementById('convertInput').value); const t = document.getElementById('convertType').value; document.getElementById('convertResult').textContent = t==='m_to_cm' ? val*100+' cm' : t==='km_to_miles' ? (val*0.621371).toFixed(2)+' miles' : 'Invalid'; };
+    const flashcards = [{front:"What is H2O?", back:"Water"},{front:"Capital of Lesotho?", back:"Maseru"}];
+    let currentCard=0, flipped=false;
+    window.flipFlashcard = () => { flipped=!flipped; document.getElementById('flashcardQuestion').textContent = flipped ? flashcards[currentCard].back : flashcards[currentCard].front; };
+    function renderFlashcard() { document.getElementById('flashcardQuestion').textContent = flipped ? flashcards[currentCard].back : flashcards[currentCard].front; }
+    document.getElementById('pdfInput').addEventListener('change', e => { const f=e.target.files[0]; if(f) document.getElementById('pdfViewer').src=URL.createObjectURL(f); });
+
+    // ---- QUIZZES ----
+    window.startQuiz = () => {
+        const subj = document.getElementById('quizSubject').value;
+        const diff = document.getElementById('quizDifficulty').value;
+        const timePerQ = parseInt(document.getElementById('quizTimePerQ').value)||0;
+        const bank = QUESTION_BANK[subj]?.[diff] || [];
+        if(!bank.length) return alert('No questions');
+        let questions = [...bank].sort(()=>Math.random()-0.5);
+        let idx=0, score=0;
+        const container = document.getElementById('quizContainer');
+        function show() {
+            if(idx>=questions.length) {
+                container.innerHTML = `<h4>Done! Score: ${score}/${questions.length}</h4><button class="btn" onclick="startQuiz()">Retry</button>`;
+                return;
             }
-            navItems.forEach(item => {
-                item.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    showPage(item.dataset.page);
-                });
-            });
+            const q = questions[idx];
+            const opts = q.opts.map((t,i)=>({text:t, correct:i===q.ans})).sort(()=>Math.random()-0.5);
+            container.innerHTML = `<p><strong>${q.q}</strong></p>${opts.map((o,i)=>`<div class="quiz-option" data-correct="${o.correct}" onclick="answerQuiz(this)">${o.text}</div>`).join('')}<div id="feedback"></div>`;
+        }
+        window.answerQuiz = (el) => {
+            const isCorrect = el.dataset.correct === 'true';
+            document.querySelectorAll('.quiz-option').forEach(o => { o.style.pointerEvents='none'; if(o.dataset.correct==='true') o.classList.add('correct'); });
+            if(!isCorrect) el.classList.add('wrong');
+            if(isCorrect) score++;
+            document.getElementById('feedback').textContent = isCorrect ? '✅ Correct!' : '❌ Wrong';
+            idx++;
+            setTimeout(show, 2000);
+        };
+        show();
+    };
 
-            // ====== DATA ======
-            // Curated resources (extended)
-            const resourcesData = [
-                { title:"Khan Academy - Math", subject:"Math", desc:"Video lessons & practice from arithmetic to calculus.", url:"https://www.khanacademy.org/math" },
-                { title:"Lesotho Past Papers (LEC)", subject:"Math", desc:"Official COSC & Cambridge past exam papers.", url:"https://www.leclesco.com/past-papers/" },
-                { title:"Siyavula Open Textbooks", subject:"Math", desc:"Free South African curriculum textbooks.", url:"https://www.siyavula.com/" },
-                { title:"BBC Bitesize - English", subject:"English", desc:"Grammar, literature & writing tips.", url:"https://www.bbc.co.uk/bitesize/subjects/z3kw2hv" },
-                { title:"Project Gutenberg", subject:"English", desc:"Thousands of free classic books.", url:"https://www.gutenberg.org/" },
-                { title:"PhET Simulations", subject:"Science", desc:"Interactive physics, chemistry & biology.", url:"https://phet.colorado.edu/" },
-                { title:"NASA STEM Resources", subject:"Science", desc:"Space & engineering activities.", url:"https://www.nasa.gov/stem" },
-                { title:"CK-12 Foundation", subject:"Science", desc:"Free science textbooks & adaptive practice.", url:"https://www.ck12.org/" },
-                { title:"Sesotho Online Dictionary", subject:"Sesotho", desc:"English-Sesotho translation & definitions.", url:"https://www.sesotho.org/" },
-                { title:"Wikipedia - History of Lesotho", subject:"History", desc:"From Basotho kingdom to modern day.", url:"https://en.wikipedia.org/wiki/History_of_Lesotho" },
-                { title:"African Studies Centre", subject:"History", desc:"Research papers & archives.", url:"https://www.ascleiden.nl/content/webdossiers/lesotho" },
-                { title:"FreeCodeCamp", subject:"Tech", desc:"Learn to code for free.", url:"https://www.freecodecamp.org/" },
-                { title:"Google Scholar", subject:"General", desc:"Search academic papers.", url:"https://scholar.google.com/" },
-                { title:"Quizlet", subject:"General", desc:"Flashcards & study sets.", url:"https://quizlet.com/" },
-                { title:"National Geographic Education", subject:"Geography", desc:"Maps & articles.", url:"https://education.nationalgeographic.org/" },
-                { title:"Duolingo", subject:"English", desc:"English for Sesotho speakers.", url:"https://www.duolingo.com/" }
-            ];
-            const subjectsList = ["all","Math","English","Science","Sesotho","History","Geography","Business","Tech","General"];
-            let currentFilter = 'all';
-            const searchInput = document.getElementById('searchInput');
-            const filterPills = document.getElementById('filterPills');
-            const resourcesContainer = document.getElementById('resourcesContainer');
+    // ---- ACHIEVEMENTS ----
+    function updateAchievements() {
+        const container = document.getElementById('achievementsContainer');
+        if(!container) return;
+        const scores = JSON.parse(localStorage.getItem('quizScores')||'[]');
+        let html = '';
+        if(scores.length>=5) html += '<span class="badge">Quiz Master</span> ';
+        if(scores.some(s=>s===100)) html += '<span class="badge">Perfect Score</span> ';
+        if(html==='') html = 'Complete quizzes and tasks to earn badges.';
+        container.innerHTML = html;
+    }
 
-            function renderResources() {
-                const term = searchInput.value.toLowerCase();
-                const filtered = resourcesData.filter(r => (currentFilter === 'all' || r.subject === currentFilter) && (!term || r.title.toLowerCase().includes(term) || r.subject.toLowerCase().includes(term) || r.desc.toLowerCase().includes(term)));
-                resourcesContainer.innerHTML = filtered.map(r => `
-                    <div class="card">
-                        <span class="badge">${r.subject}</span>
-                        <h3>${r.title}</h3>
-                        <p>${r.desc}</p>
-                        <a href="${r.url}" target="_blank" class="btn" style="padding:0.4rem 1rem;">Open</a>
-                    </div>
-                `).join('') || '<p>📭 No resources found.</p>';
-            }
-            if(searchInput && filterPills && resourcesContainer) {
-                filterPills.innerHTML = subjectsList.map(s => `<span class="pill ${s==='all'?'active':''}" data-subj="${s}">${s==='all'?'All':s}</span>`).join('');
-                filterPills.querySelectorAll('.pill').forEach(pill => pill.addEventListener('click', function() {
-                    filterPills.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
-                    this.classList.add('active');
-                    currentFilter = this.dataset.subj;
-                    renderResources();
-                }));
-                searchInput.addEventListener('input', renderResources);
-                renderResources();
-            }
+    // ---- COMMUNITY ----
+    const chatMsgs = document.getElementById('chatMessages');
+    window.sendChat = () => {
+        const msg = document.getElementById('chatInput').value.trim();
+        if(!msg) return;
+        chatMsgs.innerHTML += `<div><strong>You:</strong> ${msg}</div>`;
+        document.getElementById('chatInput').value = '';
+    };
+    window.postQuestion = () => {
+        const q = document.getElementById('questionInput').value.trim();
+        if(q) { document.getElementById('questionList').innerHTML += `<div>• ${q}</div>`; document.getElementById('questionInput').value = ''; }
+    };
+    window.reportBrokenLink = () => alert('Reported, thanks!');
+    function renderChat() {}
+    function renderQuestions() {}
 
-            // ====== PLANNER ======
-            const taskInput = document.getElementById('taskInput');
-            const taskList = document.getElementById('taskList');
-            window.addTask = () => {
-                const text = taskInput.value.trim();
-                if(!text) return;
-                const li = document.createElement('li');
-                li.innerHTML = `<input type="checkbox" onchange="this.parentElement.style.textDecoration = this.checked ? 'line-through' : 'none'"> ${text}`;
-                taskList.appendChild(li);
-                taskInput.value = '';
-            };
-            let pomodoroInterval, pomodoroSeconds = 1500, pomodoroRemaining = 1500;
-            function updatePomodoroDisplay() {
-                const m = Math.floor(pomodoroRemaining/60), s = pomodoroRemaining%60;
-                document.getElementById('pomodoroDisplay').textContent = `${m}:${s.toString().padStart(2,'0')}`;
-            }
-            window.startPomodoro = (min) => {
-                if(pomodoroInterval) clearInterval(pomodoroInterval);
-                pomodoroSeconds = min * 60; pomodoroRemaining = pomodoroSeconds;
-                updatePomodoroDisplay();
-                pomodoroInterval = setInterval(() => {
-                    pomodoroRemaining--;
-                    updatePomodoroDisplay();
-                    if(pomodoroRemaining <= 0) { clearInterval(pomodoroInterval); alert('Pomodoro complete!'); }
-                }, 1000);
-            };
-            window.resetPomodoro = () => { if(pomodoroInterval) clearInterval(pomodoroInterval); pomodoroRemaining = pomodoroSeconds; updatePomodoroDisplay(); };
+    // ---- THEME TOGGLE ----
+    document.getElementById('themeToggle').addEventListener('click', () => document.body.classList.toggle('dark'));
 
-            // ====== LEARN PAGE ======
-            window.showFormulaSheet = (subj) => alert({
-                math: `Quadratic formula: x = [-b ± √(b²-4ac)] / 2a\nPythagoras: c² = a² + b²\nArea of circle: πr²`,
-                physics: `Newton's second law: F = ma\nOhm's law: V = IR\nKinetic energy: KE = ½mv²`
-            }[subj] || 'Formula sheet unavailable.');
-            document.getElementById('periodicTableContainer').innerHTML = '<div style="display:flex;flex-wrap:wrap;">' + 'H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca'.split(' ').map(el => `<span class="pill" onclick="alert('Element: ${el}')">${el}</span>`).join('') + '</div>';
-            document.getElementById('historyTimeline').innerHTML = ['1820s: Moshoeshoe I unites Basotho clans','1868: Basutoland becomes British protectorate','1966: Independence as Lesotho'].map(e => `<div>• ${e}</div>`).join('');
-            document.getElementById('academicCalendar').innerHTML = ['2026-10-20: COSC Exams Begin','2026-08-15: Mid-term break'].map(e => `<div>📅 ${e}</div>`).join('');
+    // ---- 3D GLOBE ----
+    window.initGlobe = async () => {
+        const globe = document.getElementById('globeContainer');
+        if(!globe || globe.children.length) return;
+        const THREE = await import('three');
+        const scene = new THREE.Scene();
+        const cam = new THREE.PerspectiveCamera(45, globe.clientWidth/globe.clientHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({antialias:true, alpha:true});
+        renderer.setSize(globe.clientWidth, globe.clientHeight);
+        globe.appendChild(renderer.domElement);
+        const earth = new THREE.Mesh(new THREE.SphereGeometry(1,32,32), new THREE.MeshPhongMaterial({map: new THREE.TextureLoader().load('https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg')}));
+        scene.add(earth); scene.add(new THREE.AmbientLight(0x404040)); cam.position.z=2.5;
+        const light = new THREE.DirectionalLight(0xffffff,1); light.position.set(5,3,5); scene.add(light);
+        (function anim(){ requestAnimationFrame(anim); earth.rotation.y+=0.001; renderer.render(scene,cam); })();
+    };
 
-            // ====== TOOLS ======
-            let calcExpr = '';
-            window.calcInput = v => { calcExpr += v; document.getElementById('calcDisplay').value = calcExpr; };
-            window.calcEval = () => { try { calcExpr = eval(calcExpr).toString(); } catch { calcExpr = 'Error'; } document.getElementById('calcDisplay').value = calcExpr; };
-            window.calcClear = () => { calcExpr = ''; document.getElementById('calcDisplay').value = ''; };
-            window.convertUnit = () => {
-                const val = parseFloat(document.getElementById('convertInput').value);
-                const type = document.getElementById('convertType').value;
-                document.getElementById('convertResult').textContent = 'Result: ' + (type === 'm_to_cm' ? val*100+' cm' : type === 'km_to_miles' ? (val*0.621371).toFixed(2)+' miles' : 'Invalid');
-            };
-            let flashcardFlipped = false, currentCard = 0;
-            const flashcards = [{ front: "What is H2O?", back: "Water" }, { front: "Capital of Lesotho?", back: "Maseru" }, { front: "Solve 2x+6=14", back: "x=4" }];
-            window.flipFlashcard = () => {
-                flashcardFlipped = !flashcardFlipped;
-                document.getElementById('flashcardQuestion').textContent = flashcardFlipped ? flashcards[currentCard].back : flashcards[currentCard].front;
-            };
-            document.getElementById('pdfInput').addEventListener('change', e => {
-                const file = e.target.files[0];
-                if(file) document.getElementById('pdfViewer').src = URL.createObjectURL(file);
-            });
+    // ---- FOCUS MODE ----
+    let focusInterval;
+    window.startFocusTimer = (min) => { let sec=min*60; document.getElementById('focusTimer').textContent = `${min}:00`; clearInterval(focusInterval); focusInterval = setInterval(() => { sec--; const m=Math.floor(sec/60), s=sec%60; document.getElementById('focusTimer').textContent = `${m}:${s.toString().padStart(2,'0')}`; if(sec<=0) clearInterval(focusInterval); }, 1000); };
+    window.resetFocusTimer = () => { clearInterval(focusInterval); document.getElementById('focusTimer').textContent = '00:00'; };
+    window.toggleAmbientSound = () => { const a=document.getElementById('ambientAudio'); a.paused ? a.play() : a.pause(); };
+    window.exitFocusMode = () => showPage('dashboard');
 
-            // ====== QUIZZES ======
-            window.startQuiz = () => {
-                const subj = document.getElementById('quizSubjectSelect').value;
-                const diff = document.getElementById('quizDifficulty').value;
-                const bank = QUESTION_BANK[subj]?.[diff] || [];
-                if(!bank.length) return alert('No questions for this selection.');
-                let questions = [...bank].sort(() => Math.random() - 0.5);
-                let idx = 0, score = 0;
-                const container = document.getElementById('quizContainer');
-                function show() {
-                    if(idx >= questions.length) {
-                        container.innerHTML = `<h3>🎉 Quiz complete! Score: ${score}/${questions.length}</h3><button class="btn" onclick="startQuiz()">Retry</button>`;
-                        return;
-                    }
-                    const q = questions[idx];
-                    const shuffled = q.opts.map((text, i) => ({ text, correct: i === q.ans })).sort(() => Math.random() - 0.5);
-                    container.innerHTML = `<p><strong>${q.q}</strong></p>${shuffled.map((opt, i) => `<div class="quiz-option" data-correct="${opt.correct}" onclick="answer(this)">${opt.text}</div>`).join('')}<div id="feedback"></div>`;
-                }
-                window.answer = (el) => {
-                    const isCorrect = el.dataset.correct === 'true';
-                    document.querySelectorAll('.quiz-option').forEach(o => { o.style.pointerEvents = 'none'; if(o.dataset.correct === 'true') o.classList.add('correct'); });
-                    if(!isCorrect) el.classList.add('wrong');
-                    if(isCorrect) score++;
-                    document.getElementById('feedback').textContent = isCorrect ? '✅ Correct!' : '❌ Wrong';
-                    idx++;
-                    setTimeout(show, 2000);
-                };
-                show();
-            };
+    // ---- AUTH (localStorage demo) ----
+    let authMode = 'login';
+    const users = JSON.parse(localStorage.getItem('hub_users')||'{}');
+    window.showAuthModal = () => document.getElementById('authModal').style.display = 'flex';
+    window.hideAuthModal = () => document.getElementById('authModal').style.display = 'none';
+    window.toggleAuthMode = () => {
+        authMode = authMode==='login'?'register':'login';
+        document.getElementById('authTitle').textContent = authMode==='login'?'Login':'Register';
+        document.getElementById('authActionBtn').textContent = authMode==='login'?'Login':'Register';
+    };
+    document.getElementById('authActionBtn').addEventListener('click', () => {
+        const u = document.getElementById('authUsername').value.trim();
+        const p = document.getElementById('authPassword').value.trim();
+        if(!u||!p) return alert('Fill fields');
+        if(authMode==='register') {
+            if(users[u]) return alert('User exists');
+            users[u] = { password:p, xp:0, streak:0 };
+            localStorage.setItem('hub_users', JSON.stringify(users));
+            alert('Registered! Now login.');
+            toggleAuthMode();
+        } else {
+            if(!users[u] || users[u].password!==p) return alert('Invalid');
+            document.getElementById('userGreeting').textContent = u;
+            document.getElementById('userXP').textContent = users[u].xp||0;
+            document.getElementById('userLevel').textContent = Math.floor(Math.sqrt((users[u].xp||0)/100))+1;
+            document.getElementById('streakCount').textContent = users[u].streak||0;
+            hideAuthModal();
+        }
+    });
 
-            // ====== COMMUNITY ======
-            let chatMessages = [];
-            window.sendChat = () => {
-                const msg = document.getElementById('chatInput').value.trim();
-                if(!msg) return;
-                chatMessages.push({ user: 'You', text: msg });
-                document.getElementById('chatMessages').innerHTML = chatMessages.map(m => `<div><strong>${m.user}:</strong> ${m.text}</div>`).join('');
-                document.getElementById('chatInput').value = '';
-            };
-            window.postQuestion = () => {
-                const q = document.getElementById('questionInput').value.trim();
-                if(q) { document.getElementById('questionList').innerHTML += `<div>• ${q}</div>`; document.getElementById('questionInput').value = ''; }
-            };
-            window.reportBrokenLink = () => alert('Reported, thank you.');
+    // ---- WEATHER & DAILY CHALLENGE ----
+    fetch('https://api.open-meteo.com/v1/forecast?latitude=-29.3132&longitude=27.4833&current_weather=true')
+        .then(r=>r.json()).then(d=> document.getElementById('weatherInfo').textContent = `${d.current_weather.temperature}°C, Wind: ${d.current_weather.windspeed} km/h`)
+        .catch(()=> document.getElementById('weatherInfo').textContent = 'Weather unavailable.');
+    document.getElementById('dailyChallengeContainer').innerHTML = '<p>Solve: 2x + 6 = 14. Answer: x=4</p>';
+    document.getElementById('spotlightResource').innerHTML = '<a href="https://www.khanacademy.org/math" target="_blank">Khan Academy Math</a>';
 
-            // ====== FOCUS MODE ======
-            let focusInterval;
-            window.startFocusTimer = (min) => {
-                let sec = min * 60;
-                document.getElementById('focusTimer').textContent = `${min}:00`;
-                if(focusInterval) clearInterval(focusInterval);
-                focusInterval = setInterval(() => {
-                    sec--;
-                    const m = Math.floor(sec/60), s = sec%60;
-                    document.getElementById('focusTimer').textContent = `${m}:${s.toString().padStart(2,'0')}`;
-                    if(sec <= 0) { clearInterval(focusInterval); alert('Focus done!'); }
-                }, 1000);
-            };
-            window.resetFocusTimer = () => { if(focusInterval) clearInterval(focusInterval); document.getElementById('focusTimer').textContent = '00:00'; };
-            window.toggleAmbientSound = () => {
-                const audio = document.getElementById('ambientAudio');
-                audio.paused ? audio.play() : audio.pause();
-            };
-            window.exitFocusMode = () => showPage('dashboard');
-
-            // ====== 3D GLOBE ======
-            window.initGlobe = async () => {
-                const globe = document.getElementById('globeContainer');
-                if(!globe || globe.children.length) return;
-                const THREE = await import('three');
-                const scene = new THREE.Scene();
-                const camera = new THREE.PerspectiveCamera(45, globe.clientWidth/globe.clientHeight, 0.1, 1000);
-                const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-                renderer.setSize(globe.clientWidth, globe.clientHeight);
-                globe.appendChild(renderer.domElement);
-                const earth = new THREE.Mesh(new THREE.SphereGeometry(1,32,32), new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load('https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg') }));
-                scene.add(earth); scene.add(new THREE.AmbientLight(0x404040)); camera.position.z = 2.5;
-                const light = new THREE.DirectionalLight(0xffffff,1); light.position.set(5,3,5); scene.add(light);
-                (function animate() { requestAnimationFrame(animate); earth.rotation.y += 0.001; renderer.render(scene, camera); })();
-            };
-            document.querySelector('[data-page="world"]').addEventListener('click', () => setTimeout(initGlobe, 100));
-
-            // ====== THEME ======
-            const themes = ['default','light','nature','ocean','space','sunset','berry','mono','gold','forest','lavender','cherry','teal','retro','cyberpunk','pastel','neon'];
-            let currentTheme = localStorage.getItem('hub_theme') || 'default';
-            function applyTheme(theme) {
-                document.body.classList.remove(...themes.filter(t => t !== 'default' && t !== 'light').map(t => `theme-${t}`));
-                if(theme === 'default' || theme === 'light') { document.body.classList.toggle('light', theme === 'light'); }
-                else { document.body.classList.remove('light'); document.body.classList.add(`theme-${theme}`); }
-                localStorage.setItem('hub_theme', theme);
-                document.getElementById('themeSelector').innerHTML = `<i class="fas fa-palette"></i> Theme: ${theme}`;
-            }
-            document.getElementById('themeSelector').addEventListener('click', () => {
-                const idx = themes.indexOf(currentTheme);
-                currentTheme = themes[(idx + 1) % themes.length];
-                applyTheme(currentTheme);
-            });
-            applyTheme(currentTheme);
-
-            // ====== AUTH (simple demo) ======
-            window.showAuthModal = () => document.getElementById('authModal').style.display = 'flex';
-            window.hideAuthModal = () => document.getElementById('authModal').style.display = 'none';
-            window.toggleAuthMode = () => {
-                const isLogin = document.getElementById('authTitle').textContent === 'Login';
-                document.getElementById('authTitle').textContent = isLogin ? 'Register' : 'Login';
-                document.getElementById('authActionBtn').textContent = isLogin ? 'Register' : 'Login';
-            };
-            document.getElementById('authActionBtn').addEventListener('click', () => {
-                const u = document.getElementById('authUsername').value.trim();
-                const p = document.getElementById('authPassword').value.trim();
-                if(!u || !p) return alert('Fill all fields');
-                // Simple local storage auth (not secure, just for demo)
-                const users = JSON.parse(localStorage.getItem('hub_users') || '{}');
-                if(document.getElementById('authTitle').textContent === 'Register') {
-                    if(users[u]) return alert('User exists');
-                    users[u] = { password: p, xp: 0, bookmarks: [], tasks: [] };
-                    localStorage.setItem('hub_users', JSON.stringify(users));
-                    alert('Registered! Now login.');
-                    toggleAuthMode();
-                } else {
-                    if(!users[u] || users[u].password !== p) return alert('Invalid credentials');
-                    localStorage.setItem('hub_user', u);
-                    document.getElementById('userGreeting').textContent = u;
-                    hideAuthModal();
-                    updateDashboard();
-                }
-            });
-            window.logout = () => {
-                localStorage.removeItem('hub_user');
-                document.getElementById('userGreeting').textContent = 'Student';
-                document.getElementById('userLevel').textContent = '1';
-                document.getElementById('userXP').textContent = '0';
-                document.getElementById('streakCount').textContent = '0';
-            };
-            function updateDashboard() {
-                const user = localStorage.getItem('hub_user');
-                if(user) {
-                    document.getElementById('userGreeting').textContent = user;
-                    const users = JSON.parse(localStorage.getItem('hub_users') || '{}');
-                    const xp = users[user]?.xp || 0;
-                    document.getElementById('userXP').textContent = xp;
-                    document.getElementById('userLevel').textContent = Math.floor(Math.sqrt(xp / 100)) + 1;
-                    document.getElementById('streakCount').textContent = users[user]?.streak || 0;
-                }
-            }
-
-            // ====== INIT ======
-            // Particles
-            const pCanvas = document.getElementById('particleCanvas'), ctxP = pCanvas.getContext('2d');
-            pCanvas.width = window.innerWidth; pCanvas.height = window.innerHeight;
-            const particles = Array.from({ length: 50 }, () => ({ x: Math.random()*pCanvas.width, y: Math.random()*pCanvas.height, size: Math.random()*2+0.5, sx: (Math.random()-0.5)*0.5, sy: (Math.random()-0.5)*0.5 }));
-            (function anim() { ctxP.clearRect(0,0,pCanvas.width,pCanvas.height); ctxP.fillStyle = document.body.classList.contains('light') ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.4)'; particles.forEach(p => { ctxP.beginPath(); ctxP.arc(p.x,p.y,p.size,0,Math.PI*2); ctxP.fill(); p.x += p.sx; p.y += p.sy; if(p.x<0||p.x>pCanvas.width) p.sx *= -1; if(p.y<0||p.y>pCanvas.height) p.sy *= -1; }); requestAnimationFrame(anim); })();
-
-            // Countdown
-            function countdown() {
-                const target = new Date('2026-10-20T09:00:00').getTime();
-                const now = Date.now(), diff = target - now;
-                if(diff <= 0) { document.getElementById('countdownDays').textContent = '0'; document.getElementById('countdownHours').textContent = '0'; document.getElementById('countdownMins').textContent = '0'; return; }
-                document.getElementById('countdownDays').textContent = Math.floor(diff / (1000*60*60*24));
-                document.getElementById('countdownHours').textContent = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-                document.getElementById('countdownMins').textContent = Math.floor((diff % (1000*60*60)) / (1000*60));
-            }
-            setInterval(countdown, 60000); countdown();
-
-            // Weather (Maseru)
-            fetch('https://api.open-meteo.com/v1/forecast?latitude=-29.3132&longitude=27.4833&current_weather=true')
-                .then(r => r.json())
-                .then(d => {
-                    document.getElementById('weatherInfo').textContent = `${d.current_weather.temperature}°C, Wind: ${d.current_weather.windspeed} km/h`;
-                }).catch(() => document.getElementById('weatherInfo').textContent = 'Weather unavailable.');
-
-            // Daily challenge (simple)
-            document.getElementById('dailyChallengeContainer').innerHTML = '<p>Answer a medium Math question daily for XP!</p>';
-
-            // Spotlight
-            document.getElementById('spotlightResource').innerHTML = `<a href="${resourcesData[0].url}" target="_blank">${resourcesData[0].title}</a>`;
-
-            // Onboarding
-            if(!localStorage.getItem('onboarded')) {
-                document.getElementById('onboardingOverlay').style.display = 'flex';
-            }
-            window.closeOnboarding = () => {
-                document.getElementById('onboardingOverlay').style.display = 'none';
-                localStorage.setItem('onboarded', 'true');
-            };
-
-            // Update dashboard if logged in
-            updateDashboard();
-        });
-    </script>
+    // ---- INIT SERVICE WORKER ----
+    if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+});
+</script>
 </body>
-</html>
+    </html> 
