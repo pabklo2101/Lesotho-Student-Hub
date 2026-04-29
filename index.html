@@ -13,12 +13,10 @@
         { "imports": { "three": "https://unpkg.com/three@0.126.0/build/three.module.js" } }
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- External question bank and service worker -->
+    <!-- Load all external data files -->
     <script src="lgcse_questions.js"></script>
+    <script src="community_board.js"></script>
     <style>
-        /* ============================================================
-           VIBRANT, RESPONSIVE, MODERN DESIGN – NO COMPROMISES
-           ============================================================ */
         :root {
             --bg: #F8FAFC;
             --surface: #FFFFFF;
@@ -241,9 +239,10 @@
         </div>
         <div class="card"><h3>🏆 Leaderboard</h3><div id="leaderboardTable">No entries yet.</div></div>
         <div class="card"><h3>📊 Your Progress</h3><div class="chart-container"><canvas id="progressChart"></canvas></div></div>
-        <div class="card"><h3>🌟 Daily Challenge</h3><div id="dailyChallengeContainer">Loading...</div></div>
+        <div class="card"><h3>🌟 Quote of the Day</h3><div id="dailyQuote">Loading...</div></div>
         <div class="card"><h3>📌 Resource Spotlight</h3><div id="spotlightResource">Loading...</div></div>
         <div class="card"><h3>🌤 Maseru Weather</h3><div id="weatherInfo">Loading...</div></div>
+        <div class="card"><h3>🧠 Daily Challenge</h3><div id="dailyChallengeContainer">Loading...</div></div>
     </div>
 
     <!-- RESOURCES -->
@@ -275,14 +274,10 @@
         </div>
     </div>
 
-    <!-- LEARN -->
+    <!-- LEARN / STUDY GUIDES -->
     <div class="page" id="page-learn">
         <h2>📘 Study Guides</h2>
-        <div class="card"><h3>📐 Mathematics</h3><p>Quadratic formula, Pythagoras, statistics. <button class="btn" onclick="showFormulaSheet('math')">View Sheet</button></p></div>
-        <div class="card"><h3>📚 English</h3><p>Essay writing, grammar, comprehension.</p></div>
-        <div class="card"><h3>⚛️ Science</h3><p>Physics, Chemistry, Biology summaries.</p></div>
-        <div class="card"><h3>🏛 History of Lesotho</h3><div id="historyTimeline"></div></div>
-        <div class="card"><h3>📅 Academic Calendar</h3><div id="academicCalendar"></div></div>
+        <div id="studyGuidesContainer"></div>
     </div>
 
     <!-- TOOLS -->
@@ -319,14 +314,31 @@
         <div class="card" id="achievementsContainer">Complete quizzes and tasks to earn badges.</div>
     </div>
 
-    <!-- COMMUNITY -->
+    <!-- COMMUNITY (now with full community board) -->
     <div class="page" id="page-community">
         <h2>💬 Community</h2>
-        <div class="card"><div id="chatMessages" style="height:150px;overflow-y:auto;border:1px solid var(--border);padding:0.5rem;margin-bottom:0.5rem;"></div>
-        <input type="text" id="chatInput" placeholder="Message..." style="width:100%;padding:0.5rem;">
-        <button class="btn" onclick="sendChat()">Send</button></div>
-        <div class="card"><h3>❓ Q&A Board</h3><input type="text" id="questionInput" placeholder="Ask anonymously..."><button class="btn" onclick="postQuestion()">Post</button><div id="questionList"></div></div>
-        <div class="card"><h3>🔗 Report Broken Link</h3><input type="text" id="brokenLinkInput" placeholder="Resource title or URL"><button class="btn" onclick="reportBrokenLink()">Report</button></div>
+        <div class="card">
+            <h3>📣 Study Tip of the Moment</h3>
+            <p id="studyTip">Loading...</p>
+        </div>
+        <div class="card">
+            <h3>💬 Study Group Chat</h3>
+            <div id="chatMessages" style="height:150px;overflow-y:auto;border:1px solid var(--border);padding:0.5rem;margin-bottom:0.5rem;"></div>
+            <input type="text" id="chatInput" placeholder="Message..." style="width:100%;padding:0.5rem;">
+            <button class="btn" onclick="sendChat()">Send</button>
+        </div>
+        <div id="discussionsContainer"></div>
+        <div class="card">
+            <h3>❓ Q&A Board</h3>
+            <input type="text" id="questionInput" placeholder="Ask anonymously...">
+            <button class="btn" onclick="postQuestion()">Post</button>
+            <div id="questionList"></div>
+        </div>
+        <div class="card">
+            <h3>🔗 Report Broken Link</h3>
+            <input type="text" id="brokenLinkInput" placeholder="Resource title or URL">
+            <button class="btn" onclick="reportBrokenLink()">Report</button>
+        </div>
     </div>
 
     <!-- WORLD -->
@@ -368,27 +380,33 @@
 </div>
 
 <script>
-// ============================================================
-// COMPLETE APPLICATION SCRIPT
-// ============================================================
 document.addEventListener('DOMContentLoaded', () => {
-    // ---- NAVIGATION ----
+    // ========== NAVIGATION ==========
     const navItems = document.querySelectorAll('.nav-item:not([href])');
     const pages = document.querySelectorAll('.page');
     function showPage(id) {
         pages.forEach(p => p.classList.remove('active'));
-        document.getElementById('page-'+id).classList.add('active');
+        const target = document.getElementById('page-' + id);
+        if (target) target.classList.add('active');
         navItems.forEach(i => i.classList.remove('active'));
-        document.querySelector(`[data-page="${id}"]`).classList.add('active');
+        const activeNav = document.querySelector(`[data-page="${id}"]`);
+        if (activeNav) activeNav.classList.add('active');
         // special triggers
         if (id === 'world') setTimeout(initGlobe, 100);
-        if (id === 'learn') { renderTimeline(); renderAcademicCalendar(); }
+        if (id === 'learn') renderStudyGuides();
         if (id === 'tools') renderFlashcard();
-        if (id === 'community') { renderChat(); renderQuestions(); }
+        if (id === 'community') { renderChat(); renderQuestions(); renderCommunityBoard(); }
+        if (id === 'dashboard') { showRandomQuote(); updateCountdown(); loadDailyChallenge(); loadSpotlight(); fetchWeather(); }
+        if (id === 'focus') document.body.classList.add('focus-mode'); else document.body.classList.remove('focus-mode');
     }
-    navItems.forEach(item => item.addEventListener('click', (e) => { e.preventDefault(); showPage(item.dataset.page); }));
+    navItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+            showPage(item.dataset.page);
+        });
+    });
 
-    // ---- RESOURCES ----
+    // ========== DATA ==========
     const resourcesBase = [
         { title:"Khan Academy Math", subject:"Math", desc:"Video lessons & practice", url:"https://www.khanacademy.org/math" },
         { title:"Lesotho Past Papers (LEC)", subject:"Math", desc:"COSC past exams", url:"https://www.leclesco.com/past-papers/" },
@@ -407,6 +425,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('searchInput');
     const pills = document.getElementById('filterPills');
     const resGrid = document.getElementById('resourcesContainer');
+
     function renderResources() {
         const term = searchInput.value.toLowerCase();
         const filtered = resources.filter(r => (currentFilter==='all'||r.subject===currentFilter) && (!term || r.title.toLowerCase().includes(term)||r.subject.toLowerCase().includes(term)||r.desc.toLowerCase().includes(term)));
@@ -434,7 +453,7 @@ document.addEventListener('DOMContentLoaded', () => {
         renderResources();
     }).catch(() => {});
 
-    // ---- PLANNER ----
+    // ========== PLANNER ==========
     const taskInput = document.getElementById('taskInput');
     const taskList = document.getElementById('taskList');
     window.addTask = () => {
@@ -450,12 +469,27 @@ document.addEventListener('DOMContentLoaded', () => {
     window.startPomodoro = (min) => { clearInterval(pomodoroInterval); pomodoroRemaining = min*60; updatePomodoroDisplay(); pomodoroInterval = setInterval(() => { pomodoroRemaining--; updatePomodoroDisplay(); if(pomodoroRemaining<=0) clearInterval(pomodoroInterval); }, 1000); };
     window.resetPomodoro = () => { clearInterval(pomodoroInterval); pomodoroRemaining = 1500; updatePomodoroDisplay(); };
 
-    // ---- LEARN PAGE ----
-    window.showFormulaSheet = (subj) => alert({ math: 'Quadratic formula: x = [-b ± √(b²-4ac)]/2a' }[subj] || 'Sheet unavailable');
-    function renderTimeline() { document.getElementById('historyTimeline').innerHTML = '<p>1820s: Moshoeshoe I unites Basotho<br>1868: British protectorate<br>1966: Independence</p>'; }
-    function renderAcademicCalendar() { document.getElementById('academicCalendar').innerHTML = '<p>2026-10-20: COSC Exams Begin</p>'; }
+    // ========== STUDY GUIDES ==========
+    function renderStudyGuides() {
+        const container = document.getElementById('studyGuidesContainer');
+        if (!container) return;
+        if (typeof STUDY_GUIDES === 'undefined') {
+            container.innerHTML = '<p>Study guides not loaded. Add study_guides.js file.</p>';
+            return;
+        }
+        let html = '';
+        for (const key in STUDY_GUIDES) {
+            const guide = STUDY_GUIDES[key];
+            html += `<div class="card"><h3>${guide.title}</h3>`;
+            guide.sections.forEach(section => {
+                html += `<h4>${section.heading}</h4><ul>${section.content.map(item => `<li>${item}</li>`).join('')}</ul>`;
+            });
+            html += '</div>';
+        }
+        container.innerHTML = html;
+    }
 
-    // ---- TOOLS ----
+    // ========== TOOLS ==========
     let calcExpr = '';
     window.calcInput = v => { calcExpr += v; document.getElementById('calcDisplay').value = calcExpr; };
     window.calcEval = () => { try { calcExpr = eval(calcExpr).toString(); } catch { calcExpr = 'Error'; } document.getElementById('calcDisplay').value = calcExpr; };
@@ -467,7 +501,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderFlashcard() { document.getElementById('flashcardQuestion').textContent = flipped ? flashcards[currentCard].back : flashcards[currentCard].front; }
     document.getElementById('pdfInput').addEventListener('change', e => { const f=e.target.files[0]; if(f) document.getElementById('pdfViewer').src=URL.createObjectURL(f); });
 
-    // ---- QUIZZES ----
+    // ========== QUIZZES ==========
     window.startQuiz = () => {
         const subj = document.getElementById('quizSubject').value;
         const diff = document.getElementById('quizDifficulty').value;
@@ -498,7 +532,7 @@ document.addEventListener('DOMContentLoaded', () => {
         show();
     };
 
-    // ---- ACHIEVEMENTS ----
+    // ========== ACHIEVEMENTS ==========
     function updateAchievements() {
         const container = document.getElementById('achievementsContainer');
         if(!container) return;
@@ -510,7 +544,25 @@ document.addEventListener('DOMContentLoaded', () => {
         container.innerHTML = html;
     }
 
-    // ---- COMMUNITY ----
+    // ========== COMMUNITY BOARD ==========
+    function renderCommunityBoard() {
+        // Discussions
+        const discContainer = document.getElementById('discussionsContainer');
+        if (discContainer && typeof COMMUNITY_BOARD !== 'undefined' && COMMUNITY_BOARD.discussions) {
+            let html = '';
+            COMMUNITY_BOARD.discussions.forEach(disc => {
+                html += `<div class="card"><h4>${disc.topic}</h4><ul>${disc.replies.map(r => `<li>${r}</li>`).join('')}</ul></div>`;
+            });
+            discContainer.innerHTML = html;
+        }
+        // Study tip
+        const tipEl = document.getElementById('studyTip');
+        if (tipEl && typeof COMMUNITY_BOARD !== 'undefined' && COMMUNITY_BOARD.studyTips) {
+            const randomTip = COMMUNITY_BOARD.studyTips[Math.floor(Math.random() * COMMUNITY_BOARD.studyTips.length)];
+            tipEl.innerHTML = `<i class="fas fa-lightbulb"></i> ${randomTip}`;
+        }
+    }
+    // Chat
     const chatMsgs = document.getElementById('chatMessages');
     window.sendChat = () => {
         const msg = document.getElementById('chatInput').value.trim();
@@ -526,10 +578,19 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderChat() {}
     function renderQuestions() {}
 
-    // ---- THEME TOGGLE ----
+    // ========== QUOTE ==========
+    function showRandomQuote() {
+        if (typeof COMMUNITY_BOARD !== 'undefined' && COMMUNITY_BOARD.quotes) {
+            const quote = COMMUNITY_BOARD.quotes[Math.floor(Math.random() * COMMUNITY_BOARD.quotes.length)];
+            const el = document.getElementById('dailyQuote');
+            if (el) el.innerHTML = `${quote.text}<br><small>– ${quote.author}</small>`;
+        }
+    }
+
+    // ========== THEME ==========
     document.getElementById('themeToggle').addEventListener('click', () => document.body.classList.toggle('dark'));
 
-    // ---- 3D GLOBE ----
+    // ========== GLOBE ==========
     window.initGlobe = async () => {
         const globe = document.getElementById('globeContainer');
         if(!globe || globe.children.length) return;
@@ -545,14 +606,14 @@ document.addEventListener('DOMContentLoaded', () => {
         (function anim(){ requestAnimationFrame(anim); earth.rotation.y+=0.001; renderer.render(scene,cam); })();
     };
 
-    // ---- FOCUS MODE ----
+    // ========== FOCUS MODE ==========
     let focusInterval;
     window.startFocusTimer = (min) => { let sec=min*60; document.getElementById('focusTimer').textContent = `${min}:00`; clearInterval(focusInterval); focusInterval = setInterval(() => { sec--; const m=Math.floor(sec/60), s=sec%60; document.getElementById('focusTimer').textContent = `${m}:${s.toString().padStart(2,'0')}`; if(sec<=0) clearInterval(focusInterval); }, 1000); };
     window.resetFocusTimer = () => { clearInterval(focusInterval); document.getElementById('focusTimer').textContent = '00:00'; };
     window.toggleAmbientSound = () => { const a=document.getElementById('ambientAudio'); a.paused ? a.play() : a.pause(); };
     window.exitFocusMode = () => showPage('dashboard');
 
-    // ---- AUTH (localStorage demo) ----
+    // ========== AUTH ==========
     let authMode = 'login';
     const users = JSON.parse(localStorage.getItem('hub_users')||'{}');
     window.showAuthModal = () => document.getElementById('authModal').style.display = 'flex';
@@ -582,16 +643,51 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // ---- WEATHER & DAILY CHALLENGE ----
-    fetch('https://api.open-meteo.com/v1/forecast?latitude=-29.3132&longitude=27.4833&current_weather=true')
-        .then(r=>r.json()).then(d=> document.getElementById('weatherInfo').textContent = `${d.current_weather.temperature}°C, Wind: ${d.current_weather.windspeed} km/h`)
-        .catch(()=> document.getElementById('weatherInfo').textContent = 'Weather unavailable.');
-    document.getElementById('dailyChallengeContainer').innerHTML = '<p>Solve: 2x + 6 = 14. Answer: x=4</p>';
-    document.getElementById('spotlightResource').innerHTML = '<a href="https://www.khanacademy.org/math" target="_blank">Khan Academy Math</a>';
+    // ========== COUNTDOWN, WEATHER, SPOTLIGHT ==========
+    function updateCountdown() {
+        const target = new Date('2026-10-20T09:00:00').getTime();
+        const diff = target - Date.now();
+        if(diff <= 0) {
+            document.getElementById('countdownDays').textContent='0';
+            document.getElementById('countdownHours').textContent='0';
+            document.getElementById('countdownMins').textContent='0';
+            return;
+        }
+        document.getElementById('countdownDays').textContent = Math.floor(diff / (1000*60*60*24));
+        document.getElementById('countdownHours').textContent = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+        document.getElementById('countdownMins').textContent = Math.floor((diff % (1000*60*60)) / (1000*60));
+    }
+    setInterval(updateCountdown, 60000); updateCountdown();
 
-    // ---- INIT SERVICE WORKER ----
+    async function fetchWeather() {
+        try {
+            const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-29.3132&longitude=27.4833&current_weather=true');
+            const data = await res.json();
+            document.getElementById('weatherInfo').textContent = `${data.current_weather.temperature}°C, Wind: ${data.current_weather.windspeed} km/h`;
+        } catch(e) {
+            document.getElementById('weatherInfo').textContent = 'Weather unavailable.';
+        }
+    }
+    fetchWeather();
+
+    function loadDailyChallenge() {
+        document.getElementById('dailyChallengeContainer').innerHTML = '<p>Solve: 2x + 6 = 14. Answer: x=4</p>';
+    }
+    function loadSpotlight() {
+        document.getElementById('spotlightResource').innerHTML = '<a href="https://www.khanacademy.org/math" target="_blank">Khan Academy Math</a>';
+    }
+
+    // ========== INIT ==========
     if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+    renderResources();
+    renderStudyGuides();
+    renderCommunityBoard();
+    showRandomQuote();
+    updateCountdown();
+    loadDailyChallenge();
+    loadSpotlight();
+    fetchWeather();
 });
 </script>
 </body>
-    </html> 
+</html>
