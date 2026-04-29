@@ -1,0 +1,37 @@
+// ============================================================
+// DAILY CHALLENGE BANK – PART 1 (MATHEMATICS)
+// ============================================================
+const DAILY_CHALLENGE_BANK = [
+
+  // ==================== MATHEMATICS (30 questions) ====================
+  { subject: "Mathematics", question: "Solve for x: 2(x+3) = 14", options: ["x=4", "x=5", "x=3", "x=6"], answer: 0, explanation: "x+3=7 → x=4." },
+  { subject: "Mathematics", question: "Factorise: x² – 9", options: ["(x–3)(x+3)", "(x–9)(x+1)", "(x–3)²", "x(x–9)"], answer: 0, explanation: "Difference of squares." },
+  { subject: "Mathematics", question: "What is the derivative of x²?", options: ["2x", "x", "2", "x²"], answer: 0, explanation: "Power rule." },
+  { subject: "Mathematics", question: "If log₂(32) = x, find x.", options: ["5", "4", "6", "3"], answer: 0, explanation: "2^5 = 32." },
+  { subject: "Mathematics", question: "What is the probability of rolling a sum of 7 with two dice?", options: ["1/6", "1/12", "1/8", "1/4"], answer: 0, explanation: "6 out of 36." },
+  { subject: "Mathematics", question: "Simplify (2x³)²", options: ["4x⁶", "2x⁶", "4x⁵", "2x⁵"], answer: 0, explanation: "Square each part." },
+  { subject: "Mathematics", question: "Solve the inequality: –2x ≤ 8", options: ["x ≥ –4", "x ≤ –4", "x ≥ 4", "x ≤ 4"], answer: 0, explanation: "Divide by –2, flip sign." },
+  { subject: "Mathematics", question: "What is the sum of the interior angles of a hexagon?", options: ["720°", "360°", "540°", "180°"], answer: 0, explanation: "(n–2)×180 = 720°." },
+  { subject: "Mathematics", question: "Find the gradient of the line y = 4x + 7.", options: ["4", "7", "11", "1/4"], answer: 0, explanation: "Coefficient of x." },
+  { subject: "Mathematics", question: "Solve: 3x + 2 > 11", options: ["x > 3", "x < 3", "x > 9", "x < 9"], answer: 0, explanation: "3x > 9 → x > 3." },
+  { subject: "Mathematics", question: "Simplify √48.", options: ["4√3", "16√3", "2√12", "8√3"], answer: 0, explanation: "√48 = √(16×3) = 4√3." },
+  { subject: "Mathematics", question: "Solve: 5x – 3 = 2x + 9", options: ["x=4", "x=3", "x=5", "x=6"], answer: 0, explanation: "3x = 12 → x=4." },
+  { subject: "Mathematics", question: "Expand (x+2)(x–3)", options: ["x²–x–6", "x²–x+6", "x²+x–6", "x²–5x–6"], answer: 0, explanation: "FOIL: x² –3x +2x –6." },
+  { subject: "Mathematics", question: "If f(x)=3x–2, find f(3).", options: ["7", "9", "11", "5"], answer: 0, explanation: "3(3)–2 = 7." },
+  { subject: "Mathematics", question: "What is the area of a circle with radius 7 cm (π≈3.14)?", options: ["153.86 cm²", "150 cm²", "140 cm²", "160 cm²"], answer: 0, explanation: "πr² = 3.14×49." },
+  { subject: "Mathematics", question: "Solve: x² – 5x + 6 = 0", options: ["x=2,3", "x=3,5", "x=1,6", "x=–2,–3"], answer: 0, explanation: "Factorises to (x–2)(x–3)=0." },
+  { subject: "Mathematics", question: "What is the 10th term of the sequence: 2,5,8,11,…?", options: ["29", "30", "32", "28"], answer: 0, explanation: "Arithmetic: 2+(9×3)=29." },
+  { subject: "Mathematics", question: "If 3x = 18, x = ?", options: ["6", "3", "9", "12"], answer: 0, explanation: "Divide both sides by 3." },
+  { subject: "Mathematics", question: "What is the compound interest on M5000 at 10% for 2 years?", options: ["M1050", "M1000", "M1100", "M1150"], answer: 0, explanation: "A=5000(1.1)²=6050, interest=1050." },
+  { subject: "Mathematics", question: "Simplify: 2(3x – 4) + 3(x + 2)", options: ["9x – 2", "9x + 2", "9x – 10", "6x – 1"], answer: 0, explanation: "6x–8+3x+6 = 9x–2." },
+  { subject: "Mathematics", question: "What is the probability of choosing a king from a standard deck of cards?", options: ["1/13", "1/26", "1/52", "4/52"], answer: 0, explanation: "4 kings out of 52 = 1/13." },
+  { subject: "Mathematics", question: "Solve: 4x – 1 ≤ 7", options: ["x ≤ 2", "x ≤ 3", "x ≥ 2", "x ≥ 3"], answer: 0, explanation: "4x ≤ 8 → x ≤ 2." },
+  { subject: "Mathematics", question: "Factorise: 6x² – 9x", options: ["3x(2x–3)", "3(2x²–3x)", "3x(2x+3)", "x(6x–9)"], answer: 0, explanation: "GCF is 3x." },
+  { subject: "Mathematics", question: "If sinθ = 3/5, what is cosθ? (θ acute)", options: ["4/5", "3/4", "5/3", "2/5"], answer: 0, explanation: "Pythagorean identity." },
+  { subject: "Mathematics", question: "Integrate 3x²", options: ["x³ + C", "3x³ + C", "x² + C", "6x + C"], answer: 0, explanation: "Power rule: x³ + C." },
+  { subject: "Mathematics", question: "What is the volume of a sphere with radius 3 cm? (π≈3.14)", options: ["113.04 cm³", "84.78 cm³", "150.72 cm³", "100.48 cm³"], answer: 0, explanation: "4/3πr³ = 4/3×3.14×27 ≈ 113.04." },
+  { subject: "Mathematics", question: "Simplify: 5y – 2y + y", options: ["4y", "3y", "5y", "6y"], answer: 0, explanation: "5-2+1 = 4y." },
+  { subject: "Mathematics", question: "What is 1/4 of 100?", options: ["25", "20", "30", "50"], answer: 0, explanation: "100/4 = 25." },
+  { subject: "Mathematics", question: "Round 36 to the nearest ten.", options: ["40", "30", "35", "36"], answer: 0, explanation: "36 is closer to 40." },
+  { subject: "Mathematics", question: "What is the square root of 144?", options: ["12", "14", "16", "10"], answer: 0, explanation: "12×12=144." }
+]
