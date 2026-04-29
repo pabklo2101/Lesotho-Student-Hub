@@ -3,9 +3,9 @@
   "short_name": "LSHub",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#0a0c14",
-  "theme_color": "#7c3aed",
-  "description": "Free study resources, LGCSE exams, quizzes & tools for Basotho students.",
+  "background_color": "#F8FAFC",
+  "theme_color": "#4F46E5",
+  "description": "Free study resources, LGCSE exams, quizzes, planner, tools, and community for Basotho students.",
   "icons": [
     {
       "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>",
