@@ -427,6 +427,45 @@ document.addEventListener('DOMContentLoaded', () => {
         { title:"Google Scholar", subject:"General", desc:"Academic papers", url:"https://scholar.google.com/" }
     ];
     let resources = [...resourcesBase];
+    // Global Search
+const globalSearch = document.getElementById('globalSearch');
+if (globalSearch) {
+  globalSearch.addEventListener('input', () => {
+    const term = globalSearch.value.toLowerCase();
+    const results = [];
+
+    // Search resources
+    resources.forEach(r => {
+      if (r.title.toLowerCase().includes(term) || r.desc.toLowerCase().includes(term))
+        results.push(`📘 <a href="${r.url}" target="_blank">${r.title}</a> – ${r.desc}`);
+    });
+
+    // Search quizzes
+    if (typeof QUESTION_BANK !== 'undefined') {
+      for (const subj in QUESTION_BANK) {
+        const diffs = QUESTION_BANK[subj];
+        for (const diff in diffs) {
+          diffs[diff].forEach(q => {
+            if (q.q.toLowerCase().includes(term))
+              results.push(`🧠 ${subj} (${diff}): ${q.q}`);
+          });
+        }
+      }
+    }
+
+    // Search community discussions
+    if (typeof COMMUNITY_BOARD !== 'undefined') {
+      COMMUNITY_BOARD.discussions.forEach(disc => {
+        if (disc.topic.toLowerCase().includes(term))
+          results.push(`💬 Discussion: ${disc.topic}`);
+      });
+    }
+
+    document.getElementById('searchResults').innerHTML = 
+      results.length ? results.slice(0,10).map(r => `<div class="card" style="margin-top:0.3rem;">${r}</div>`).join('') 
+      : (term ? '<p>No results found.</p>' : '');
+  });
+    }
     const subjects = ["all","Math","English","Science","Sesotho","History","Tech","General"];
     let currentFilter = 'all';
     const searchInput = document.getElementById('searchInput');
