@@ -13,6 +13,7 @@
         { "imports": { "three": "https://unpkg.com/three@0.126.0/build/three.module.js" } }
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- External question bank -->
     <script src="lgcse_questions.js"></script>
     <style>
         :root {
@@ -32,6 +33,7 @@
             --primary: #6d28d9; --accent: #0891b2; --orb-color1: #6d28d9; --orb-color2: #0891b2; --orb-color3: #d946ef;
             --toast-bg: #ffffff; --chart-grid: rgba(0,0,0,0.1);
         }
+        /* (themes unchanged) */
         body.theme-nature { --primary: #10b981; --accent: #34d399; --orb-color1: #10b981; --orb-color2: #34d399; --orb-color3: #6ee7b7; }
         body.theme-ocean { --primary: #0ea5e9; --accent: #38bdf8; --orb-color1: #0ea5e9; --orb-color2: #38bdf8; --orb-color3: #7dd3fc; }
         body.theme-space { --primary: #a78bfa; --accent: #c4b5fd; --orb-color1: #a78bfa; --orb-color2: #c4b5fd; --orb-color3: #e9d5ff; }
@@ -229,7 +231,8 @@
                 <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;">
                     <select id="quizSubjectSelect" style="padding:0.7rem;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,0.05);color:var(--text);">
                         <option value="math">Mathematics</option><option value="english">English</option><option value="science">Science</option>
-                        <option value="history">History</option><option value="geography">Geography</option><option value="sesotho">Sesotho</option>
+                        <option value="history">History</option><option value="geography">Geography</option>
+                        <option value="sesotho">Sesotho</option>
                         <option value="business">Business</option><option value="tech">Tech/ICT</option>
                     </select>
                     <select id="quizDifficulty" style="padding:0.7rem;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,0.05);color:var(--text);">
@@ -312,33 +315,20 @@
 <div id="toast"></div>
 
 <script>
-// ============================================================
-// ENTIRE APPLICATION LOGIC (uses external QUESTION_BANK)
-// ============================================================
+// ===========================
+// COMPLETE WORKING SCRIPT
+// ===========================
 const curatedResources = [
-    { title:"Khan Academy - Math", subject:"Math", description:"Video lessons & practice from arithmetic to calculus.", url:"https://www.khanacademy.org/math" },
-    { title:"Lesotho Past Papers (LEC)", subject:"Math", description:"Official COSC & Cambridge past exam papers.", url:"https://www.leclesco.com/past-papers/" },
-    { title:"Siyavula Open Textbooks", subject:"Math", description:"Free South African curriculum textbooks.", url:"https://www.siyavula.com/" },
-    { title:"BBC Bitesize - English", subject:"English", description:"Grammar, literature & writing tips.", url:"https://www.bbc.co.uk/bitesize/subjects/z3kw2hv" },
-    { title:"Project Gutenberg", subject:"English", description:"Thousands of free classic books.", url:"https://www.gutenberg.org/" },
-    { title:"Grammarly Handbook", subject:"English", description:"Free writing & grammar guide.", url:"https://www.grammarly.com/handbook" },
-    { title:"PhET Simulations", subject:"Science", description:"Interactive physics, chemistry & biology.", url:"https://phet.colorado.edu/" },
-    { title:"NASA STEM Resources", subject:"Science", description:"Space & engineering activities.", url:"https://www.nasa.gov/stem" },
-    { title:"CK-12 Foundation", subject:"Science", description:"Free science textbooks & adaptive practice.", url:"https://www.ck12.org/" },
-    { title:"Sesotho Online Dictionary", subject:"Sesotho", description:"English-Sesotho translation & definitions.", url:"https://www.sesotho.org/" },
-    { title:"Wikipedia - History of Lesotho", subject:"History", description:"From Basotho kingdom to modern day.", url:"https://en.wikipedia.org/wiki/History_of_Lesotho" },
-    { title:"African Studies Centre", subject:"History", description:"Research papers & archives.", url:"https://www.ascleiden.nl/content/webdossiers/lesotho" },
-    { title:"FreeCodeCamp", subject:"Tech", description:"Learn to code for free.", url:"https://www.freecodecamp.org/" },
-    { title:"Google Scholar", subject:"General", description:"Search academic papers.", url:"https://scholar.google.com/" },
-    { title:"Quizlet", subject:"General", description:"Flashcards & study sets.", url:"https://quizlet.com/" },
-    { title:"Lesotho Times - Education", subject:"General", description:"Local education news.", url:"https://lestimes.com/category/education/" },
-    { title:"National Geographic Education", subject:"Geography", description:"Maps & articles", url:"https://education.nationalgeographic.org/" },
-    { title:"World Bank Data", subject:"Geography", description:"Economic data for Lesotho", url:"https://data.worldbank.org/country/lesotho" },
-    { title:"AccountingCoach", subject:"Business", description:"Free accounting lessons", url:"https://www.accountingcoach.com/" },
-    { title:"Duolingo", subject:"English", description:"English for Sesotho speakers", url:"https://www.duolingo.com/" },
-    { title:"Wolfram Alpha", subject:"Math", description:"Step-by-step solutions", url:"https://www.wolframalpha.com/" },
-    { title:"Brilliant.org", subject:"Math", description:"Interactive problem solving", url:"https://brilliant.org/" },
-    { title:"Coursera - English Composition", subject:"English", description:"University writing course", url:"https://www.coursera.org/courses?query=english%20composition" }
+    { title:"Khan Academy - Math", subject:"Math", description:"Video lessons & practice", url:"https://www.khanacademy.org/math" },
+    { title:"Lesotho Past Papers (LEC)", subject:"Math", description:"COSC past exams", url:"https://www.leclesco.com/past-papers/" },
+    { title:"Siyavula Open Textbooks", subject:"Math", description:"Free SA curriculum books", url:"https://www.siyavula.com/" },
+    { title:"BBC Bitesize - English", subject:"English", description:"Grammar, literature", url:"https://www.bbc.co.uk/bitesize/subjects/z3kw2hv" },
+    { title:"Project Gutenberg", subject:"English", description:"Free classic books", url:"https://www.gutenberg.org/" },
+    { title:"PhET Simulations", subject:"Science", description:"Physics/Chem/Bio", url:"https://phet.colorado.edu/" },
+    { title:"Sesotho Online Dictionary", subject:"Sesotho", description:"Translations", url:"https://www.sesotho.org/" },
+    { title:"Wikipedia - History of Lesotho", subject:"History", description:"Basotho kingdom", url:"https://en.wikipedia.org/wiki/History_of_Lesotho" },
+    { title:"FreeCodeCamp", subject:"Tech", description:"Learn to code", url:"https://www.freecodecamp.org/" },
+    { title:"Google Scholar", subject:"General", description:"Academic papers", url:"https://scholar.google.com/" }
 ];
 const subjectsList = ["all","Math","English","Science","Sesotho","History","Geography","Business","Tech","General"];
 let resources = [...curatedResources];
@@ -359,34 +349,32 @@ let quizQuestions = [], quizIdx = 0, quizScore = 0, quizTimePerQ = 0, quizQTimer
 let globalChart = null;
 let streakDays = parseInt(localStorage.getItem('streakDays') || '0');
 let lastStudyDate = localStorage.getItem('lastStudyDate');
+let chatMessages = JSON.parse(localStorage.getItem('chatMessages') || '[]');
 
 function $(sel) { return document.querySelector(sel); }
 function saveUserData() { if(!currentUser) return; if(!allUsers[currentUser]) allUsers[currentUser] = {}; allUsers[currentUser].bookmarks = bookmarks; allUsers[currentUser].ratings = ratings; allUsers[currentUser].tasks = plannerTasks; localStorage.setItem('hub_users', JSON.stringify(allUsers)); }
 function shuffleArray(arr) { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr; }
 
-// ====== XP, LEVEL, PET ======
+// XP / Level / Pet
 function updateXP(amount) { userXP += amount; localStorage.setItem('userXP', userXP); recalcLevel(); }
 function recalcLevel() {
     userLevel = Math.floor(Math.sqrt(userXP / 100)) + 1;
-    const nextXP = Math.pow(userLevel, 2) * 100;
-    const prevXP = Math.pow(userLevel-1, 2) * 100;
-    const progress = ((userXP - prevXP) / (nextXP - prevXP)) * 100;
     document.getElementById('userLevel').textContent = userLevel;
     document.getElementById('userXP').textContent = userXP;
-    document.getElementById('xpFill').style.width = Math.min(100, progress) + '%';
+    document.getElementById('xpFill').style.width = Math.min(100, ((userXP - Math.pow(userLevel-1,2)*100) / (Math.pow(userLevel,2)*100 - Math.pow(userLevel-1,2)*100)) * 100) + '%';
     const pet = document.getElementById('petDisplay');
-    if(userLevel >= 15) { pet.textContent = '🦉'; } else if(userLevel >= 10) { pet.textContent = '🐶'; } else if(userLevel >= 5) { pet.textContent = '🐱'; } else { pet.textContent = '🐣'; }
+    if(userLevel >= 15) pet.textContent = '🦉';
+    else if(userLevel >= 10) pet.textContent = '🐶';
+    else if(userLevel >= 5) pet.textContent = '🐱';
+    else pet.textContent = '🐣';
     document.getElementById('streakCount').textContent = streakDays;
-    const messages = ["Keep going!","You're doing great!","Study time!","Wow, you're smart!","Let's ace that exam!"];
-    document.getElementById('petSpeech').textContent = messages[Math.floor(Math.random()*messages.length)];
     updateLeaderboard();
-    if(progress >= 100) { showToast(`🎉 Level ${userLevel} reached!`); }
 }
 function updateStreak() {
     const today = new Date().toISOString().slice(0,10);
     if(lastStudyDate !== today) {
-        if(lastStudyDate) { const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0,10); streakDays = (lastStudyDate === yesterday) ? streakDays + 1 : 1; }
-        else { streakDays = 1; }
+        if(lastStudyDate) streakDays = (lastStudyDate === new Date(Date.now() - 86400000).toISOString().slice(0,10)) ? streakDays + 1 : 1;
+        else streakDays = 1;
         lastStudyDate = today;
         localStorage.setItem('lastStudyDate', today);
         localStorage.setItem('streakDays', streakDays);
@@ -394,14 +382,10 @@ function updateStreak() {
     document.getElementById('streakCount').textContent = streakDays;
 }
 
-// ====== LEADERBOARD ======
+// Leaderboard
 function updateLeaderboard() {
     let lb = JSON.parse(localStorage.getItem('leaderboard') || '[]');
     if(currentUser) { const existing = lb.find(e => e.user === currentUser); if(existing) existing.xp = userXP; else lb.push({user: currentUser, xp: userXP}); lb.sort((a,b) => b.xp - a.xp); lb = lb.slice(0, 10); localStorage.setItem('leaderboard', JSON.stringify(lb)); }
-    renderLeaderboard();
-}
-function renderLeaderboard() {
-    const lb = JSON.parse(localStorage.getItem('leaderboard') || '[]');
     const container = document.getElementById('leaderboardTable');
     if(!lb.length) { container.innerHTML = '<p>No entries yet.</p>'; return; }
     let html = '<table class="leaderboard-table"><tr><th>#</th><th>User</th><th>XP</th></tr>';
@@ -409,28 +393,30 @@ function renderLeaderboard() {
     html += '</table>'; container.innerHTML = html;
 }
 
-// ====== RESOURCES ======
+// Resources Rendering
 function renderResources() {
     const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-    const filtered = resources.filter(r => { const matchSubj = currentFilter === 'all' || r.subject === currentFilter; return matchSubj && (!searchTerm || r.title.toLowerCase().includes(searchTerm) || r.subject.toLowerCase().includes(searchTerm) || r.description.toLowerCase().includes(searchTerm)); });
+    const filtered = resources.filter(r => (currentFilter === 'all' || r.subject === currentFilter) && (!searchTerm || r.title.toLowerCase().includes(searchTerm) || r.subject.toLowerCase().includes(searchTerm) || r.description.toLowerCase().includes(searchTerm)));
     const container = document.getElementById('resourcesContainer');
     if(!filtered.length) { container.innerHTML = '<p>📭 No resources found.</p>'; return; }
     container.innerHTML = filtered.map(r => {
         const avg = (allRatings[r.title] && allRatings[r.title].count) ? (allRatings[r.title].sum/allRatings[r.title].count).toFixed(1) : '';
         const bm = bookmarks.includes(r.title);
         const safe = r.title.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-        return `<div class="card"><span class="badge">${r.subject}</span><h3>${r.title} ${avg ? `⭐${avg}` : ''}</h3><p>${r.description}</p><div style="display:flex;justify-content:space-between;"><a href="${r.url}" target="_blank" class="btn" style="padding:0.4rem 1rem;">Open</a><div><i class="fas fa-star" style="color:${bm?'gold':'var(--text-secondary)'};cursor:pointer;" onclick="toggleBookmark('${safe}')"></i> ${[1,2,3,4,5].map(n => `<i class="fas fa-star" onclick="rate('${safe}',${n})" style="color:${n <= (ratings[r.title]||0) ? '#fbbf24' : '#4b5563'};cursor:pointer;"></i>`).join('')}</div></div><div style="border-top:1px solid var(--border);padding-top:0.5rem;margin-top:0.5rem"><input type="text" placeholder="Comment..." onkeypress="if(event.key==='Enter') addComment('${safe}', this.value); this.value='';" style="width:100%;padding:0.5rem;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,0.05);color:var(--text);"><div style="max-height:60px;overflow-y:auto;font-size:0.8rem;">${(hubComments[r.title]||[]).map(c=>`<div>• ${c}</div>`).join('')}</div></div></div>`;
+        return `<div class="card"><span class="badge">${r.subject}</span><h3>${r.title} ${avg ? `⭐${avg}` : ''}</h3><p>${r.description}</p><div style="display:flex;justify-content:space-between;"><a href="${r.url}" target="_blank" class="btn" style="padding:0.4rem 1rem;">Open</a><div><i class="fas fa-star" style="color:${bm?'gold':'var(--text-secondary)'};cursor:pointer;" onclick="toggleBookmark('${safe}')"></i> ${[1,2,3,4,5].map(n => `<i class="fas fa-star" onclick="rate('${safe}',${n})" style="color:${n <= (ratings[r.title]||0) ? '#fbbf24' : '#4b5563'};cursor:pointer;"></i>`).join('')}</div></div><div style="border-top:1px solid var(--border);padding-top:0.5rem;margin-top:0.5rem"><input type="text" placeholder="Comment..." onkeypress="if(event.key==='Enter') addComment('${safe}', this.value); this.value='';" style="width:100%;padding:0.5rem;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,0.05);color:var(--text);"><div style="max-height:60px;overflow-y:auto;">${(hubComments[r.title]||[]).map(c=>`<div>• ${c}</div>`).join('')}</div></div></div>`;
     }).join('');
 }
 window.toggleBookmark = (title) => { if(!currentUser) return alert('Login first.'); if(bookmarks.includes(title)) bookmarks = bookmarks.filter(t=>t!==title); else bookmarks.push(title); saveUserData(); renderResources(); };
 window.rate = (title, val) => { if(!currentUser) return alert('Login required.'); ratings[title] = val; if(!allRatings[title]) allRatings[title] = { sum:0, count:0, voters:{} }; const prev = allRatings[title].voters[currentUser] || 0; allRatings[title].sum = allRatings[title].sum - prev + val; if(!allRatings[title].voters[currentUser]) allRatings[title].count++; allRatings[title].voters[currentUser] = val; localStorage.setItem('hub_ratings', JSON.stringify(allRatings)); saveUserData(); renderResources(); };
 window.addComment = (title, text) => { if(!text.trim()) return; if(!hubComments[title]) hubComments[title] = []; hubComments[title].push((currentUser||'Anonymous')+': '+text); localStorage.setItem('hub_comments', JSON.stringify(hubComments)); renderResources(); };
+
+// Filters
 document.getElementById('searchInput').addEventListener('input', renderResources);
 const pillsContainer = document.getElementById('filterPills');
 pillsContainer.innerHTML = subjectsList.map(s => `<span class="pill ${s==='all'?'active':''}" data-subj="${s}">${s==='all'?'All':s}</span>`).join('');
 pillsContainer.querySelectorAll('.pill').forEach(pill => { pill.addEventListener('click', function() { pillsContainer.querySelectorAll('.pill').forEach(p => p.classList.remove('active')); this.classList.add('active'); currentFilter = this.dataset.subj; renderResources(); }); });
 
-// ====== PLANNER ======
+// Planner
 function renderTasks() {
     const list = document.getElementById('taskList');
     if(!plannerTasks.length) { list.innerHTML = '<p>No tasks yet.</p>'; return; }
@@ -445,7 +431,7 @@ window.startPomodoro = (min) => { if(pomodoroInterval) clearInterval(pomodoroInt
 window.resetPomodoro = () => { if(pomodoroInterval) clearInterval(pomodoroInterval); pomodoroRemaining = pomodoroSeconds; updatePomodoroDisplay(); };
 window.sharePomodoro = () => { const bc = new BroadcastChannel('shared_pomodoro'); bc.postMessage({ type: 'start', duration: 25 }); showToast('Shared Pomodoro room started!'); bc.onmessage = (e) => { if(e.data.type === 'start') startPomodoro(e.data.duration); }; };
 
-// ====== QUIZZES ======
+// Quizzes
 window.startQuiz = () => {
     const subj = document.getElementById('quizSubjectSelect').value;
     const diff = document.getElementById('quizDifficulty').value;
@@ -479,18 +465,55 @@ function showQuizQuestion() {
 window.answerQuiz = (chosen) => { if(quizQTimer) clearTimeout(quizQTimer); const container = document.getElementById('quizContainer'); const correct = container._correctIndex; const explanation = container._explanation || ''; const opts = document.querySelectorAll('.quiz-option'); opts.forEach((el,i) => { el.style.pointerEvents = 'none'; if(i === correct) el.classList.add('correct'); else if(i === chosen) el.classList.add('wrong'); }); if(chosen === correct) { quizScore++; document.getElementById('quizFeedback').innerHTML = `<span style="color:#10b981;">✅ Correct! ${explanation}</span>`; } else { document.getElementById('quizFeedback').innerHTML = `<span style="color:#ef4444;">❌ Wrong. ${explanation}</span>`; } quizIdx++; setTimeout(showQuizQuestion, 2000); };
 window.startCustomQuiz = () => { const num = parseInt(document.getElementById('customQuizNum').value) || 10; const subj = document.getElementById('quizSubjectSelect').value; const diff = document.getElementById('quizDifficulty').value; let bank = QUESTION_BANK[subj]?.[diff] || []; if(!bank.length) { alert('No questions.'); return; } quizQuestions = shuffleArray(bank).slice(0, num); quizIdx = 0; quizScore = 0; quizTimePerQ = 0; showQuizQuestion(); };
 
-// ====== ACHIEVEMENTS ======
-function updateAchievements() { const container = document.getElementById('achievementsContainer'); if(!container) return; const scores = JSON.parse(localStorage.getItem('quizScores')||'[]'); const totalQuizzes = scores.length; let html = '<div style="display:flex;flex-wrap:wrap;gap:0.5rem;">'; if(totalQuizzes >= 5) html += '<span class="achievement-badge"><i class="fas fa-medal"></i> Quiz Master</span>'; if(scores.filter(s=>s===100).length > 0) html += '<span class="achievement-badge"><i class="fas fa-trophy"></i> Perfect Score</span>'; if(plannerTasks.filter(t=>t.done).length >= 10) html += '<span class="achievement-badge"><i class="fas fa-check-double"></i> Task Champion</span>'; if(userLevel >= 5) html += '<span class="achievement-badge"><i class="fas fa-star"></i> High Achiever</span>'; if(totalQuizzes === 0) html = '<p>Complete quizzes and tasks to earn achievements!</p>'; html += '</div>'; container.innerHTML = html; }
+// Achievements
+function updateAchievements() {
+    const container = document.getElementById('achievementsContainer');
+    if(!container) return;
+    const scores = JSON.parse(localStorage.getItem('quizScores')||'[]');
+    const totalQuizzes = scores.length;
+    let html = '<div style="display:flex;flex-wrap:wrap;gap:0.5rem;">';
+    if(totalQuizzes >= 5) html += '<span class="achievement-badge"><i class="fas fa-medal"></i> Quiz Master</span>';
+    if(scores.filter(s=>s===100).length > 0) html += '<span class="achievement-badge"><i class="fas fa-trophy"></i> Perfect Score</span>';
+    if(plannerTasks.filter(t=>t.done).length >= 10) html += '<span class="achievement-badge"><i class="fas fa-check-double"></i> Task Champion</span>';
+    if(userLevel >= 5) html += '<span class="achievement-badge"><i class="fas fa-star"></i> High Achiever</span>';
+    if(totalQuizzes === 0) html = '<p>Complete quizzes and tasks to earn achievements!</p>';
+    html += '</div>'; container.innerHTML = html;
+}
 
-// ====== CHART ======
-function renderChart() { const scores = JSON.parse(localStorage.getItem('quizScores') || '[]').slice(-10); const ctx = document.getElementById('progressChart')?.getContext('2d'); if(!ctx) return; if(globalChart) globalChart.destroy(); globalChart = new Chart(ctx, { type: 'line', data: { labels: scores.map((_,i) => `Q${i+1}`), datasets: [{ label: 'Score %', data: scores, borderColor: '#7c3aed', tension: 0.1 }] }, options: { scales: { y: { beginAtZero: true, max: 100 } } } }); }
+// Chart
+function renderChart() {
+    const scores = JSON.parse(localStorage.getItem('quizScores') || '[]').slice(-10);
+    const ctx = document.getElementById('progressChart')?.getContext('2d');
+    if(!ctx) return;
+    if(globalChart) globalChart.destroy();
+    globalChart = new Chart(ctx, { type: 'line', data: { labels: scores.map((_,i) => `Q${i+1}`), datasets: [{ label: 'Score %', data: scores, borderColor: '#7c3aed', tension: 0.1 }] }, options: { scales: { y: { beginAtZero: true, max: 100 } } } });
+}
 
-// ====== DAILY CHALLENGE & SPOTLIGHT ======
-function loadDailyChallenge() { const today = new Date().toISOString().slice(0,10); const stored = JSON.parse(localStorage.getItem('dailyChallenge') || 'null'); if(!stored || stored.date !== today) { const subjects = Object.keys(QUESTION_BANK); const subj = subjects[Math.floor(Math.random()*subjects.length)]; const pool = QUESTION_BANK[subj]?.medium || []; if(pool.length) { const q = pool[Math.floor(Math.random()*pool.length)]; const challenge = { date: today, question: q, completed: false }; localStorage.setItem('dailyChallenge', JSON.stringify(challenge)); document.getElementById('dailyChallengeContainer').innerHTML = `<p><strong>${subj}:</strong> ${q.q}</p><button class="btn" onclick="answerDaily('${q.ans}')">Submit</button>`; } else { document.getElementById('dailyChallengeContainer').innerHTML = '<p>No challenge today.</p>'; } } else { document.getElementById('dailyChallengeContainer').innerHTML = stored.completed ? '<p>✅ Challenge completed!</p>' : `<p><strong>${stored.question.q}</strong></p><button class="btn" onclick="answerDaily('${stored.question.ans}')">Submit</button>`; } }
+// Daily Challenge
+function loadDailyChallenge() {
+    const today = new Date().toISOString().slice(0,10);
+    const stored = JSON.parse(localStorage.getItem('dailyChallenge') || 'null');
+    if(!stored || stored.date !== today) {
+        const subjects = Object.keys(QUESTION_BANK);
+        const subj = subjects[Math.floor(Math.random()*subjects.length)];
+        const pool = QUESTION_BANK[subj]?.medium || [];
+        if(pool.length) {
+            const q = pool[Math.floor(Math.random()*pool.length)];
+            localStorage.setItem('dailyChallenge', JSON.stringify({ date: today, question: q, completed: false }));
+            document.getElementById('dailyChallengeContainer').innerHTML = `<p><strong>${subj}:</strong> ${q.q}</p><button class="btn" onclick="answerDaily('${q.ans}')">Submit</button>`;
+        } else {
+            document.getElementById('dailyChallengeContainer').innerHTML = '<p>No challenge today.</p>';
+        }
+    } else {
+        document.getElementById('dailyChallengeContainer').innerHTML = stored.completed ? '<p>✅ Challenge completed!</p>' : `<p><strong>${stored.question.q}</strong></p><button class="btn" onclick="answerDaily('${stored.question.ans}')">Submit</button>`;
+    }
+}
 window.answerDaily = (correctAns) => { const stored = JSON.parse(localStorage.getItem('dailyChallenge')); if(!stored || stored.completed) return; const userAns = prompt('Enter answer index (0-3):'); if(userAns === correctAns) { updateXP(50); showToast('🎉 Daily challenge complete! +50 XP'); } else { showToast('❌ Wrong answer. Try again tomorrow!'); } stored.completed = true; localStorage.setItem('dailyChallenge', JSON.stringify(stored)); loadDailyChallenge(); };
+
+// Spotlight
 function loadSpotlight() { const res = curatedResources[Math.floor(Math.random()*curatedResources.length)]; document.getElementById('spotlightResource').innerHTML = `<p><strong>${res.title}</strong> – ${res.description}</p><a href="${res.url}" target="_blank" class="btn">Open</a>`; }
 
-// ====== TOOLS: CALCULATOR, CONVERTER, FLASHCARDS, PDF ======
+// Tools: Calculator, Converter, Flashcards, PDF
 let calcExpr = '';
 window.calcInput = (val) => { calcExpr += val; document.getElementById('calcDisplay').value = calcExpr; };
 window.calcEvaluate = () => { try { calcExpr = eval(calcExpr).toString(); } catch(e) { calcExpr = 'Error'; } document.getElementById('calcDisplay').value = calcExpr; };
@@ -498,35 +521,34 @@ window.calcClear = () => { calcExpr = ''; document.getElementById('calcDisplay')
 window.convertUnit = () => { const val = parseFloat(document.getElementById('convertInput').value); const type = document.getElementById('convertType').value; let result; if(type === 'm_to_cm') result = val * 100 + ' cm'; else if(type === 'cm_to_m') result = val / 100 + ' m'; else if(type === 'km_to_miles') result = (val * 0.621371).toFixed(2) + ' miles'; document.getElementById('convertResult').textContent = 'Result: ' + (result || 'Invalid'); };
 const flashcards = [ { front: "What is H2O?", back: "Water" }, { front: "Capital of Lesotho?", back: "Maseru" }, { front: "Solve 2x+6=14", back: "x=4" } ];
 let currentFlashcard = 0, flashcardFlipped = false;
-function renderFlashcard() { const card = flashcards[currentFlashcard]; document.getElementById('flashcardQuestion').textContent = flashcardFlipped ? card.back : card.front; }
+function renderFlashcard() { document.getElementById('flashcardQuestion').textContent = flashcardFlipped ? flashcards[currentFlashcard].back : flashcards[currentFlashcard].front; }
 window.flipFlashcard = () => { flashcardFlipped = !flashcardFlipped; renderFlashcard(); };
 document.addEventListener('keydown', (e) => { if(e.key === 'ArrowRight') { flashcardFlipped=false; currentFlashcard=(currentFlashcard+1)%flashcards.length; renderFlashcard(); } });
-document.getElementById('pdfInput').addEventListener('change', function(e) { const file = e.target.files[0]; if(file) { const url = URL.createObjectURL(file); document.getElementById('pdfViewer').src = url; } });
+document.getElementById('pdfInput').addEventListener('change', function(e) { const file = e.target.files[0]; if(file) { document.getElementById('pdfViewer').src = URL.createObjectURL(file); } });
 
-// ====== LEARN PAGE ======
-window.showFormulaSheet = (subject) => { const sheets = { math: `Quadratic formula: x = [-b ± √(b²-4ac)] / 2a\nPythagoras: c² = a² + b²`, physics: `F = ma, E = mc², V = IR` }; alert(sheets[subject] || 'Formula sheet unavailable.'); };
+// Learn page
+window.showFormulaSheet = (subject) => { alert({ math: `Quadratic formula: x = [-b ± √(b²-4ac)] / 2a\nPythagoras: c² = a² + b²`, physics: `F = ma, E = mc², V = IR` }[subject] || 'Formula sheet unavailable.'); };
 function renderPeriodicTable() { const container = document.getElementById('periodicTableContainer'); container.innerHTML = '<div style="display:flex;flex-wrap:wrap;">'; 'H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca'.split(' ').forEach(el => { container.innerHTML += `<span class="pill" onclick="alert('Element: ${el}')">${el}</span>`; }); container.innerHTML += '</div>'; }
-function renderTimeline() { const events = [ {year: "1820s", text: "Moshoeshoe I unites Basotho clans"}, {year: "1868", text: "Basutoland becomes British protectorate"}, {year: "1966", text: "Independence as Lesotho"} ]; const html = events.map(e => `<div style="display:flex;gap:1rem;margin:0.5rem 0;"><div style="font-weight:700;color:var(--primary);">${e.year}</div><div>${e.text}</div></div>`).join(''); document.getElementById('historyTimeline').innerHTML = html; }
-function renderAcademicCalendar() { const events = [{ date: "2026-10-20", text: "COSC Exams Begin" }, { date: "2026-08-15", text: "Mid-term break" }]; const html = events.map(e => `<div>📅 ${e.date}: ${e.text}</div>`).join(''); document.getElementById('academicCalendar').innerHTML = html || '<p>No upcoming events.</p>'; }
+function renderTimeline() { const events = [ {year:"1820s", text:"Moshoeshoe I unites Basotho clans"}, {year:"1868", text:"Basutoland becomes British protectorate"}, {year:"1966", text:"Independence as Lesotho"} ]; document.getElementById('historyTimeline').innerHTML = events.map(e => `<div style="display:flex;gap:1rem;margin:0.5rem 0;"><div style="font-weight:700;color:var(--primary);">${e.year}</div><div>${e.text}</div></div>`).join(''); }
+function renderAcademicCalendar() { const events = [{ date:"2026-10-20", text:"COSC Exams Begin" }, { date:"2026-08-15", text:"Mid-term break" }]; document.getElementById('academicCalendar').innerHTML = events.map(e => `<div>📅 ${e.date}: ${e.text}</div>`).join('') || '<p>No upcoming events.</p>'; }
 
-// ====== FOCUS MODE ======
+// Focus mode
 window.startFocusTimer = (min) => { let seconds = min*60; document.getElementById('focusTimer').textContent = `${min}:00`; if(focusInterval) clearInterval(focusInterval); focusInterval = setInterval(() => { seconds--; const m = Math.floor(seconds/60); const s = seconds%60; document.getElementById('focusTimer').textContent = `${m}:${s.toString().padStart(2,'0')}`; if(seconds <= 0) { clearInterval(focusInterval); showToast('Focus session complete!'); } }, 1000); };
 window.resetFocusTimer = () => { if(focusInterval) clearInterval(focusInterval); document.getElementById('focusTimer').textContent = '00:00'; };
 window.exitFocusMode = () => { document.body.classList.remove('focus-mode'); document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active')); document.querySelector('[data-page="dashboard"]').classList.add('active'); document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-dashboard').classList.add('active'); };
 window.toggleAmbientSound = () => { const audio = document.getElementById('ambientAudio'); if(ambientPlaying) { audio.pause(); ambientPlaying = false; document.getElementById('ambientBtn').innerHTML = '<i class="fas fa-music"></i> Play Ambient'; } else { audio.play(); ambientPlaying = true; document.getElementById('ambientBtn').innerHTML = '<i class="fas fa-pause"></i> Pause Ambient'; } };
 
-// ====== 3D GLOBE ======
-async function initGlobe() { if(!document.getElementById('page-world')?.classList.contains('active')) return; const container = document.getElementById('globeContainer'); if(container.children.length) return; const THREE = await import('three'); const scene = new THREE.Scene(); const camera = new THREE.PerspectiveCamera(45, container.clientWidth/container.clientHeight, 0.1, 1000); const renderer = new THREE.WebGLRenderer({antialias: true, alpha: true}); renderer.setSize(container.clientWidth, container.clientHeight); container.appendChild(renderer.domElement); const geometry = new THREE.SphereGeometry(1, 32, 32); const material = new THREE.MeshPhongMaterial({map: new THREE.TextureLoader().load('https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg')}); const earth = new THREE.Mesh(geometry, material); scene.add(earth); scene.add(new THREE.AmbientLight(0x404040)); const light = new THREE.DirectionalLight(0xffffff, 1); light.position.set(5,3,5); scene.add(light); camera.position.z = 2.5; function animate() { requestAnimationFrame(animate); earth.rotation.y += 0.001; renderer.render(scene, camera); } animate(); }
+// 3D Globe
+async function initGlobe() { if(!document.getElementById('page-world')?.classList.contains('active')) return; const container = document.getElementById('globeContainer'); if(container.children.length) return; const THREE = await import('three'); const scene = new THREE.Scene(); const camera = new THREE.PerspectiveCamera(45, container.clientWidth/container.clientHeight, 0.1, 1000); const renderer = new THREE.WebGLRenderer({antialias: true, alpha: true}); renderer.setSize(container.clientWidth, container.clientHeight); container.appendChild(renderer.domElement); const earth = new THREE.Mesh(new THREE.SphereGeometry(1,32,32), new THREE.MeshPhongMaterial({map: new THREE.TextureLoader().load('https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg')})); scene.add(earth); scene.add(new THREE.AmbientLight(0x404040)); const light = new THREE.DirectionalLight(0xffffff, 1); light.position.set(5,3,5); scene.add(light); camera.position.z = 2.5; function animate() { requestAnimationFrame(animate); earth.rotation.y += 0.001; renderer.render(scene, camera); } animate(); }
 
-// ====== COMMUNITY ======
-let chatMessages = JSON.parse(localStorage.getItem('chatMessages') || '[]');
+// Community
 function renderChat() { const box = document.getElementById('chatMessages'); box.innerHTML = chatMessages.map(m => `<div><strong>${m.user}:</strong> ${m.text}</div>`).join(''); box.scrollTop = box.scrollHeight; }
 window.sendChat = () => { const text = document.getElementById('chatInput').value.trim(); if(!text || !currentUser) return; chatMessages.push({user: currentUser, text, time: Date.now()}); localStorage.setItem('chatMessages', JSON.stringify(chatMessages)); renderChat(); document.getElementById('chatInput').value = ''; };
 window.postQuestion = () => { const q = document.getElementById('questionInput').value.trim(); if(!q) return; const questions = JSON.parse(localStorage.getItem('questionBoard') || '[]'); questions.push({text: q, time: Date.now()}); localStorage.setItem('questionBoard', JSON.stringify(questions)); renderQuestions(); document.getElementById('questionInput').value = ''; };
 function renderQuestions() { const questions = JSON.parse(localStorage.getItem('questionBoard') || '[]'); document.getElementById('questionList').innerHTML = questions.map(q => `<div>• ${q.text}</div>`).join(''); }
-window.reportBrokenLink = () => { const link = document.getElementById('brokenLinkInput').value.trim(); if(link) { const reports = JSON.parse(localStorage.getItem('brokenLinks') || '[]'); reports.push(link); localStorage.setItem('brokenLinks', JSON.stringify(reports)); showToast('Report submitted, thank you!'); document.getElementById('brokenLinkInput').value = ''; } };
+window.reportBrokenLink = () => { const link = document.getElementById('brokenLinkInput').value.trim(); if(link) { const reports = JSON.parse(localStorage.getItem('brokenLinks') || '[]'); reports.push(link); localStorage.setItem('brokenLinks', JSON.stringify(reports)); showToast('Report submitted!'); document.getElementById('brokenLinkInput').value = ''; } };
 
-// ====== AUTH ======
+// Auth
 window.showAuthModal = () => { document.getElementById('authModal').style.display = 'flex'; };
 window.hideAuthModal = () => { document.getElementById('authModal').style.display = 'none'; };
 window.toggleAuthMode = () => { authMode = authMode==='login'?'register':'login'; document.getElementById('authTitle').textContent = authMode==='login'?'Login':'Register'; document.getElementById('authActionBtn').textContent = authMode==='login'?'Login':'Register'; };
@@ -534,41 +556,57 @@ document.getElementById('authActionBtn').addEventListener('click', () => { const
 window.logout = () => { currentUser=null; localStorage.removeItem('hub_user'); bookmarks=[]; ratings={}; plannerTasks=[]; renderAuthUI(); renderResources(); renderTasks(); updateLeaderboard(); };
 function renderAuthUI() { const panel = document.getElementById('userPanel'); if(currentUser) { panel.innerHTML = `<div style="font-weight:600;">👤 ${currentUser}</div><button class="btn btn-outline" onclick="logout()" style="margin-top:0.5rem;">Logout</button>`; } else { panel.innerHTML = `<button class="btn" onclick="showAuthModal()"><i class="fas fa-sign-in-alt"></i> Login/Register</button>`; } }
 
-// ====== NAVIGATION ======
-document.querySelectorAll('.nav-item').forEach(item => { if(item.dataset.page) { item.addEventListener('click', (e) => { e.preventDefault(); document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active')); item.classList.add('active'); document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); const target = document.getElementById('page-'+item.dataset.page); if(target) target.classList.add('active'); if(item.dataset.page === 'focus') document.body.classList.add('focus-mode'); else document.body.classList.remove('focus-mode'); if(item.dataset.page === 'dashboard') { updateCountdown(); loadDailyChallenge(); loadSpotlight(); updateLeaderboard(); renderChart(); fetchWeather(); } if(item.dataset.page === 'learn') { renderTimeline(); renderPeriodicTable(); renderAcademicCalendar(); } if(item.dataset.page === 'planner') renderTasks(); if(item.dataset.page === 'resources') renderResources(); if(item.dataset.page === 'community') { renderChat(); renderQuestions(); } if(item.dataset.page === 'world') setTimeout(initGlobe, 100); if(item.dataset.page === 'achievements') updateAchievements(); }); } });
+// Navigation
+document.querySelectorAll('.nav-item').forEach(item => {
+    if(item.dataset.page) {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const target = document.getElementById('page-'+item.dataset.page);
+            if(target) target.classList.add('active');
+            if(item.dataset.page === 'focus') document.body.classList.add('focus-mode'); else document.body.classList.remove('focus-mode');
+            if(item.dataset.page === 'dashboard') { updateCountdown(); loadDailyChallenge(); loadSpotlight(); updateLeaderboard(); renderChart(); fetchWeather(); }
+            if(item.dataset.page === 'learn') { renderTimeline(); renderPeriodicTable(); renderAcademicCalendar(); }
+            if(item.dataset.page === 'tools') { renderFlashcard(); }
+            if(item.dataset.page === 'community') { renderChat(); renderQuestions(); }
+            if(item.dataset.page === 'world') setTimeout(initGlobe, 100);
+            if(item.dataset.page === 'achievements') updateAchievements();
+        });
+    }
+});
 
-// ====== THEMES ======
+// Themes
 const themes = ['default','light','nature','ocean','space','sunset','berry','mono','gold','forest','lavender','cherry','teal','retro','cyberpunk','pastel','neon'];
-function applyTheme(theme) { document.body.classList.remove(...themes.filter(t => t!=='default' && t!=='light').map(t => `theme-${t}`)); if(theme === 'default') { document.body.classList.remove('light'); localStorage.setItem('hub_theme', 'default'); } else if(theme === 'light') { document.body.classList.add('light'); localStorage.setItem('hub_theme', 'light'); } else { document.body.classList.remove('light'); document.body.classList.add(`theme-${theme}`); localStorage.setItem('hub_theme', `theme-${theme}`); } updateThemeUI(); }
-function updateThemeUI() { const current = localStorage.getItem('hub_theme') || 'default'; document.getElementById('themeSelector').innerHTML = `<i class="fas fa-palette"></i> Theme: ${current.replace('theme-','')}`; }
-document.getElementById('themeSelector').addEventListener('click', () => { const current = localStorage.getItem('hub_theme') || 'default'; const index = themes.indexOf(current.replace('theme-','')); const next = themes[(index+1) % themes.length]; applyTheme(next); });
+function applyTheme(theme) { document.body.classList.remove(...themes.filter(t => t!=='default' && t!=='light').map(t => `theme-${t}`)); if(theme === 'default') { document.body.classList.remove('light'); localStorage.setItem('hub_theme', 'default'); } else if(theme === 'light') { document.body.classList.add('light'); localStorage.setItem('hub_theme', 'light'); } else { document.body.classList.remove('light'); document.body.classList.add(`theme-${theme}`); localStorage.setItem('hub_theme', `theme-${theme}`); } document.getElementById('themeSelector').innerHTML = `<i class="fas fa-palette"></i> Theme: ${theme.replace('theme-','')}`; }
+document.getElementById('themeSelector').addEventListener('click', () => { const current = localStorage.getItem('hub_theme') || 'default'; const index = themes.indexOf(current.replace('theme-','')); applyTheme(themes[(index+1) % themes.length]); });
 applyTheme(localStorage.getItem('hub_theme') || 'default');
 
-// ====== NOTIFICATIONS ======
-let notifEnabled = false;
-document.getElementById('notifToggle').addEventListener('click', () => { if(!('Notification' in window)) return alert('Notifications not supported'); if(Notification.permission === 'granted') { notifEnabled = true; showToast('Notifications enabled!'); } else { Notification.requestPermission().then(perm => { if(perm === 'granted') { notifEnabled = true; showToast('Notifications enabled!'); } }); } });
+// Notifications
+document.getElementById('notifToggle').addEventListener('click', () => { if(Notification.permission === 'granted') { showToast('Notifications already enabled!'); } else { Notification.requestPermission().then(perm => { if(perm === 'granted') showToast('Notifications enabled!'); }); } });
 
-// ====== EXPORT / IMPORT ======
-document.getElementById('exportBtn').addEventListener('click', () => { const profile = { userXP, userLevel, bookmarks, ratings, plannerTasks, allRatings, hubComments, streakDays, lastStudyDate }; const blob = new Blob([JSON.stringify(profile)], {type: 'application/json'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'lesotho_hub_profile.json'; a.click(); });
-document.getElementById('importBtn').addEventListener('click', () => { const input = document.createElement('input'); input.type = 'file'; input.accept = '.json'; input.onchange = (e) => { const file = e.target.files[0]; const reader = new FileReader(); reader.onload = (ev) => { try { const profile = JSON.parse(ev.target.result); userXP = profile.userXP || 0; userLevel = profile.userLevel || 1; bookmarks = profile.bookmarks || []; ratings = profile.ratings || {}; plannerTasks = profile.plannerTasks || []; allRatings = profile.allRatings || {}; hubComments = profile.hubComments || {}; streakDays = profile.streakDays || 0; lastStudyDate = profile.lastStudyDate; localStorage.setItem('userXP', userXP); localStorage.setItem('hub_ratings', JSON.stringify(allRatings)); localStorage.setItem('hub_comments', JSON.stringify(hubComments)); localStorage.setItem('streakDays', streakDays); localStorage.setItem('lastStudyDate', lastStudyDate); saveUserData(); recalcLevel(); renderResources(); renderTasks(); updateLeaderboard(); showToast('Profile imported!'); } catch(ex) { alert('Invalid file'); } }; reader.readAsText(file); }; input.click(); });
+// Export / Import
+document.getElementById('exportBtn').addEventListener('click', () => { const profile = { userXP, userLevel, bookmarks, ratings, plannerTasks, allRatings, hubComments, streakDays, lastStudyDate }; const blob = new Blob([JSON.stringify(profile)], {type:'application/json'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'lesotho_hub_profile.json'; a.click(); });
+document.getElementById('importBtn').addEventListener('click', () => { const input = document.createElement('input'); input.type='file'; input.accept='.json'; input.onchange = (e) => { const file = e.target.files[0]; const reader = new FileReader(); reader.onload = (ev) => { try { const profile = JSON.parse(ev.target.result); userXP = profile.userXP || 0; userLevel = profile.userLevel || 1; bookmarks = profile.bookmarks || []; ratings = profile.ratings || {}; plannerTasks = profile.plannerTasks || []; allRatings = profile.allRatings || {}; hubComments = profile.hubComments || {}; streakDays = profile.streakDays || 0; lastStudyDate = profile.lastStudyDate; localStorage.setItem('userXP', userXP); localStorage.setItem('hub_ratings', JSON.stringify(allRatings)); localStorage.setItem('hub_comments', JSON.stringify(hubComments)); localStorage.setItem('streakDays', streakDays); localStorage.setItem('lastStudyDate', lastStudyDate); saveUserData(); recalcLevel(); renderResources(); renderTasks(); updateLeaderboard(); showToast('Profile imported!'); } catch(ex) { alert('Invalid file'); } }; reader.readAsText(file); }; input.click(); });
 
-// ====== PARTICLES ======
-const canvas = document.getElementById('particleCanvas'), ctxCanvas = canvas.getContext('2d'); canvas.width = window.innerWidth; canvas.height = window.innerHeight; const particlesArray = []; for(let i=0;i<50;i++) particlesArray.push({ x:Math.random()*canvas.width, y:Math.random()*canvas.height, size:Math.random()*2+0.5, speedX:(Math.random()-0.5)*0.5, speedY:(Math.random()-0.5)*0.5 }); function animateParticles() { ctxCanvas.clearRect(0,0,canvas.width,canvas.height); ctxCanvas.fillStyle = document.body.classList.contains('light') ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.4)'; for(let p of particlesArray) { ctxCanvas.beginPath(); ctxCanvas.arc(p.x,p.y,p.size,0,Math.PI*2); ctxCanvas.fill(); p.x += p.speedX; p.y += p.speedY; if(p.x<0||p.x>canvas.width) p.speedX *= -1; if(p.y<0||p.y>canvas.height) p.speedY *= -1; } requestAnimationFrame(animateParticles); } animateParticles(); window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+// Countdown
+function updateCountdown() { const target = new Date('2026-10-20T09:00:00').getTime(); const diff = target - Date.now(); if(diff <= 0) { document.getElementById('countdownDays').textContent='0'; document.getElementById('countdownHours').textContent='0'; document.getElementById('countdownMins').textContent='0'; return; } document.getElementById('countdownDays').textContent = Math.floor(diff / (1000*60*60*24)); document.getElementById('countdownHours').textContent = Math.floor((diff % (1000*60*60*24)) / (1000*60*60)); document.getElementById('countdownMins').textContent = Math.floor((diff % (1000*60*60)) / (1000*60)); } setInterval(updateCountdown, 60000); updateCountdown();
 
-// ====== COUNTDOWN ======
-function updateCountdown() { const target = new Date('2026-10-20T09:00:00').getTime(); const now = Date.now(); const diff = target - now; if(diff <= 0) { document.getElementById('countdownDays').textContent='0'; document.getElementById('countdownHours').textContent='0'; document.getElementById('countdownMins').textContent='0'; return; } document.getElementById('countdownDays').textContent = Math.floor(diff / (1000*60*60*24)); document.getElementById('countdownHours').textContent = Math.floor((diff % (1000*60*60*24)) / (1000*60*60)); document.getElementById('countdownMins').textContent = Math.floor((diff % (1000*60*60)) / (1000*60)); } setInterval(updateCountdown, 60000); updateCountdown();
-
-// ====== WEATHER ======
+// Weather
 async function fetchWeather() { try { const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-29.3132&longitude=27.4833&current_weather=true'); const data = await res.json(); const weather = data.current_weather; document.getElementById('weatherInfo').innerHTML = `<p>Temperature: ${weather.temperature}°C</p><p>Wind: ${weather.windspeed} km/h</p>`; } catch(e) { document.getElementById('weatherInfo').textContent = 'Weather unavailable.'; } }
 
-// ====== TOAST ======
+// Toast
 function showToast(msg) { const toast = document.getElementById('toast'); toast.textContent = msg; toast.className = 'toast'; setTimeout(() => toast.className = '', 3000); }
 
-// ====== ONBOARDING ======
+// Onboarding
 if(!localStorage.getItem('onboarded')) { document.getElementById('onboardingOverlay').style.display = 'flex'; }
 window.closeOnboarding = () => { document.getElementById('onboardingOverlay').style.display = 'none'; localStorage.setItem('onboarded', 'true'); };
 
-// ====== INIT ======
+// Particles
+const canvas = document.getElementById('particleCanvas'), ctxCanvas = canvas.getContext('2d'); canvas.width = window.innerWidth; canvas.height = window.innerHeight; const particlesArray = []; for(let i=0;i<50;i++) particlesArray.push({ x:Math.random()*canvas.width, y:Math.random()*canvas.height, size:Math.random()*2+0.5, speedX:(Math.random()-0.5)*0.5, speedY:(Math.random()-0.5)*0.5 }); function animateParticles() { ctxCanvas.clearRect(0,0,canvas.width,canvas.height); ctxCanvas.fillStyle = document.body.classList.contains('light') ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.4)'; for(let p of particlesArray) { ctxCanvas.beginPath(); ctxCanvas.arc(p.x,p.y,p.size,0,Math.PI*2); ctxCanvas.fill(); p.x += p.speedX; p.y += p.speedY; if(p.x<0||p.x>canvas.width) p.speedX *= -1; if(p.y<0||p.y>canvas.height) p.speedY *= -1; } requestAnimationFrame(animateParticles); } animateParticles(); window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+
+// Final init
 fetch('file_list.json').then(r=>r.json()).then(files => { files.forEach(f => resources.push({title:f.title, subject:f.subject, description:f.description||'File', url:f.url})); renderResources(); }).catch(()=>{});
 renderAuthUI();
 renderResources();
