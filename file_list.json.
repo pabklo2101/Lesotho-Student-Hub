@@ -10,5 +10,23 @@
     "subject": "English",
     "description": "NSC poetry analysis",
     "url": "local_files/english/poetry-guide.docx"
+  },
+  {
+    "title": "Periodic Table Reference.pdf",
+    "subject": "Science",
+    "description": "Full periodic table with atomic numbers",
+    "url": "local_files/science/periodic-table.pdf"
+  },
+  {
+    "title": "Basotho History Timeline.png",
+    "subject": "History",
+    "description": "Key dates in Lesotho's history",
+    "url": "local_files/history/timeline.png"
+  },
+  {
+    "title": "Sesotho Proverbs.pdf",
+    "subject": "Sesotho",
+    "description": "Collection of common proverbs",
+    "url": "local_files/sesotho/proverbs.pdf"
   }
 ]
