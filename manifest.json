@@ -1,0 +1,16 @@
+{
+  "name": "Lesotho Student Hub",
+  "short_name": "LSHub",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0a0c14",
+  "theme_color": "#7c3aed",
+  "description": "Free study resources, LGCSE exams, quizzes & tools for Basotho students.",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>",
+      "sizes": "100x100",
+      "type": "image/svg+xml"
+    }
+  ]
+}
