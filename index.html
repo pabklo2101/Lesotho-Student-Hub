@@ -388,6 +388,10 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+    const SUPABASE_URL = 'https://uiypxstgermlmvf.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_m9V4NOJ_jgOUaECQkOl7nw_VZyqyUvi';
+const { createClient } = supabase;
+const _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     // ========== NAVIGATION ==========
     const navItems = document.querySelectorAll('.nav-item:not([href])');
     const pages = document.querySelectorAll('.page');
