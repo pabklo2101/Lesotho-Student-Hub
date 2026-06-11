@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lesotho Student Hub | Free Study Platform for Basotho Students</title>
+  <meta name="description" content="A free all-in-one study platform for Basotho students with resources, planner, study tools, quizzes, focus mode, and LGCSE exam links." />
+  <meta name="theme-color" content="#2563eb" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="lgcse_questions.js" defer></script>
+  <script src="community_board.js" defer></script>
+  <script src="daily_challenges.js" defer></script>
+  <style>
+    :root{
+      --bg:#f4f7fb;--surface:#ffffff;--surface-2:#eef6ff;--text:#102033;--muted:#64748b;--primary:#2563eb;--primary-2:#0ea5e9;--green:#16a34a;--warning:#f59e0b;--danger:#dc2626;--border:#dbe5f1;--shadow:0 20px 60px rgba(15,23,42,.10);--shadow-soft:0 8px 24px rgba(15,23,42,.06);--radius:24px;--font:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    }
+    body.dark{--bg:#07111f;--surface:#101b2c;--surface-2:#0f2742;--text:#eef6ff;--muted:#9fb0c7;--border:#21324a;--shadow:0 20px 60px rgba(0,0,0,.35);--shadow-soft:0 8px 24px rgba(0,0,0,.25)}
+    *{box-sizing:border-box;margin:0;padding:0} html{scroll-behavior:smooth} body{font-family:var(--font);background:radial-gradient(circle at top left,rgba(37,99,235,.18),transparent 34%),linear-gradient(180deg,var(--bg),var(--surface-2));color:var(--text);min-height:100vh;line-height:1.6;display:flex}.app{display:flex;width:100%;min-height:100vh}.sidebar{width:292px;background:rgba(255,255,255,.78);backdrop-filter:blur(18px);border-right:1px solid var(--border);padding:1.25rem;position:sticky;top:0;height:100vh;overflow:auto;box-shadow:var(--shadow-soft)}body.dark .sidebar{background:rgba(16,27,44,.82)}.brand{display:flex;align-items:center;gap:.8rem;margin-bottom:1.4rem}.brand-icon{width:48px;height:48px;border-radius:18px;background:linear-gradient(135deg,var(--primary),var(--green));color:#fff;display:grid;place-items:center;font-size:1.4rem;box-shadow:0 12px 30px rgba(37,99,235,.3)}.brand h1{font-size:1.15rem;line-height:1.1}.brand p{font-size:.78rem;color:var(--muted)}.nav{display:grid;gap:.45rem}.nav button,.nav a{border:0;text-decoration:none;background:transparent;color:var(--muted);padding:.78rem .85rem;border-radius:16px;font-weight:750;text-align:left;cursor:pointer;display:flex;gap:.65rem;align-items:center;transition:.18s}.nav button:hover,.nav a:hover,.nav button.active{background:linear-gradient(135deg,var(--primary),var(--primary-2));color:white;box-shadow:0 10px 24px rgba(37,99,235,.24)}.side-actions{margin-top:1rem;display:grid;gap:.6rem}.btn{border:0;border-radius:999px;background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;font-weight:800;padding:.72rem 1rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:.45rem;box-shadow:0 10px 24px rgba(37,99,235,.22)}.btn:hover{transform:translateY(-1px);filter:brightness(1.04)}.btn.secondary{background:transparent;color:var(--text);border:1px solid var(--border);box-shadow:none}.main{flex:1;padding:1.6rem;overflow:auto}.hero{border:1px solid var(--border);border-radius:32px;padding:1.6rem;background:linear-gradient(135deg,rgba(37,99,235,.95),rgba(14,165,233,.88)),url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1600&q=80') center/cover;color:white;box-shadow:var(--shadow);position:relative;overflow:hidden}.hero:after{content:'';position:absolute;inset:auto -90px -120px auto;width:330px;height:330px;border-radius:50%;background:rgba(255,255,255,.16)}.hero-content{position:relative;z-index:1;max-width:850px}.eyebrow{display:inline-flex;padding:.35rem .8rem;border-radius:999px;background:rgba(255,255,255,.18);font-weight:800;font-size:.8rem}.hero h2{font-size:clamp(2rem,5vw,4rem);line-height:1;margin:.75rem 0}.hero p{max-width:700px;color:rgba(255,255,255,.9);font-size:1.05rem}.hero-actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.1rem}.hero .btn{background:white;color:#16428a;box-shadow:none}.hero .btn.secondary{background:rgba(255,255,255,.12);color:white;border-color:rgba(255,255,255,.35)}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem;margin:1rem 0}.stat,.card{background:rgba(255,255,255,.82);backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem;box-shadow:var(--shadow-soft)}body.dark .stat,body.dark .card{background:rgba(16,27,44,.88)}.stat strong{font-size:1.7rem;color:var(--primary)}body.dark .stat strong{color:#60a5fa}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem}.page{display:none;animation:rise .22s ease}.page.active{display:block}@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}.section-title{display:flex;justify-content:space-between;align-items:end;gap:1rem;margin:1.2rem 0 .85rem}.section-title h2{font-size:1.7rem}.muted{color:var(--muted)}input,select,textarea{width:100%;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:16px;padding:.82rem .95rem;font:inherit;outline:none}input:focus,select:focus,textarea:focus{border-color:var(--primary);box-shadow:0 0 0 4px rgba(37,99,235,.12)}.toolbar{display:flex;gap:.7rem;flex-wrap:wrap;margin-bottom:1rem}.pill{border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:999px;padding:.5rem .85rem;font-weight:800;cursor:pointer}.pill.active{background:var(--primary);color:white;border-color:var(--primary)}.resource-card h3,.tool-card h3{margin-bottom:.25rem}.badge{display:inline-flex;border-radius:999px;background:rgba(37,99,235,.12);color:var(--primary);font-size:.75rem;font-weight:900;padding:.25rem .65rem;margin-bottom:.55rem}body.dark .badge{color:#93c5fd}.row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}.task{display:flex;gap:.7rem;align-items:center;justify-content:space-between;border:1px solid var(--border);border-radius:16px;padding:.75rem;margin-top:.55rem;background:var(--surface)}.task.done{opacity:.65;text-decoration:line-through}.timer{font-size:3rem;font-weight:900;color:var(--primary);text-align:center;margin:.4rem 0}.quiz-option{display:block;width:100%;border:1px solid var(--border);background:var(--surface);color:var(--text);padding:.85rem;border-radius:16px;margin:.45rem 0;text-align:left;cursor:pointer}.quiz-option.correct{background:rgba(22,163,74,.14);border-color:var(--green)}.quiz-option.wrong{background:rgba(220,38,38,.14);border-color:var(--danger)}.footer-note{margin-top:1.2rem;color:var(--muted);font-size:.9rem}.mobile-top{display:none}.calc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.45rem}.calc-grid button{border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:14px;padding:.75rem;font-weight:900;cursor:pointer}.community-post{border-left:4px solid var(--primary);padding-left:1rem}.hidden{display:none!important}@media(max-width:900px){body,.app{display:block}.mobile-top{display:flex;position:sticky;top:0;z-index:30;align-items:center;justify-content:space-between;background:var(--surface);border-bottom:1px solid var(--border);padding:.8rem 1rem}.sidebar{display:none;position:fixed;z-index:40;inset:0 auto 0 0;width:86%;max-width:330px;height:100vh}.sidebar.open{display:block}.main{padding:1rem}.stats{grid-template-columns:repeat(2,1fr)}.row{grid-template-columns:1fr}.hero{border-radius:24px}.hero h2{font-size:2.3rem}}@media(max-width:520px){.stats{grid-template-columns:1fr}.hero-actions{display:grid}.timer{font-size:2.3rem}}
+  
+
+    /* ===== Premium motion + beauty upgrade (keeps existing information) ===== */
+    :root{
+      --glow-blue:rgba(37,99,235,.28);
+      --glow-cyan:rgba(14,165,233,.22);
+      --glow-green:rgba(22,163,74,.20);
+    }
+    body{
+      background:
+        radial-gradient(circle at 12% 8%, rgba(37,99,235,.22), transparent 28%),
+        radial-gradient(circle at 78% 4%, rgba(14,165,233,.18), transparent 26%),
+        radial-gradient(circle at 70% 92%, rgba(22,163,74,.16), transparent 28%),
+        linear-gradient(180deg,var(--bg),var(--surface-2));
+      overflow-x:hidden;
+    }
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background-image:
+        linear-gradient(rgba(37,99,235,.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37,99,235,.045) 1px, transparent 1px);
+      background-size:44px 44px;
+      mask-image:linear-gradient(to bottom, black, transparent 75%);
+      z-index:-3;
+    }
+    .ambient-orbs{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:-2}
+    .orb{position:absolute;border-radius:999px;filter:blur(6px);opacity:.38;animation:floatOrb 13s ease-in-out infinite alternate}
+    .orb.one{width:260px;height:260px;left:-80px;top:12%;background:var(--glow-blue)}
+    .orb.two{width:220px;height:220px;right:8%;top:10%;background:var(--glow-cyan);animation-delay:-3s}
+    .orb.three{width:280px;height:280px;right:-120px;bottom:8%;background:var(--glow-green);animation-delay:-6s}
+    @keyframes floatOrb{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(28px,-34px,0) scale(1.08)}}
+    .hero{
+      min-height:360px;
+      display:flex;
+      align-items:center;
+      isolation:isolate;
+      background:
+        linear-gradient(135deg,rgba(15,70,185,.96),rgba(14,165,233,.82) 52%,rgba(22,163,74,.72)),
+        url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1600&q=80') center/cover;
+      transform-style:preserve-3d;
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(circle at 22% 18%,rgba(255,255,255,.36),transparent 20%),
+        radial-gradient(circle at 80% 16%,rgba(255,255,255,.22),transparent 18%),
+        linear-gradient(120deg,transparent,rgba(255,255,255,.16),transparent);
+      mix-blend-mode:screen;
+      opacity:.72;
+      animation:heroShimmer 8s ease-in-out infinite alternate;
+      z-index:0;
+    }
+    @keyframes heroShimmer{from{transform:translateX(-3%)}to{transform:translateX(3%)}}
+    .hero-content{animation:heroEnter .75s cubic-bezier(.2,.8,.2,1) both}
+    @keyframes heroEnter{from{opacity:0;transform:translateY(24px) scale(.985)}to{opacity:1;transform:none}}
+    .eyebrow{backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.24);animation:pulseGlow 2.8s ease-in-out infinite}
+    @keyframes pulseGlow{0%,100%{box-shadow:0 0 0 rgba(255,255,255,0)}50%{box-shadow:0 0 38px rgba(255,255,255,.22)}}
+    .hero h2{letter-spacing:-.055em;text-shadow:0 16px 48px rgba(0,0,0,.22)}
+    .brand-icon{animation:bookBounce 4s ease-in-out infinite}
+    @keyframes bookBounce{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-5px) rotate(-3deg)}}
+    .sidebar{animation:slideSidebar .65s cubic-bezier(.2,.8,.2,1) both}
+    @keyframes slideSidebar{from{opacity:0;transform:translateX(-22px)}to{opacity:1;transform:none}}
+    .nav button,.nav a,.btn,.pill,.calc-grid button{position:relative;overflow:hidden}
+    .nav button::after,.nav a::after,.btn::after,.pill::after,.calc-grid button::after{
+      content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent,rgba(255,255,255,.35),transparent);transform:translateX(-130%);transition:transform .55s;pointer-events:none
+    }
+    .nav button:hover::after,.nav a:hover::after,.btn:hover::after,.pill:hover::after,.calc-grid button:hover::after{transform:translateX(130%)}
+    .card,.stat{
+      transform:translateY(0);
+      transition:transform .28s ease, box-shadow .28s ease, border-color .28s ease, background .28s ease;
+    }
+    .card:hover,.stat:hover{
+      transform:translateY(-6px);
+      border-color:rgba(37,99,235,.35);
+      box-shadow:0 26px 70px rgba(15,23,42,.14), 0 0 0 1px rgba(37,99,235,.08) inset;
+    }
+    body.dark .card:hover,body.dark .stat:hover{box-shadow:0 26px 70px rgba(0,0,0,.42),0 0 0 1px rgba(96,165,250,.12) inset}
+    .stats .stat{animation:popIn .55s cubic-bezier(.2,.8,.2,1) both}
+    .stats .stat:nth-child(1){animation-delay:.05s}.stats .stat:nth-child(2){animation-delay:.13s}.stats .stat:nth-child(3){animation-delay:.21s}.stats .stat:nth-child(4){animation-delay:.29s}
+    @keyframes popIn{from{opacity:0;transform:translateY(16px) scale(.96)}to{opacity:1;transform:none}}
+    .page.active .card,.page.active .section-title,.page.active .grid > *{animation:softReveal .52s cubic-bezier(.2,.8,.2,1) both}
+    .page.active .grid > *:nth-child(2){animation-delay:.06s}.page.active .grid > *:nth-child(3){animation-delay:.12s}.page.active .grid > *:nth-child(4){animation-delay:.18s}.page.active .grid > *:nth-child(5){animation-delay:.24s}.page.active .grid > *:nth-child(6){animation-delay:.30s}
+    @keyframes softReveal{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+    .timer{
+      background:linear-gradient(135deg,var(--primary),var(--primary-2),var(--green));
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+      text-shadow:0 18px 45px rgba(37,99,235,.18);
+      animation:timerBreath 2.2s ease-in-out infinite;
+    }
+    @keyframes timerBreath{0%,100%{transform:scale(1)}50%{transform:scale(1.035)}}
+    .badge{box-shadow:0 10px 24px rgba(37,99,235,.10)}
+    input,select,textarea{transition:border-color .2s, box-shadow .2s, transform .2s} input:hover,select:hover,textarea:hover{transform:translateY(-1px)}
+    .task{animation:taskIn .35s ease both}@keyframes taskIn{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:none}}
+    .quiz-option:hover,.calc-grid button:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(15,23,42,.09)}
+    .ripple{position:absolute;border-radius:999px;background:rgba(255,255,255,.42);transform:scale(0);animation:ripple .65s linear;pointer-events:none}
+    @keyframes ripple{to{transform:scale(4);opacity:0}}
+    .confetti-piece{position:fixed;width:8px;height:12px;top:-14px;border-radius:3px;z-index:9999;pointer-events:none;animation:confettiFall 1.25s ease-out forwards}
+    @keyframes confettiFall{to{transform:translateY(105vh) rotate(560deg);opacity:0}}
+    @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.card:hover,.stat:hover{transform:none}}
+
+  </style>
+</head>
+<body>
+<div class="mobile-top"><strong>📚 Lesotho Student Hub</strong><button class="btn secondary" id="openMenu">Menu</button></div>
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><div class="brand-icon">📚</div><div><h1>Lesotho Student Hub</h1><p>Free tools for Basotho students</p></div></div>
+    <nav class="nav">
+      <button class="active" data-page="dashboard">🏠 Dashboard</button>
+      <button data-page="resources">🔗 Resources</button>
+      <button data-page="planner">📅 Planner</button>
+      <button data-page="learn">📘 Study Guides</button>
+      <button data-page="tools">🧰 Tools</button>
+      <button data-page="quizzes">🧠 Quizzes</button>
+      <a href="exams.html">📝 LGCSE Exams</a>
+      <button data-page="achievements">🏆 Achievements</button>
+      <button data-page="community">💬 Community</button>
+      <button data-page="world">🌍 World</button>
+      <button data-page="focus">🧘 Focus Mode</button>
+      <button data-page="about">ℹ️ About</button>
+    </nav>
+    <div class="side-actions"><button class="btn secondary" id="themeToggle">🌓 Toggle Theme</button><button class="btn secondary" id="resetData">♻️ Reset Local Data</button></div>
+  </aside>
+  <main class="main">
+    <section class="hero"><div class="hero-content"><span class="eyebrow">🇱🇸 Built for learners in Lesotho</span><h2>Study smarter. Plan better. Pass stronger.</h2><p>One free hub for resources, study planning, quizzes, focus sessions, quick tools, and LGCSE exam preparation.</p><div class="hero-actions"><button class="btn" data-jump="resources">Explore Resources</button><button class="btn secondary" data-jump="tools">Open Tools</button><a class="btn secondary" href="exams.html">LGCSE Exams</a></div></div></section>
+    <div class="stats"><div class="stat"><strong id="statResources">0</strong><p>Resources</p></div><div class="stat"><strong id="statTasks">0</strong><p>Tasks saved</p></div><div class="stat"><strong id="statScore">0%</strong><p>Best quiz score</p></div><div class="stat"><strong id="statFocus">0</strong><p>Focus sessions</p></div></div>
+
+    <section class="page active" id="page-dashboard"><div class="section-title"><div><h2>Dashboard</h2><p class="muted">Your quick study command centre.</p></div></div><div class="grid"><div class="card"><h3>🔎 Global Search</h3><input id="globalSearch" placeholder="Search resources, tools, subjects..."/><div id="searchResults" style="margin-top:.75rem"></div></div><div class="card"><h3>🌟 Quote of the Day</h3><p id="dailyQuote" class="muted"></p></div><div class="card"><h3>📌 Resource Spotlight</h3><p id="spotlightResource"></p></div><div class="card"><h3>🌤 Maseru Weather</h3><p id="weatherInfo" class="muted">Weather loads when internet is available.</p></div></div></section>
+
+    <section class="page" id="page-resources"><div class="section-title"><div><h2>Study Resources</h2><p class="muted">Search and filter free learning links.</p></div></div><input id="resourceSearch" placeholder="Search by title, subject or description"/><div class="toolbar" id="resourceFilters"></div><div class="grid" id="resourcesGrid"></div></section>
+
+    <section class="page" id="page-planner"><div class="section-title"><div><h2>Study Planner</h2><p class="muted">Tasks save on your device using local storage.</p></div></div><div class="card"><div class="row"><input id="taskText" placeholder="Add a task, e.g. Revise algebra"/><input type="date" id="taskDate"/></div><div class="row" style="margin-top:.75rem"><select id="taskPriority"><option>Low</option><option selected>Medium</option><option>High</option></select><button class="btn" id="addTaskBtn">Add Task</button></div><div id="taskList"></div></div><div class="card"><h3>🍅 Pomodoro</h3><div class="timer" id="pomodoroDisplay">25:00</div><div class="toolbar"><button class="btn" data-pomodoro="25">25 min</button><button class="btn" data-pomodoro="15">15 min</button><button class="btn secondary" id="resetPomodoro">Reset</button></div></div></section>
+
+    <section class="page" id="page-learn"><div class="section-title"><div><h2>Study Guides</h2><p class="muted">Starter guides. You can expand these with more local subjects.</p></div></div><div class="grid" id="studyGuidesGrid"></div></section>
+
+    <section class="page" id="page-tools"><div class="section-title"><div><h2>Student Tools</h2><p class="muted">Free tools that work in the browser.</p></div></div><div class="grid"><div class="card tool-card"><h3>🧮 Safe Calculator</h3><input id="calcDisplay" readonly placeholder="0"/><div class="calc-grid" id="calcButtons"></div></div><div class="card tool-card"><h3>📏 Unit Converter</h3><input type="number" id="convertValue" placeholder="Enter value"/><select id="convertType" style="margin-top:.6rem"><option value="m-cm">Meters → Centimeters</option><option value="km-mi">Kilometers → Miles</option><option value="kg-g">Kilograms → Grams</option><option value="c-f">Celsius → Fahrenheit</option></select><button class="btn" id="convertBtn" style="margin-top:.6rem">Convert</button><p id="convertResult" class="muted" style="margin-top:.6rem"></p></div><div class="card tool-card"><h3>🎓 GPA / Average Calculator</h3><textarea id="marksInput" rows="4" placeholder="Enter marks separated by commas, e.g. 70, 65, 80"></textarea><button class="btn" id="marksBtn" style="margin-top:.6rem">Calculate Average</button><p id="marksResult" class="muted" style="margin-top:.6rem"></p></div><div class="card tool-card"><h3>🃏 Flashcards</h3><p id="flashcardText" style="font-size:1.2rem;font-weight:800;margin:.8rem 0"></p><div class="toolbar"><button class="btn" id="flipCard">Show Answer</button><button class="btn secondary" id="nextCard">Next</button></div></div><div class="card tool-card"><h3>📄 Local PDF Viewer</h3><input type="file" id="pdfInput" accept="application/pdf"/><iframe id="pdfViewer" title="PDF preview" style="width:100%;height:360px;border:1px solid var(--border);border-radius:18px;margin-top:.7rem"></iframe></div></div></section>
+
+    <section class="page" id="page-quizzes"><div class="section-title"><div><h2>Quizzes</h2><p class="muted">Uses your question bank when available, with a safe fallback quiz.</p></div></div><div class="card"><div class="row"><select id="quizSubject"><option value="math">Math</option><option value="english">English</option><option value="science">Science</option><option value="history">History</option></select><select id="quizDifficulty"><option value="easy">Easy</option><option value="medium" selected>Medium</option><option value="hard">Hard</option></select></div><button class="btn" id="startQuizBtn" style="margin-top:.75rem">Start Quiz</button><div id="quizContainer" style="margin-top:1rem"></div></div></section>
+
+    <section class="page" id="page-achievements"><div class="section-title"><div><h2>Achievements</h2><p class="muted">Badges unlock from local progress.</p></div></div><div class="grid" id="achievementsGrid"></div></section>
+
+    <section class="page" id="page-community"><div class="section-title"><div><h2>Community</h2><p class="muted">Local demo board for study tips, questions and discussion ideas.</p></div></div><div class="grid"><div class="card"><h3>📣 Study Tip</h3><p id="studyTip" class="muted"></p></div><div class="card"><h3>❓ Q&A Board</h3><input id="questionInput" placeholder="Ask anonymously..."/><button class="btn" id="postQuestion" style="margin-top:.6rem">Post</button><div id="questionList" style="margin-top:.8rem"></div></div><div class="card"><h3>🔗 Report Broken Link</h3><input id="brokenLinkInput" placeholder="Paste resource title or URL"/><button class="btn" id="reportBroken" style="margin-top:.6rem">Report</button><p id="reportStatus" class="muted" style="margin-top:.5rem"></p></div></div><div id="discussionsGrid" class="grid" style="margin-top:1rem"></div></section>
+
+    <section class="page" id="page-world"><div class="section-title"><div><h2>Our World</h2><p class="muted">A lightweight global learning section without heavy 3D dependencies.</p></div></div><div class="grid"><div class="card"><h3>🌍 Global Study Links</h3><p class="muted">Use international free learning platforms alongside Lesotho resources.</p><ul id="worldLinks" style="margin-left:1.2rem;margin-top:.6rem"></ul></div><div class="card"><h3>🇱🇸 Lesotho Focus</h3><p>Keep improving this hub with LGCSE past papers, local scholarships, school clubs, and student community support.</p></div></div></section>
+
+    <section class="page" id="page-focus"><div class="section-title"><div><h2>Focus Mode</h2><p class="muted">Simple distraction-free study timer.</p></div></div><div class="card" style="text-align:center"><div class="timer" id="focusTimer">00:00</div><div class="toolbar" style="justify-content:center"><button class="btn" data-focus="25">25 min</button><button class="btn" data-focus="15">15 min</button><button class="btn secondary" id="resetFocus">Reset</button></div><p class="muted">Breathe. Read. Practice. Repeat.</p></div></section>
+
+    <section class="page" id="page-about"><div class="section-title"><div><h2>About</h2><p class="muted">Free platform for Basotho students.</p></div></div><div class="card"><p>🇱🇸 Lesotho Student Hub is a free all-in-one study platform for Basotho students. It brings together study resources, LGCSE exam access, quizzes, planning tools, focus sessions, and community support ideas.</p><p class="footer-note">This version keeps the existing project idea but fixes broken UI behaviour, improves mobile responsiveness, adds local saving, and protects the app from missing external files.</p></div></section>
+  </main>
+</div>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const store = {get:(k,d)=>{try{return JSON.parse(localStorage.getItem(k)) ?? d}catch{return d}},set:(k,v)=>localStorage.setItem(k,JSON.stringify(v))};
+  const resources = [
+    {title:'Khan Academy Math',subject:'Math',desc:'Video lessons and practice for mathematics.',url:'https://www.khanacademy.org/math'},
+    {title:'Lesotho Past Papers (LEC)',subject:'LGCSE',desc:'Past exam papers and examination resources.',url:'https://www.lec.org.ls/'},
+    {title:'Siyavula Textbooks',subject:'Math',desc:'Free maths and science textbooks.',url:'https://www.siyavula.com/'},
+    {title:'BBC Bitesize English',subject:'English',desc:'Grammar, writing, reading and literature support.',url:'https://www.bbc.co.uk/bitesize/subjects/z3kw2hv'},
+    {title:'Project Gutenberg',subject:'English',desc:'Free classic books for reading practice.',url:'https://www.gutenberg.org/'},
+    {title:'PhET Science Simulations',subject:'Science',desc:'Interactive science and maths simulations.',url:'https://phet.colorado.edu/'},
+    {title:'Sesotho.org',subject:'Sesotho',desc:'Sesotho language learning and reference material.',url:'https://www.sesotho.org/'},
+    {title:'History of Lesotho',subject:'History',desc:'Background reading on Basotho history.',url:'https://en.wikipedia.org/wiki/History_of_Lesotho'},
+    {title:'freeCodeCamp',subject:'Tech',desc:'Free coding lessons and certificates.',url:'https://www.freecodecamp.org/'},
+    {title:'Google Scholar',subject:'General',desc:'Search academic papers and references.',url:'https://scholar.google.com/'}
+  ];
+  const fallbackGuides = [
+    {title:'Math Study Method',items:['Practice examples daily, not only reading notes.','Write formulas in one notebook section.','Redo wrong questions after 24 hours.']},
+    {title:'English Improvement',items:['Read one passage daily.','Summarise paragraphs in your own words.','Build vocabulary from past papers.']},
+    {title:'Science Revision',items:['Understand definitions first.','Draw diagrams for processes.','Use simulations to visualise concepts.']},
+    {title:'Exam Preparation',items:['Use past papers under timed conditions.','Mark mistakes and revise weak areas.','Sleep properly before exam day.']}
+  ];
+  const fallbackQuestions = {
+    math:{easy:[{q:'What is 12 × 8?',opts:['80','86','96','108'],ans:2}],medium:[{q:'Solve: 2x + 6 = 16',opts:['3','4','5','6'],ans:2}],hard:[{q:'What is the gradient of y = 3x + 2?',opts:['2','3','5','1'],ans:1}]},
+    english:{easy:[{q:'Choose the noun.',opts:['Run','Beautiful','Maseru','Quickly'],ans:2}],medium:[{q:'A synonym for “rapid” is:',opts:['Slow','Fast','Late','Weak'],ans:1}],hard:[{q:'The main idea of a paragraph is called its:',opts:['Topic sentence','Comma','Suffix','Tense'],ans:0}]},
+    science:{easy:[{q:'H2O is:',opts:['Oxygen','Water','Salt','Hydrogen'],ans:1}],medium:[{q:'Plants make food through:',opts:['Respiration','Photosynthesis','Evaporation','Condensation'],ans:1}],hard:[{q:'Force is measured in:',opts:['Watts','Newtons','Joules','Volts'],ans:1}]},
+    history:{easy:[{q:'The capital city of Lesotho is:',opts:['Leribe','Mafeteng','Maseru','Quthing'],ans:2}],medium:[{q:'Lesotho is also called the:',opts:['Mountain Kingdom','River State','Coastal Nation','Desert Land'],ans:0}],hard:[{q:'Moshoeshoe I is remembered as:',opts:['Founder of Basotho nation','First modern president','British governor','Explorer'],ans:0}]}
+  };
+  const quotes = ['Education is the passport to the future.','Small daily progress becomes big results.','Study today so tomorrow becomes easier.','Discipline beats motivation when exams are near.'];
+  const flashcards = [{front:'What is H2O?',back:'Water'},{front:'Capital of Lesotho?',back:'Maseru'},{front:'What does LGCSE stand for?',back:'Lesotho General Certificate of Secondary Education'},{front:'A verb is...',back:'An action or state word'}];
+  let tasks = store.get('lsh_tasks',[]), quizScores = store.get('lsh_scores',[]), focusSessions = store.get('lsh_focus',0), questions = store.get('lsh_questions',[]), reports = store.get('lsh_reports',[]);
+  let currentFilter = 'All';
+  function navTo(page){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));$('page-'+page)?.classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));$('sidebar')?.classList.remove('open');window.scrollTo({top:0,behavior:'smooth'});}
+  document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>navTo(b.dataset.page)));document.querySelectorAll('[data-jump]').forEach(b=>b.addEventListener('click',()=>navTo(b.dataset.jump)));$('openMenu')?.addEventListener('click',()=>$('sidebar').classList.add('open'));
+  $('themeToggle').addEventListener('click',()=>{document.body.classList.toggle('dark');store.set('lsh_dark',document.body.classList.contains('dark'))});if(store.get('lsh_dark',false))document.body.classList.add('dark');$('resetData').addEventListener('click',()=>{if(confirm('Reset tasks, scores, questions and focus sessions on this device?')){['lsh_tasks','lsh_scores','lsh_focus','lsh_questions','lsh_reports'].forEach(k=>localStorage.removeItem(k));location.reload();}});
+  function updateStats(){ $('statResources').textContent=resources.length; $('statTasks').textContent=tasks.length; $('statScore').textContent=(quizScores.length?Math.max(...quizScores):0)+'%'; $('statFocus').textContent=focusSessions; renderAchievements(); }
+  function renderResources(){const subjects=['All',...new Set(resources.map(r=>r.subject))];$('resourceFilters').innerHTML=subjects.map(s=>`<button class="pill ${s===currentFilter?'active':''}" data-filter="${s}">${s}</button>`).join('');document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{currentFilter=b.dataset.filter;renderResources()});const term=($('resourceSearch').value||'').toLowerCase();const list=resources.filter(r=>(currentFilter==='All'||r.subject===currentFilter)&&[r.title,r.subject,r.desc].join(' ').toLowerCase().includes(term));$('resourcesGrid').innerHTML=list.map(r=>`<article class="card resource-card"><span class="badge">${r.subject}</span><h3>${r.title}</h3><p class="muted">${r.desc}</p><a class="btn" href="${r.url}" target="_blank" rel="noopener">Open Resource</a></article>`).join('')||'<p>No resources found.</p>';} $('resourceSearch').addEventListener('input',renderResources);
+  function renderTasks(){store.set('lsh_tasks',tasks);$('taskList').innerHTML=tasks.map((t,i)=>`<div class="task ${t.done?'done':''}"><div><strong>${t.text}</strong><br><small>${t.date||'No date'} · ${t.priority}</small></div><div><button class="pill" data-done="${i}">${t.done?'Undo':'Done'}</button><button class="pill" data-del="${i}">Delete</button></div></div>`).join('')||'<p class="muted" style="margin-top:.8rem">No tasks yet.</p>';document.querySelectorAll('[data-done]').forEach(b=>b.onclick=()=>{tasks[b.dataset.done].done=!tasks[b.dataset.done].done;renderTasks();updateStats()});document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{tasks.splice(b.dataset.del,1);renderTasks();updateStats()});}
+  $('addTaskBtn').onclick=()=>{const text=$('taskText').value.trim();if(!text)return;tasks.unshift({text,date:$('taskDate').value,priority:$('taskPriority').value,done:false});$('taskText').value='';renderTasks();updateStats();};
+  let pomoInt,pomoSec=1500;function showPomo(){let m=Math.floor(pomoSec/60),s=pomoSec%60;$('pomodoroDisplay').textContent=`${m}:${String(s).padStart(2,'0')}`;}document.querySelectorAll('[data-pomodoro]').forEach(b=>b.onclick=()=>{clearInterval(pomoInt);pomoSec=Number(b.dataset.pomodoro)*60;showPomo();pomoInt=setInterval(()=>{pomoSec--;showPomo();if(pomoSec<=0){clearInterval(pomoInt);alert('Pomodoro complete!')}} ,1000)});$('resetPomodoro').onclick=()=>{clearInterval(pomoInt);pomoSec=1500;showPomo()};
+  function renderGuides(){const guides = window.STUDY_GUIDES ? Object.values(window.STUDY_GUIDES).map(g=>({title:g.title,items:(g.sections||[]).flatMap(s=>s.content||[])})) : fallbackGuides;$('studyGuidesGrid').innerHTML=guides.map(g=>`<div class="card"><h3>${g.title}</h3><ul style="margin-left:1.2rem;margin-top:.5rem">${g.items.map(i=>`<li>${i}</li>`).join('')}</ul></div>`).join('');}
+  let expr=''; const calcVals=['7','8','9','/','4','5','6','*','1','2','3','-','0','.','=','+','C'];$('calcButtons').innerHTML=calcVals.map(v=>`<button data-calc="${v}">${v}</button>`).join('');document.querySelectorAll('[data-calc]').forEach(b=>b.onclick=()=>{const v=b.dataset.calc;if(v==='C'){expr=''}else if(v==='='){try{if(!/^[0-9+\-*/. ()]+$/.test(expr))throw Error();expr=String(Function('return '+expr)())}catch{expr='Error'}}else{expr=expr==='Error'?v:expr+v}$('calcDisplay').value=expr;});
+  $('convertBtn').onclick=()=>{const v=Number($('convertValue').value);if(Number.isNaN(v))return $('convertResult').textContent='Enter a valid number.';const t=$('convertType').value;const result={ 'm-cm':`${v*100} cm`, 'km-mi':`${(v*0.621371).toFixed(2)} miles`, 'kg-g':`${v*1000} g`, 'c-f':`${((v*9/5)+32).toFixed(1)} °F`}[t];$('convertResult').textContent=result;};
+  $('marksBtn').onclick=()=>{const nums=$('marksInput').value.split(/[ ,\n]+/).map(Number).filter(n=>!Number.isNaN(n));if(!nums.length)return $('marksResult').textContent='Enter at least one mark.';const avg=nums.reduce((a,b)=>a+b,0)/nums.length;$('marksResult').textContent=`Average: ${avg.toFixed(1)}% (${nums.length} marks)`;};
+  let cardIndex=0, flipped=false;function showCard(){const c=flashcards[cardIndex];$('flashcardText').textContent=flipped?c.back:c.front;$('flipCard').textContent=flipped?'Show Question':'Show Answer'}$('flipCard').onclick=()=>{flipped=!flipped;showCard()};$('nextCard').onclick=()=>{cardIndex=(cardIndex+1)%flashcards.length;flipped=false;showCard()};$('pdfInput').onchange=e=>{const f=e.target.files[0];if(f)$('pdfViewer').src=URL.createObjectURL(f)};
+  function getBank(){return window.QUESTION_BANK || fallbackQuestions;} $('startQuizBtn').onclick=()=>{const subj=$('quizSubject').value,diff=$('quizDifficulty').value,bank=(getBank()[subj]?.[diff]||fallbackQuestions[subj]?.[diff]||[]);if(!bank.length)return $('quizContainer').innerHTML='<p>No questions available.</p>';let i=0,score=0,qs=[...bank].sort(()=>Math.random()-.5);function show(){if(i>=qs.length){const pct=Math.round(score/qs.length*100);quizScores.push(pct);store.set('lsh_scores',quizScores);updateStats();$('quizContainer').innerHTML=`<h3>Done! Score: ${score}/${qs.length} (${pct}%)</h3><button class="btn" id="retryQuiz">Retry</button>`;$('retryQuiz').onclick=$('startQuizBtn').onclick;return}const q=qs[i];$('quizContainer').innerHTML=`<h3>${q.q||q.question}</h3>${(q.opts||q.options).map((o,idx)=>`<button class="quiz-option" data-answer="${idx}">${o}</button>`).join('')}`;document.querySelectorAll('[data-answer]').forEach(b=>b.onclick=()=>{const correct=Number(b.dataset.answer)===(q.ans??q.answer);if(correct)score++;document.querySelectorAll('[data-answer]').forEach(x=>{x.disabled=true;if(Number(x.dataset.answer)===(q.ans??q.answer))x.classList.add('correct')});if(!correct)b.classList.add('wrong');i++;setTimeout(show,900);});}show();};
+  function renderAchievements(){const best=quizScores.length?Math.max(...quizScores):0;const badges=[['Starter','Open the hub and begin learning.',true],['Planner','Add at least 3 tasks.',tasks.length>=3],['Focused','Complete a focus session.',focusSessions>=1],['Quiz Master','Score 80% or more.',best>=80],['Perfect Score','Score 100%.',best>=100]];$('achievementsGrid').innerHTML=badges.map(b=>`<div class="card"><span class="badge">${b[2]?'Unlocked':'Locked'}</span><h3>${b[0]}</h3><p class="muted">${b[1]}</p></div>`).join('');}
+  function renderCommunity(){const tips=(window.COMMUNITY_BOARD?.studyTips)||['Break big tasks into smaller study blocks.','Teach a friend to test your understanding.','Use past papers to find weak topics.'];$('studyTip').textContent=tips[Math.floor(Math.random()*tips.length)];$('questionList').innerHTML=questions.map(q=>`<div class="task"><span>• ${q}</span></div>`).join('')||'<p class="muted">No questions posted on this device.</p>';const discussions=(window.COMMUNITY_BOARD?.discussions)||[{topic:'How do you prepare for exams?',replies:['Create a timetable.','Use past papers.','Revise weak topics first.']},{topic:'Best study habits',replies:['Avoid cramming.','Study in focused sessions.']}];$('discussionsGrid').innerHTML=discussions.map(d=>`<div class="card community-post"><h3>${d.topic}</h3><ul style="margin-left:1.2rem">${(d.replies||[]).map(r=>`<li>${r}</li>`).join('')}</ul></div>`).join('');} $('postQuestion').onclick=()=>{const q=$('questionInput').value.trim();if(!q)return;questions.unshift(q);store.set('lsh_questions',questions);$('questionInput').value='';renderCommunity();};$('reportBroken').onclick=()=>{const r=$('brokenLinkInput').value.trim();if(!r)return;reports.push(r);store.set('lsh_reports',reports);$('brokenLinkInput').value='';$('reportStatus').textContent='Thanks, saved locally for review.';};
+  $('worldLinks').innerHTML=resources.filter(r=>['Math','Science','Tech','General'].includes(r.subject)).map(r=>`<li><a href="${r.url}" target="_blank" rel="noopener">${r.title}</a></li>`).join('');
+  let focusInt,focusSec=0;function showFocus(){let m=Math.floor(focusSec/60),s=focusSec%60;$('focusTimer').textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;}document.querySelectorAll('[data-focus]').forEach(b=>b.onclick=()=>{clearInterval(focusInt);focusSec=Number(b.dataset.focus)*60;showFocus();focusInt=setInterval(()=>{focusSec--;showFocus();if(focusSec<=0){clearInterval(focusInt);focusSessions++;store.set('lsh_focus',focusSessions);updateStats();alert('Focus session complete!')}} ,1000)});$('resetFocus').onclick=()=>{clearInterval(focusInt);focusSec=0;showFocus()};
+  $('globalSearch').addEventListener('input',()=>{const term=$('globalSearch').value.toLowerCase();if(!term)return $('searchResults').innerHTML='';const hits=[...resources.map(r=>({type:'Resource',text:r.title,desc:r.desc})),...fallbackGuides.map(g=>({type:'Guide',text:g.title,desc:g.items[0]})),...['Calculator','Unit Converter','GPA / Average Calculator','Flashcards','PDF Viewer','Pomodoro','Focus Mode'].map(t=>({type:'Tool',text:t,desc:'Student tool'}))].filter(x=>(x.text+' '+x.desc+' '+x.type).toLowerCase().includes(term));$('searchResults').innerHTML=hits.slice(0,8).map(h=>`<div class="task"><span><strong>${h.type}:</strong> ${h.text}<br><small>${h.desc}</small></span></div>`).join('')||'<p class="muted">No results found.</p>';});
+  $('dailyQuote').textContent=quotes[new Date().getDate()%quotes.length];$('spotlightResource').innerHTML=`<a href="${resources[0].url}" target="_blank">${resources[0].title}</a> — ${resources[0].desc}`;async function weather(){try{const r=await fetch('https://api.open-meteo.com/v1/forecast?latitude=-29.3132&longitude=27.4833&current_weather=true');const d=await r.json();$('weatherInfo').textContent=`${d.current_weather.temperature}°C, wind ${d.current_weather.windspeed} km/h`;}catch{$('weatherInfo').textContent='Weather unavailable offline.'}}weather();
+  if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{})}
+  renderResources();renderTasks();renderGuides();showCard();renderCommunity();showPomo();showFocus();updateStats();
+})();
+
+
+  // ===== Premium interaction animations, safely layered on top =====
+  (function upgradeMotion(){
+    const body = document.body;
+    if (!document.querySelector('.ambient-orbs')) {
+      const orbs = document.createElement('div');
+      orbs.className = 'ambient-orbs';
+      orbs.innerHTML = '<span class="orb one"></span><span class="orb two"></span><span class="orb three"></span>';
+      body.prepend(orbs);
+    }
+
+    document.addEventListener('click', (event) => {
+      const target = event.target.closest('.btn,.pill,.nav button,.nav a,.calc-grid button,.quiz-option');
+      if (!target || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const rect = target.getBoundingClientRect();
+      const ripple = document.createElement('span');
+      const size = Math.max(rect.width, rect.height);
+      ripple.className = 'ripple';
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = (event.clientX - rect.left - size / 2) + 'px';
+      ripple.style.top = (event.clientY - rect.top - size / 2) + 'px';
+      target.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 700);
+    });
+
+    const celebrate = () => {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const colors = ['#2563eb','#0ea5e9','#16a34a','#f59e0b','#ffffff'];
+      for (let i = 0; i < 34; i++) {
+        const piece = document.createElement('span');
+        piece.className = 'confetti-piece';
+        piece.style.left = Math.random() * 100 + 'vw';
+        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.animationDelay = (Math.random() * .25) + 's';
+        piece.style.transform = 'rotate(' + Math.random() * 180 + 'deg)';
+        document.body.appendChild(piece);
+        setTimeout(() => piece.remove(), 1500);
+      }
+    };
+
+    document.addEventListener('click', (event) => {
+      const text = (event.target.textContent || '').toLowerCase();
+      if (text.includes('done') || text.includes('start quiz') || text.includes('post')) {
+        setTimeout(celebrate, 120);
+      }
+    });
+
+    const hero = document.querySelector('.hero');
+    if (hero && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      hero.addEventListener('mousemove', (e) => {
+        const r = hero.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - .5;
+        const y = (e.clientY - r.top) / r.height - .5;
+        hero.style.transform = `perspective(900px) rotateX(${(-y*3).toFixed(2)}deg) rotateY(${(x*3).toFixed(2)}deg)`;
+      });
+      hero.addEventListener('mouseleave', () => { hero.style.transform = ''; });
+    }
+  })();
+
+</script>
+</body>
+</html>
